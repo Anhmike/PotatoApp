@@ -1,0 +1,36 @@
+CREATE TABLE Admin(
+A_ID int NOT NULL AUTO_INCREMENT,
+Username varchar(20) ,
+PWord password,
+Email varchar(20),
+PRIMARY KEY(ID)
+)
+
+CREATE TABLE Problems(
+P_ID int NOT NULL AUTO_INCREMENT,
+Name varchar (30),
+Description char(250),
+Type char(20),
+PRIMARY KEY(P_ID)
+)
+
+CREATE TABLE Symptoms(
+S_ID int NOT NULL AUTO_INCREMENT,
+Description char(250),
+PRIMARY KEY(S_ID)
+)
+
+CREATE TABLE Picture(
+Picture_ID int NOT NULL,
+S_ID int NOT NULL,
+URL char(100),
+FOREIGN KEY (S_ID) REFERENCES Symptoms(S_ID)
+)
+
+CREATE TABLE Link_Symptoms(
+LS_ID INT NOT NULL AUTO_INCREMENT,
+P_ID INT NOT NULL,
+S_ID INT NOT NULL,
+FOREIGN KEY (P_ID) REFERENCES Problems(P_ID),
+FOREIGN KEY (S_ID) REFERENCES Symptoms(S_ID)
+)
