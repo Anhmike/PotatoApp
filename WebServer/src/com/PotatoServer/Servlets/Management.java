@@ -1,9 +1,8 @@
 package com.PotatoServer.Servlets;
 
 import java.io.IOException;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -16,14 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import com.PotatoServer.Models.ProblemModel;
-import com.PotatoServer.Stores.ProblemDes;
+import com.PotatoServer.Stores.ProblemStore;
 import com.PotatoServer.lib.Dbutils;
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.PreparedStatement;
-
-import java.sql.DriverManager;
-import java.util.Iterator;
-import java.util.LinkedList;
 
 /**
  * Servlet implementation class Manament
@@ -35,14 +28,14 @@ import java.util.LinkedList;
 initParams = { 
 	@WebInitParam(name = "data-source", value = "jdbc/potatodb")
 })
-public class Manament extends HttpServlet {
+public class Management extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private DataSource _ds = null;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Manament() {
+    public Management() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -63,16 +56,16 @@ public class Manament extends HttpServlet {
 		// TODO Auto-generated method stub
 				System.out.println("Starting GET");
 				//String args[]=Convertors.SplitRequestPath(request);
-				Iterator<ProblemDes> iterator;
+				Iterator<ProblemStore> iterator;
 				ProblemModel Problem = new ProblemModel(); //Create a new instance of the model
 
 				Problem.setDatasource(_ds);
-				LinkedList<ProblemDes> psl = Problem.getDES();
+				LinkedList<ProblemStore> psl = Problem.getDES();
 				// Get a list of all faults
 
 				/* If we want to forward to a jsp page do this */
-				request.setAttribute("Faults", psl); //Set a bean with the list in it
-				RequestDispatcher rd = request.getRequestDispatcher("/SelectEditFault.jsp"); 
+				request.setAttribute("Problems", psl); //Set a bean with the list in it
+				RequestDispatcher rd = request.getRequestDispatcher("/Managment.jsp"); 
 				 
 				
 				rd.forward(request, response);

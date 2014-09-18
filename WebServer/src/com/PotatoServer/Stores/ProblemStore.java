@@ -10,5 +10,43 @@ public class ProblemStore {
 	String description;
 	String type;
 	DateTime updateDate;
-	ArrayList<SymptomStore> symptoms;
+	ArrayList<Integer> symptoms;
+	
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public DateTime getUpdateDate() {
+		return updateDate;
+	}
+	public void setUpdateDate(DateTime updateDate) {
+		this.updateDate = updateDate;
+	}
+	public ArrayList<Integer> getSymptoms() {
+		return symptoms;
+	}
+	public void setSymptoms(ArrayList<Integer> symptoms) {
+		this.symptoms = symptoms;
+	}
 }

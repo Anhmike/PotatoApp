@@ -1,17 +1,13 @@
 package com.PotatoServer.Models;
-import javax.sql.DataSource;
+import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.LinkedList;
 
+import javax.sql.DataSource;
 
-import java.sql.Connection;
-
-
-import com.PotatoServer.Stores.ProblemDes;
+import com.PotatoServer.Stores.ProblemStore;
 import com.mysql.jdbc.PreparedStatement;
-import com.mysql.jdbc.StatementImpl;
-
-import java.sql.Statement;
 
 public class ProblemModel {
 
@@ -26,22 +22,22 @@ public class ProblemModel {
 		System.out.println("Set Data Source in Model"+_ds.toString());
 	}
 
-    public LinkedList<ProblemDes> getDES(){
-		LinkedList<ProblemDes> psl = new LinkedList<ProblemDes>();
+    public LinkedList<ProblemStore> getDES(){
+		LinkedList<ProblemStore> psl = new LinkedList<ProblemStore>();
 		Connection Conn;
-		ProblemDes ps = null;
+		ProblemStore ps = null;
 		ResultSet rs = null;
 		try {
 				Conn = _ds.getConnection();
 		} catch (Exception et) {
 
-			System.out.println("No Connection in Faults Model");
+			System.out.println("No Connection in Problem Model");
 			return null;
 		}
 
 		PreparedStatement pmst = null;
 		Statement stmt = null;
-		String sqlQuery = "select summary,idfault from fault";
+		String sqlQuery = "select P_ID,description from problem";
 		System.out.println("Potato Query " + sqlQuery);
 		try {
 			try {
@@ -67,9 +63,9 @@ public class ProblemModel {
 			}
 			while (rs.next()) {
 				System.out.println("Getting RS");
-				ps = new ProblemDes();
-				ps.setP_ID(rs.getString("P_ID "));
-				ps.SetDescription(rs.getString("Description "));
+				ps = new ProblemStore();
+				ps.setId(Integer.parseInt(rs.getString("P_ID ")));
+				ps.setDescription(rs.getString("Description "));
 				psl.add(ps);
 			}
 		} catch (Exception ex) {

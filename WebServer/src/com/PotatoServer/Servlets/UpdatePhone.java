@@ -1,6 +1,7 @@
 package com.PotatoServer.Servlets;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -59,11 +60,18 @@ public class UpdatePhone extends HttpServlet {
 		uPM.setDatasource(_ds);
 		
 		String lastUpdate = request.getParameter("lastUpdate");
+		StringBuilder xml = new StringBuilder();
+		
+		xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 		
 		if(uPM.checkIfUpdateRequired(lastUpdate)) {
-			uPM.createXMLReturn();
+			xml.append(uPM.parseProblems(uPM.getUpdatedProblems(lastUpdate)));
 		}
 		
+		response.setContentType("text/html");
+	    PrintWriter out = response.getWriter();
+
+	    out.println(xml.toString());
 		
 	}
 
