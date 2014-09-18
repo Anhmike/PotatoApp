@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.annotation.WebInitParam;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,27 +14,27 @@ import javax.sql.DataSource;
 import com.PotatoServer.lib.Dbutils;
 
 /**
- * Servlet implementation class UpdatePhone
+ * Servlet implementation class Manament
  */
 @WebServlet(urlPatterns = { 
-				"/UpdatePhone", 
-				"/UpdatePhone/*"
-		}, 
-		initParams = { 
-			@WebInitParam(name = "data-source", value = "jdbc/potatodb")
-		})
-public class UpdatePhone extends HttpServlet {
+		"/Management", 
+		"/Management/*"
+}, 
+initParams = { 
+	@WebInitParam(name = "data-source", value = "jdbc/potatodb")
+})
+public class Manament extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private DataSource _ds = null;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdatePhone() {
+    public Manament() {
         super();
         // TODO Auto-generated constructor stub
     }
-
+    
     public void init(ServletConfig config) throws ServletException {
 		// TODO Auto-generated method stub
 		Dbutils db = new Dbutils();
@@ -42,12 +42,12 @@ public class UpdatePhone extends HttpServlet {
 	
         _ds=db.assemble(config);
 	}
-    
+
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		// TODO Auto-generated method stub
 	}
 
 	/**
