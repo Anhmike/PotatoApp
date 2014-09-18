@@ -11,19 +11,24 @@ P_ID int NOT NULL AUTO_INCREMENT,
 Name varchar (30),
 Description char(250),
 Type char(20),
+Change_Date DATETIME,
 PRIMARY KEY(P_ID)
 )
 
 CREATE TABLE Symptoms(
 S_ID int NOT NULL AUTO_INCREMENT,
 Description char(250),
-PRIMARY KEY(S_ID)
+Parent_Symptom int,
+Change_Date DATETIME,
+PRIMARY KEY(S_ID),
+FOREIGN KEY (Parent_Symptom) REFERENCES Symptons(S_ID)
 )
 
 CREATE TABLE Picture(
 Picture_ID int NOT NULL,
 S_ID int NOT NULL,
 URL char(100),
+Change_Date DATETIME,
 FOREIGN KEY (S_ID) REFERENCES Symptoms(S_ID)
 )
 
@@ -33,4 +38,11 @@ P_ID INT NOT NULL,
 S_ID INT NOT NULL,
 FOREIGN KEY (P_ID) REFERENCES Problems(P_ID),
 FOREIGN KEY (S_ID) REFERENCES Symptoms(S_ID)
+)
+
+CREATE TABLE Versions(
+ID INT NOT NULL,
+Table_Name varchar(20),
+Version_Num char(100),
+PRIMARY KEY (ID)
 )
