@@ -18,8 +18,10 @@ PRIMARY KEY(P_ID)
 CREATE TABLE Symptoms(
 S_ID int NOT NULL AUTO_INCREMENT,
 Description char(250),
+Parent_Symptom int,
 Change_Date DATETIME,
-PRIMARY KEY(S_ID)
+PRIMARY KEY(S_ID),
+FOREIGN KEY (Parent_Symptom) REFERENCES Symptons(S_ID)
 )
 
 CREATE TABLE Picture(
