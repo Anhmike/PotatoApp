@@ -15,10 +15,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import com.PotatoServer.Models.ProblemModel;
+import com.PotatoServer.Stores.ProblemDes;
 import com.PotatoServer.lib.Dbutils;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
+
 import java.sql.DriverManager;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 /**
  * Servlet implementation class Manament
@@ -55,51 +60,22 @@ public class Manament extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs= null;
+		// TODO Auto-generated method stub
+				System.out.println("Starting GET");
+				//String args[]=Convertors.SplitRequestPath(request);
+				Iterator<ProblemDes> iterator;
+				ProblemModel Problem = new ProblemModel(); //Create a new instance of the model
 
-		String PID = request.getParameter("P_ID");
-    	
-    	
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-        	con = DriverManager.getConnection("");
-            ps = con.prepareStatement(stmt);
-        	ps.setString(1, faultId);
-        	
-        	System.out.println(faultId);
-        	
-        	
-            rs=ps.executeQuery();
-            
-            if (rs.next()) {
-                // redirect to error page
-            	String PName = rs.getString("Name");
-            	String PDescription = rs.getString("Description");
-                
-            	
-            	request.setAttribute("faultDetails", faultDetails);
-            	request.setAttribute("faultSummary", faultSummary);
-            	
-            	RequestDispatcher rd = request.getRequestDispatcher("/FaultSummary.jsp"); 
+				Problem.setDatasource(_ds);
+				LinkedList<ProblemDes> psl = Problem.getDES();
+				// Get a list of all faults
 
-        		rd.forward(request, response);
-                //response.sendRedirect("/FaultDetails.jsp"); 
-                
-               
-            } 
-        } catch (Exception e)
-        {
-        System.out.println(e);
-        }
-        
-        try {
-			con.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+				/* If we want to forward to a jsp page do this */
+				request.setAttribute("Faults", psl); //Set a bean with the list in it
+				RequestDispatcher rd = request.getRequestDispatcher("/SelectEditFault.jsp"); 
+				 
+				
+				rd.forward(request, response);
 	}
 
 	/**
