@@ -18,10 +18,6 @@ if (problems==null){
 	<p>No faults found</p>
 	<% 
 }else{
-%>
-
-
-<% 
 Iterator<ProblemStore> iterator;
 
 
@@ -30,7 +26,8 @@ while (iterator.hasNext()){
 	ProblemStore md = (ProblemStore)iterator.next();
 
 	%>
-	<input type= "radio" name="Select" value="Name?P_ID=<%=md.getId() %>" >ID:<%=md.getId() %>  <%=md.getDescription() %><br/><%
+	<input type= "radio" name="Select" value="Name?P_ID=<%=md.getId() %>" >ID:<%=md.getId() %>  <%=md.getDescription() %><br/>
+	<%
 }
 }
 %>

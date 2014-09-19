@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -49,7 +50,7 @@ public class UpdatePhone extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		doPost(request, response);
 	}
 
 	/**
@@ -60,16 +61,16 @@ public class UpdatePhone extends HttpServlet {
 		uPM.setDatasource(_ds);
 		
 		String lastUpdate = request.getParameter("lastUpdate");
-		StringBuilder xml = new StringBuilder();
 		
-		xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-		xml.append(uPM.getUpdatedProblems(lastUpdate));
+		ServletOutputStream out = response.getOutputStream();
 		
-		response.setContentType("text/html");
-	    PrintWriter out = response.getWriter();
-
-	    out.println(xml.toString());
+		if(lastUpdate == null) { lastUpdate = "00000000000000";}
 		
+		out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+		out.println("<data>");
+		uPM.getUpdatedProblems(lastUpdate, out);
+		uPM.getUpdatesSymptoms(lastUpdate, out);
+		out.println("</data>");
 	}
 
 }
