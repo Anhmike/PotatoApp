@@ -66,13 +66,13 @@ public class Dbutils {
 		} catch (NamingException e) {
 			throw new ServletException("Cant find datasource name " +dataSourceName+" Error "+ e);
 		}
-		 CreateSchema(_ds);
+		// CreateSchema(_ds);
 		return _ds;
 
 	}
 
 	// create the schema if it doesn't exist
-	private void CreateSchema(DataSource _ds) {
+	/*private void CreateSchema(DataSource _ds) {
 		PreparedStatement pmst = null;
 		Connection Conn;
 		try {
@@ -190,5 +190,5 @@ public class Dbutils {
 			return;
 		}
 
-	}
+	}*/
 }

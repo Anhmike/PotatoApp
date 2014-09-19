@@ -43,7 +43,7 @@ public class Management extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
 		// TODO Auto-generated method stub
 		Dbutils db = new Dbutils();
-		db.createSchema();
+		//db.createSchema();
 		
         _ds=db.assemble(config);
 	}
