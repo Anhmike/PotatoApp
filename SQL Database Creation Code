@@ -4,7 +4,7 @@ CREATE TABLE Admin(
 A_ID int NOT NULL AUTO_INCREMENT,
 Username varchar(20),
 PWord varchar(50),
-Email varchar(20),
+Email varchar(255),
 PRIMARY KEY(A_ID)
 );
 
