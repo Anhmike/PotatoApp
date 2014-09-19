@@ -63,10 +63,7 @@ public class UpdatePhone extends HttpServlet {
 		StringBuilder xml = new StringBuilder();
 		
 		xml.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-		
-		if(uPM.checkIfUpdateRequired(lastUpdate)) {
-			xml.append(uPM.parseProblems(uPM.getUpdatedProblems(lastUpdate)));
-		}
+		xml.append(uPM.getUpdatedProblems(lastUpdate));
 		
 		response.setContentType("text/html");
 	    PrintWriter out = response.getWriter();

@@ -65,7 +65,7 @@ public class Management extends HttpServlet {
 
 				/* If we want to forward to a jsp page do this */
 				request.setAttribute("Problems", psl); //Set a bean with the list in it
-				RequestDispatcher rd = request.getRequestDispatcher("/Managment.jsp"); 
+				RequestDispatcher rd = request.getRequestDispatcher("/Management.jsp"); 
 				 
 				
 				rd.forward(request, response);

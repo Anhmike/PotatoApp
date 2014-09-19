@@ -11,8 +11,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
+import com.PotatoServer.Models.LoginModel;
+import com.PotatoServer.Stores.SessionBean;
 import com.PotatoServer.lib.Dbutils;
 
 /**
@@ -56,15 +59,30 @@ public class Login extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		LoginModel lm = new LoginModel();
+		lm.setDatasource(_ds);
+		
+		String password = request.getParameter("password");
+		
 		String username = request.getParameter("username");
 		try {
-			String password = sha1(request.getParameter("password"));
+			password = sha1(password);
 		} catch (NoSuchAlgorithmException e) {
 			System.out.println("SHA1 missing");
 			e.printStackTrace();
 		}
 		
+		HttpSession session = request.getSession();
 		
+		if(lm.checkLogin(username, password)) {
+			SessionBean sb = new SessionBean();
+			sb.setUsername(username);
+			session.setAttribute("sessionBean", sb);
+			response.sendRedirect("Management");
+		} else {
+			response.sendRedirect("index.jsp?r=incorrect");
+		}
 		
 	}
 	

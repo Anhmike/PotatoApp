@@ -8,8 +8,13 @@
 </head>
 <body>
 Potato Login
-
 <form name="loginForm" action="Login" method="post">
+<% if(request.getParameter("r") != null) {
+%>
+<b>Incorrect username or password</b><br />
+<%
+	}
+	%>
 <input type="text" name="username" /><br />
 <input type="password" name="password" /><br />
 <input type="submit" />

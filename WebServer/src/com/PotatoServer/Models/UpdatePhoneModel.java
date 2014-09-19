@@ -7,6 +7,8 @@ import java.util.LinkedList;
 
 import javax.sql.DataSource;
 
+import org.joda.time.DateTime;
+
 import com.PotatoServer.Stores.ProblemStore;
 import com.PotatoServer.Stores.SymptomStore;
 
@@ -21,14 +23,9 @@ public class UpdatePhoneModel {
 		this._ds=_ds;
 		System.out.println("Set Data Source in Model"+_ds.toString());
 	}
+
 	
-	public boolean checkIfUpdateRequired(String userTime) {
-		return true;
-		//if userTime < databaseTime get update
-		
-	}
-	
-	public LinkedList<ProblemStore> getUpdatedProblems (String userTime) {
+	public String getUpdatedProblems (String userTime) {
 		LinkedList<ProblemStore> psl = new LinkedList<ProblemStore>();
 		Connection Conn;
 		ProblemStore ps = null;
@@ -74,6 +71,7 @@ public class UpdatePhoneModel {
 				ps.setName(rs.getString("name"));
 				ps.setDescription(rs.getString("description"));
 				ps.setType(rs.getString("type"));
+				ps.setUpdateDate(DateTime.parse(rs.getString("change_date")));
 				psl.add(ps);
 			}
 		} catch (Exception ex) {
@@ -87,11 +85,12 @@ public class UpdatePhoneModel {
 		} catch (Exception ex) {
 			return null;
 		}
-		return psl;
+		
+		return parseProblems(psl);
 		
 	}
 	
-	public LinkedList<SymptomStore> getUpdatesSymptoms (String userTime) {
+	public String getUpdatesSymptoms (String userTime) {
 		LinkedList<SymptomStore> psl = new LinkedList<SymptomStore>();
 		Connection Conn;
 		SymptomStore ss = null;
@@ -149,11 +148,11 @@ public class UpdatePhoneModel {
 		} catch (Exception ex) {
 			return null;
 		}
-		return psl;
+		return parseSymptoms(psl);
 		
 	}
 	
-	public String parseProblems(LinkedList<ProblemStore> list) {
+	private String parseProblems(LinkedList<ProblemStore> list) {
 		if(list == null) { return null;}
 		
 		StringBuilder xml = new StringBuilder();
@@ -178,7 +177,7 @@ public class UpdatePhoneModel {
 		return xml.toString();
 	}
 	
-	public String parseSymptoms(LinkedList<SymptomStore> list) {
+	private String parseSymptoms(LinkedList<SymptomStore> list) {
 		if(list == null) { return null; }
 		
 		StringBuilder xml = new StringBuilder();
