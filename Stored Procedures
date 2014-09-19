@@ -1,0 +1,23 @@
+Delete Problem
+
+DECLARE @PROB_ID INT
+
+DELETE FROM Problems WHERE P_ID = @PROB_ID
+
+
+
+Select Edit Problem
+
+DECLARE @PROB_ID INT
+
+SELECT FROM Problems WHERE P_ID = @PROB_ID
+
+
+
+Edit Problem
+
+DECLARE @PROBLEM_NAME VARCHAR(100)
+DECLARE @DES CHAR(500)
+
+UPDATE Problems SET Name = @PROBLEM_NAME, Description = @DES WHERE Name = @PROBLEM_NAME
+
