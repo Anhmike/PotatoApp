@@ -37,7 +37,7 @@ public class ProblemModel {
 
 		PreparedStatement pmst = null;
 		Statement stmt = null;
-		String sqlQuery = "select P_ID,description from problem";
+		String sqlQuery = "select P_ID,description from problems";
 		System.out.println("Potato Query " + sqlQuery);
 		try {
 			try {
@@ -64,8 +64,8 @@ public class ProblemModel {
 			while (rs.next()) {
 				System.out.println("Getting RS");
 				ps = new ProblemStore();
-				ps.setId(Integer.parseInt(rs.getString("P_ID ")));
-				ps.setDescription(rs.getString("Description "));
+				ps.setId(Integer.parseInt(rs.getString("P_ID")));
+				ps.setDescription(rs.getString("Description"));
 				psl.add(ps);
 			}
 		} catch (Exception ex) {

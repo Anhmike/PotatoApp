@@ -43,7 +43,7 @@ public class Login extends HttpServlet {
     public void init(ServletConfig config) throws ServletException {
 		// TODO Auto-generated method stub
 		Dbutils db = new Dbutils();
-		db.createSchema();
+		//db.createSchema();
 	
         _ds=db.assemble(config);
 	}
@@ -72,6 +72,8 @@ public class Login extends HttpServlet {
 			System.out.println("SHA1 missing");
 			e.printStackTrace();
 		}
+		
+		System.out.println(password);
 		
 		HttpSession session = request.getSession();
 		

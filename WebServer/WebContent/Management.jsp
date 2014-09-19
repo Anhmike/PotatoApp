@@ -12,7 +12,7 @@
 <h1> List of Problems </h1>
 <%
 System.out.println("In render");
-List<ProblemStore> problems = (List<ProblemStore>)request.getAttribute("Name");
+List<ProblemStore> problems = (List<ProblemStore>)request.getAttribute("Problems");
 if (problems==null){
  %>
 	<p>No faults found</p>

@@ -40,7 +40,7 @@ public class UpdatePhoneModel {
 
 		//PreparedStatement pmst = null;
 		Statement stmt = null;
-		String sqlQuery = "select * from problems where change_date > " + userTime;
+		String sqlQuery = "select * from problems where change_date > " + userTime + " left join link_symptoms where p_id = problems.p_id";
 		System.out.println("Problem Query " + sqlQuery);
 		try {
 			try {
