@@ -27,10 +27,17 @@ end;
 
 
 
-Edit Problem
+delimiter $$;
 
-DECLARE @PROBLEM_NAME VARCHAR(100)
-DECLARE @DES CHAR(500)
+create procedure `edit_problem`
+(in new_id int, new_name varchar(30), new_description char(250), new_type char(20), new_date datetime)
+begin
 
-UPDATE Problems SET Name = @PROBLEM_NAME, Description = @DES WHERE Name = @PROBLEM_NAME
+
+update problems 
+set problems.Name = new_name, problems.Description = new_description, problems.Type = new_type, problems.Change_Date = new_date
+where problems.P_ID = new_id;
+
+end;
+
 
