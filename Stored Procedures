@@ -12,11 +12,18 @@ end;
 
 
 
-Select Edit Problem
 
-DECLARE @PROB_ID INT
+delimiter $$;
 
-SELECT FROM Problems WHERE P_ID = @PROB_ID
+create procedure `select_problem`
+(in sel_prob int)
+begin
+
+
+select * from problems where problems.P_ID = sel_prob;
+
+end;
+
 
 
 
