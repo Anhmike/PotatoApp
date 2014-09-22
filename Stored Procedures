@@ -1,8 +1,14 @@
-Delete Problem
 
-DECLARE @PROB_ID INT
+delimiter $$;
 
-DELETE FROM Problems WHERE P_ID = @PROB_ID
+create procedure `delete_problem`
+(in del_prob int)
+begin
+
+
+delete from problems where problems.P_ID = del_prob;
+
+end;
 
 
 
