@@ -20,6 +20,36 @@ public class ProblemModel {
 	public void setDatasource(DataSource _ds){
 		this._ds=_ds;
 		System.out.println("Set Data Source in Model"+_ds.toString());
+		
+	}
+	
+	public void deleteprob(String id)
+	{
+		Connection Conn;
+		ProblemStore ps = null;
+		ResultSet rs = null;
+		try {
+				Conn = _ds.getConnection();
+		} catch (Exception et) {
+
+			System.out.println("No Connection in Problem Model");
+		}
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		
+	    
+			PreparedStatement pmst = null;
+			Statement stmt = null;
+			String sqlQuery = "call delete_problem('"+ id +"')";
+			System.out.println("Potato Query " + sqlQuery);
+		
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
 	}
 
     public LinkedList<ProblemStore> getDES(){

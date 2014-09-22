@@ -78,28 +78,15 @@ public class Problem extends HttpServlet {
 
 				/* If we want to forward to a jsp page do this */
 				request.setAttribute("Problems", psl); //Set a bean with the list in it
+				
+				
+				String dl = request.getParameter("Select");
+				Problem.deleteprob(dl);
+				
 				RequestDispatcher rd = request.getRequestDispatcher("/Problem.jsp"); 
 				 
 				
 				rd.forward(request, response);
-				
-				try {
-					Class.forName("com.mysql.jdbc.Driver").newInstance();
-				
-			    con = DriverManager.getConnection("jdbc:mysql://SILVA:3306/14indt3db","14indt3","312.bac;");
-			    
-			    PreparedStatement doSub = null;
-			    
-			    String del = request.getParameter("Delete");
-			    
-			    String sql = ("{call delete_problem (?)}");
-			    
-				
-				}
-				catch(Exception e)
-				{
-					e.printStackTrace();
-				}
 				
 	}
 
