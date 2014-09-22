@@ -81,7 +81,7 @@ public class Login extends HttpServlet {
 			SessionBean sb = new SessionBean();
 			sb.setUsername(username);
 			session.setAttribute("sessionBean", sb);
-			response.sendRedirect("Management");
+			response.sendRedirect("Dashboard");
 		} else {
 			response.sendRedirect("index.jsp?r=incorrect");
 		}
