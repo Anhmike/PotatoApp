@@ -19,23 +19,23 @@ import com.PotatoServer.Stores.ProblemStore;
 import com.PotatoServer.lib.Dbutils;
 
 /**
- * Servlet implementation class Manament
+ * Servlet implementation class Problem
  */
 @WebServlet(urlPatterns = { 
-		"/Management", 
-		"/Management/*"
+		"/Problem", 
+		"/Problem/*"
 }, 
 initParams = { 
 	@WebInitParam(name = "data-source", value = "jdbc/potatodb")
 })
-public class Management extends HttpServlet {
+public class Problem extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private DataSource _ds = null;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Management() {
+    public Problem() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -52,8 +52,6 @@ public class Management extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		// TODO Auto-generated method stub
 				System.out.println("Starting GET");
 				//String args[]=Convertors.SplitRequestPath(request);
 				Iterator<ProblemStore> iterator;
@@ -65,7 +63,7 @@ public class Management extends HttpServlet {
 
 				/* If we want to forward to a jsp page do this */
 				request.setAttribute("Problems", psl); //Set a bean with the list in it
-				RequestDispatcher rd = request.getRequestDispatcher("/Management.jsp"); 
+				RequestDispatcher rd = request.getRequestDispatcher("/Problem.jsp"); 
 				 
 				
 				rd.forward(request, response);
@@ -76,6 +74,7 @@ public class Management extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
 	}
 
 }
