@@ -1,6 +1,8 @@
 package com.PotatoServer.Servlets;
 
 import java.io.IOException;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -17,6 +19,10 @@ import javax.sql.DataSource;
 import com.PotatoServer.Models.ProblemModel;
 import com.PotatoServer.Stores.ProblemStore;
 import com.PotatoServer.lib.Dbutils;
+
+import java.sql.Connection;
+
+
 
 /**
  * Servlet implementation class Problem
@@ -52,6 +58,10 @@ public class Problem extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+				Connection con = null;
+				
+			    
 				System.out.println("Starting GET");
 				//String args[]=Convertors.SplitRequestPath(request);
 				Iterator<ProblemStore> iterator;
@@ -67,6 +77,25 @@ public class Problem extends HttpServlet {
 				 
 				
 				rd.forward(request, response);
+				
+				try {
+					Class.forName("com.mysql.jdbc.Driver").newInstance();
+				
+			    con = DriverManager.getConnection("jdbc:mysql://SILVA:3306/14indt3db","14indt3","312.bac;");
+			    
+			    PreparedStatement doSub = null;
+			    
+			    String del = request.getParameter("Delete");
+			    
+			    String sql = ("{call delete_problem (?)}");
+			    
+				
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+				}
+				
 	}
 
 	/**
