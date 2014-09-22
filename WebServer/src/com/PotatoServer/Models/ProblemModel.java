@@ -23,6 +23,42 @@ public class ProblemModel {
 		
 	}
 	
+	public void editprob(String edit)
+	{
+		Connection Conn = null;
+		ProblemStore ps = null;
+		ResultSet rs = null;
+		Statement stmt = null;
+		
+		try {
+				Conn = _ds.getConnection();
+		} catch (Exception et) {
+
+			System.out.println("No Connection in Problem Model");
+		}
+		
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+		
+			stmt = Conn.createStatement();
+			PreparedStatement pmst = null;
+			
+			if(edit !=null)
+			{
+			String sqlQuery = "call select_problem("+ edit +")";
+			System.out.println("Potato Query " + sqlQuery);
+			rs = stmt.executeQuery(sqlQuery);
+			rs = 
+			}
+			
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	
 	public void deleteprob(String id)
 	{
 		Connection Conn = null;
