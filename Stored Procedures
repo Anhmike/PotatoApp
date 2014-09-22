@@ -41,3 +41,14 @@ where problems.P_ID = new_id;
 end;
 
 
+
+delimiter $$;
+
+create procedure `select_type`
+(in select_type char(20))
+
+begin
+
+select * from problems where problems.Type = select_type;
+
+end;
