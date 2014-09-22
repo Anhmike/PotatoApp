@@ -18,6 +18,9 @@ if (problems==null){
 	<p>No faults found</p>
 	<% 
 }else{
+%>
+<form action="Problem" method = "GET">
+<%
 Iterator<ProblemStore> iterator;
 
 
@@ -26,12 +29,13 @@ while (iterator.hasNext()){
 	ProblemStore md = (ProblemStore)iterator.next();
 
 	%>
-	<input type= "radio" name="Select" value="Name?P_ID=<%=md.getId() %>" >ID:<%=md.getId() %>  <%=md.getDescription() %><br/>
+	<input type= "radio" name="Select" value="<%=md.getId() %>" >ID:<%=md.getId() %>  <%=md.getDescription() %><br/>
 	<%
 }
 }
 %>
-<input type="submit" name="submit" value="Delete"> <input type="submit" name="submit" value="Edit">
 
+<input type="submit" name="submit" value="Delete"> <input type="submit" name="submit" value="Edit">
+</form>
 </body>
 </html>

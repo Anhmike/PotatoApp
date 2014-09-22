@@ -25,9 +25,11 @@ public class ProblemModel {
 	
 	public void deleteprob(String id)
 	{
-		Connection Conn;
+		Connection Conn = null;
 		ProblemStore ps = null;
 		ResultSet rs = null;
+		Statement stmt = null;
+		
 		try {
 				Conn = _ds.getConnection();
 		} catch (Exception et) {
@@ -38,12 +40,16 @@ public class ProblemModel {
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 		
-	    
+			stmt = Conn.createStatement();
 			PreparedStatement pmst = null;
-			Statement stmt = null;
-			String sqlQuery = "call delete_problem('"+ id +"')";
+			
+			if(id !=null)
+			{
+			String sqlQuery = "call delete_problem("+ id +")";
 			System.out.println("Potato Query " + sqlQuery);
-		
+			rs = stmt.executeQuery(sqlQuery);
+			}
+			
 		}
 		catch(Exception e)
 		{
