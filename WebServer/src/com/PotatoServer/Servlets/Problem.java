@@ -1,8 +1,11 @@
 package com.PotatoServer.Servlets;
 
+import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -14,13 +17,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import javax.sql.DataSource;
 
 import com.PotatoServer.Models.ProblemModel;
 import com.PotatoServer.Stores.ProblemStore;
 import com.PotatoServer.lib.Dbutils;
-
-import java.sql.Connection;
 
 
 
@@ -37,7 +39,10 @@ initParams = {
 public class Problem extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private DataSource _ds = null;
-       
+    private String saveDirectory = "/Users/tombutterwith/Desktop"; 
+    private String saveLocation = "images";
+    private int allowedImages = 5;
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -102,8 +107,35 @@ public class Problem extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
+		String problemName = request.getParameter("problemName");
+		String problemType = request.getParameter("problemType");
+		String problemDescription = request.getParameter("problemDescription");
+
+		// gets absolute path of the web application
+		//String appPath = request.getServletContext().getRealPath("");
+		// constructs path of the directory to save uploaded file
+		String savePath = saveLocation + File.separator + saveDirectory;
+
+		// creates the save directory if it does not exists
+		File fileSaveDir = new File(savePath);
+		if (!fileSaveDir.exists()) {
+			fileSaveDir.mkdir();
+		}
+
+		ArrayList <Part> imagesToUpload = new ArrayList<Part>();
+		for(int i = 1; i <= allowedImages; i++) {
+			Part part = request.getPart("file" + i);
+			if(part != null) { imagesToUpload.add(part); }
+		}
+
+
+		int fileCount = 1;
+		for (Part part : imagesToUpload) {
+			String fileName = problemName + '_' + problemType + fileCount;
+			part.write(savePath + File.separator + fileName + ".png");
+			fileCount++;
+		}
+
 	}
 
 }

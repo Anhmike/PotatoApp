@@ -4,25 +4,45 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<title>Insert title here</title>
+<title>Add a Problem</title>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {
+	var imageCount = 1;
+	var allowedImageCount = 5;
+	$('#addImageButton').on('click', function (e) {
+		var imageSpan = $('#uploadImageSpan');
+		if(imageCount < allowedImageCount) {
+			imageCount++;
+			imageSpan.html(imageSpan.html() + '<input type=\"file\" name=\"file' + imageCount + '\" /><br />');
+			if(imageCount == allowedImageCount) { $('#addImageButton').remove(); }
+		} 
+;	});
+});
+</script>
 </head>
 <body>
 <h1>Add a new problem</h1>
 
-<form name="newProblem" action="Problem" method="post">
-<label>Problem Name</label>< br/>
-<input type="text" name="problemName" /><br />
+<form name="newProblem" action="Problem" method="post" enctype="multipart/form-data">
+<label>Problem Name</label><br />
+<input type="text" name="problemName" placeholder="Problem name"/><br />
 <label>Problem Type</label><br />
 <select name="problemType">
-	<option value="Pest" />
-	<option value="Plant" />
-	<option value="Tubor" />
+	<option value="Pest" >Pest</option>
+	<option value="Plant">Plant</option>
+	<option value="Tubor">Tubor</option>
 </select> <br />
 <label>Problem Description</label><br />
-<input type="text" value="Problem description" /><br />
+<input type="text" name="problemDescription" placeholder="Problem description" /><br />
+<span id="uploadImageSpan">
 <label>Images</label><br />
-<input type="file" /><br />
+<input type="file" name="file1" /><br />
+</span>
+<button type="button" id="addImageButton">Add another image</button><br /><br />
 
+<input type="submit" value="Add Symptoms" />
 </form>
 </body>
 </html>
