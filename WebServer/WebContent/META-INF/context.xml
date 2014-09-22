@@ -9,7 +9,7 @@
     auth="Container" 
 	factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
 	driverClassName="com.mysql.jdbc.Driver" 
-	url="jdbc:mysql://SILVA:3306/14indt3db"
+	url="jdbc:mysql://SILVA.computing.dundee.ac.uk:3306/14indt3db"
 	username="14indt3" password="312.bac" 
     jdbcInterceptors="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer"
     
