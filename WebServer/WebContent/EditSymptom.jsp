@@ -10,10 +10,11 @@
 </head>
 <body>
 <h1>Update symptom information</h1>
-<% SymptomStore symptom = (SymptomStore)request.getAttribute("symptom"); %>
+<% SymptomStore symptom = (SymptomStore)request.getAttribute("symptom"); 
+%>
 
 <form name="editSymptom" action="Symptom" method="post" enctype="multipart/form-data">
-<input type="text" name="id" value="<%=symptom.getId() %>" /><br />
+<input type="text" name="id" value="<%= symptom.getId() %>" /><br />
 <label>Parent Symptom</label><br />
 <select name="parentSymptom">
 	<option value="null" >No parent</option>

@@ -19,8 +19,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import javax.sql.DataSource;
 
+import com.PotatoServer.Models.ProblemModel;
 import com.PotatoServer.Models.SymptomModel;
 import com.PotatoServer.Stores.SymptomStore;
+import com.PotatoServer.lib.Convertors;
 import com.PotatoServer.lib.Dbutils;
 
 /**
@@ -60,24 +62,45 @@ public class Symptom extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Connection con = null;
+
+		SymptomModel SymptomModel = new SymptomModel();
+		SymptomModel.setDatasource(_ds);
+		String args[] = Convertors.SplitRequestPath(request);
+		if(args.length > 2){
+			if(args[2].equals("delete")){
+				String dl = request.getParameter("id");
+				//SymptomModel.deleteprob(dl);
+
+				response.sendRedirect("/PotatoServer/ShowAllSymptoms.jsp");
+
+			} else if (args[2].equals("edit")){
+				String edit = request.getParameter("id");
+				//SymptomModel.editprob(edit);
+				request.setAttribute("symptom", SymptomModel.getSymptomByID(Integer.parseInt(edit), _ds));
+				RequestDispatcher rd = request.getRequestDispatcher("/EditSymptom.jsp"); 
+				rd.forward(request, response);
+				//do edit stuff
+			}
+		} else {
+			Connection con = null;
 
 
-		System.out.println("Starting GET");
-		//String args[]=Convertors.SplitRequestPath(request);
-		Iterator<SymptomStore> iterator;
-		SymptomModel symptomModel = new SymptomModel(); //Create a new instance of the model
+			System.out.println("Starting GET");
+			//String args[]=Convertors.SplitRequestPath(request);
+			Iterator<SymptomStore> iterator;
+			SymptomModel symptomModel = new SymptomModel(); //Create a new instance of the model
 
-		symptomModel.setDatasource(_ds);
-		LinkedList<SymptomStore> psl = symptomModel.getAllSymptoms();
-		// Get a list of all faults
+			symptomModel.setDatasource(_ds);
+			LinkedList<SymptomStore> psl = symptomModel.getAllSymptoms();
+			// Get a list of all faults
 
-		/* If we want to forward to a jsp page do this */
-		request.setAttribute("symptoms", psl); //Set a bean with the list in it
-		RequestDispatcher rd = request.getRequestDispatcher("/ShowAllSymptoms.jsp"); 
+			/* If we want to forward to a jsp page do this */
+			request.setAttribute("symptoms", psl); //Set a bean with the list in it
+			RequestDispatcher rd = request.getRequestDispatcher("/ShowAllSymptoms.jsp"); 
 
 
-		rd.forward(request, response);
+			rd.forward(request, response);
+		}
 	}
 
 	/**
@@ -103,24 +126,24 @@ public class Symptom extends HttpServlet {
 
 		String fileName = description;
 		if(part != null) { part.write(savePath + File.separator + fileName + ".png"); }
-		
+
 		SymptomStore symptom;
 		if(newSymptom)
 			symptom = new SymptomStore();
 		else
 			symptom = SymptomModel.getSymptomByID(id, _ds);
-		
+
 		symptom.setDescription(description);
 		if(parentSymptom != null) { symptom.setParentSymptom(parentSymptom); }
 		symptom.setImageLocation(request.getPart("file1") == null ? null : description);
-		
+
 		SymptomModel symptomModel = new SymptomModel();
 		symptomModel.setDatasource(_ds);
 		if(newSymptom)
 			symptomModel.updateSymptom(symptom, newSymptom);
 		else
 			symptomModel.updateSymptom(symptom, newSymptom);
-		
+
 		doGet(request, response);
 
 	}

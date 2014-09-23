@@ -66,20 +66,4 @@ public class Dashboard extends HttpServlet {
 			System.out.println(args[i]);
 		}
 	}
-	
-	protected void addProblem(HttpServletRequest request, HttpServletResponse response) {
-		
-	}
-	
-	protected void addSymptom(HttpServletRequest request, HttpServletResponse response) {
-		
-	}
-	
-	protected void editProblem(HttpServletRequest request, HttpServletResponse response) {
-		
-	}
-
-	protected void editSymptom(HttpServletRequest request, HttpServletResponse response) {
-		
-	}
 }
