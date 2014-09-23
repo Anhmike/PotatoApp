@@ -48,7 +48,6 @@ public class ProblemModel {
 			String sqlQuery = "call select_problem("+ edit +")";
 			System.out.println("Potato Query " + sqlQuery);
 			rs = stmt.executeQuery(sqlQuery);
-			rs = 
 			}
 			
 		}

@@ -4,7 +4,21 @@
     <%@ page import="com.PotatoServer.Stores.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
+<head> <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript">$(document).ready(function(){
+	$('#delete').on('click', function(e){
+
+		var id = $('input[name=Select]:checked').val();
+		window.location.replace("http://localhost:8080/PotatoServer/Problem/delete?id="+ id);
+	});
+	
+	$('#edit').on('click', function(e){
+
+		var id = $('input[name=Select]:checked').val();
+		window.location.replace("http://localhost:8080/PotatoServer/Problem/edit?id="+ id);
+	});
+})</script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Problems Home</title>
 </head>
@@ -19,7 +33,7 @@ if (problems==null){
 	<% 
 }else{
 %>
-<form action="Problem" method = "GET">
+
 <%
 Iterator<ProblemStore> iterator;
 
@@ -35,7 +49,7 @@ while (iterator.hasNext()){
 }
 %>
 
-<input type="submit" name="submit" value="Delete"> <input type="submit" name="submit" value="Edit">
-</form>
+<input id= "delete" type="submit" name="submit" value="Delete"> <input id= "edit" type="submit" name="submit" value="Edit">
+
 </body>
 </html>

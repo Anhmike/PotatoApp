@@ -22,6 +22,7 @@ import javax.sql.DataSource;
 
 import com.PotatoServer.Models.ProblemModel;
 import com.PotatoServer.Stores.ProblemStore;
+import com.PotatoServer.lib.Convertors;
 import com.PotatoServer.lib.Dbutils;
 
 
@@ -64,30 +65,40 @@ public class Problem extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-				Connection con = null;
-				
-			    
-				System.out.println("Starting GET");
-				//String args[]=Convertors.SplitRequestPath(request);
-				Iterator<ProblemStore> iterator;
-				ProblemModel Problem = new ProblemModel(); //Create a new instance of the model
-
-				Problem.setDatasource(_ds);
-				LinkedList<ProblemStore> psl = Problem.getDES();
-				// Get a list of all faults
-
-				/* If we want to forward to a jsp page do this */
-				request.setAttribute("Problems", psl); //Set a bean with the list in it
-				
-				
-				String dl = request.getParameter("Select");
-				Problem.deleteprob(dl);
-				
-				RequestDispatcher rd = request.getRequestDispatcher("/Problem.jsp"); 
-				 
-				
-				rd.forward(request, response);
-				
+		ProblemModel Problem = new ProblemModel();
+		Problem.setDatasource(_ds);
+		String args[] = Convertors.SplitRequestPath(request);
+		if(args.length > 2){
+		System.out.print("dis start ere m8" + args[2]);
+		if(args[2].equals("delete")){
+			String dl = request.getParameter("id");
+			Problem.deleteprob(dl);
+			
+			response.sendRedirect("/PotatoServer/Problem.jsp");
+			
+		} else if (args[2].equals("edit")){
+			String edit = request.getParameter("id");
+			Problem.editprob(edit);
+			response.sendRedirect("/PotatoServer/Edit.jsp");
+			//do edit stuff
+		}
+		}
+		
+		else{
+					Connection con = null;
+					System.out.println("Starting GET");
+					//String args[]=Convertors.SplitRequestPath(request);
+					Iterator<ProblemStore> iterator;
+					//ProblemModel Problem = new ProblemModel(); //Create a new instance of the model
+					Problem.setDatasource(_ds);
+					LinkedList<ProblemStore> psl = Problem.getDES();
+					// Get a list of all faults
+					/* If we want to forward to a jsp page do this */
+					request.setAttribute("Problems", psl); //Set a bean with the list in it
+					RequestDispatcher rd = request
+							.getRequestDispatcher("/Problem.jsp");
+					rd.forward(request, response);
+				}
 	}
 
 	/**
