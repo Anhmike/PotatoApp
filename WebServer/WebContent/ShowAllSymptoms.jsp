@@ -15,7 +15,7 @@ System.out.println("In render");
 List<SymptomStore> symptoms = (List<SymptomStore>)request.getAttribute("symptoms");
 if (symptoms==null){
  %>
-	<p>No faults found</p>
+	<p>No symptoms in the database</p>
 	<% 
 }else{
 Iterator<SymptomStore> iterator;
@@ -26,7 +26,7 @@ while (iterator.hasNext()){
 	SymptomStore ss = (SymptomStore)iterator.next();
 
 	%>
-	<input type= "radio" name="Select" value="Name?P_ID=<%=ss.getId() %>" >ID:<%=ss.getId() %>  <%=ss.getDescription() %><br/>
+	<input type= "radio" name="Select" value="<%=ss.getId() %>" >ID:<%=ss.getId() %>  <%=ss.getDescription() %><br/>
 	<%
 }
 }

@@ -35,7 +35,7 @@ public class LoginModel {
 
 		//PreparedStatement pmst = null;
 		Statement stmt = null;
-		String sqlQuery = "select * from admin where username =  '" + username + "' and pword ='" + password + "'";
+		String sqlQuery = "select count(username) as rowcount from admin where username =  '" + username + "' AND pword ='" + password + "'";
 		System.out.println("Problem Query " + sqlQuery);
 		try {
 			try {
@@ -47,18 +47,16 @@ public class LoginModel {
 			}
 			System.out.println("Created prepare");
 			try {
-				// rs=pmst.executeQuery();
 				rs = stmt.executeQuery(sqlQuery);
 			} catch (Exception et) {
 				System.out.println("Can not execut query here " + et);
 				return successFlag;
 			}
 			System.out.println("Statement executed");
-			if (rs.wasNull()) {
+			if (!rs.next()) {
 				System.out.println("result set was null");
 			} else {
-				System.out.println("Well it wasn't null");
-				successFlag = true;
+				successFlag = (rs.getInt("rowcount")) == 1 ? true : false;
 			}
 		} catch (Exception ex) {
 			System.out.println("Opps, error in query " + ex);

@@ -5,8 +5,9 @@ import org.joda.time.DateTime;
 public class SymptomStore {
 	int id;
 	String description;
-	int parentSymptom;
+	Integer parentSymptom;
 	DateTime updateDate;
+	String imageLocation;
 	
 	public int getId() {
 		return id;
@@ -20,10 +21,10 @@ public class SymptomStore {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public int getParentSymptom() {
+	public Integer getParentSymptom() {
 		return parentSymptom;
 	}
-	public void setParentSymptom(int parentSymptom) {
+	public void setParentSymptom(Integer parentSymptom) {
 		this.parentSymptom = parentSymptom;
 	}
 	public DateTime getUpdateDate() {
@@ -31,6 +32,12 @@ public class SymptomStore {
 	}
 	public void setUpdateDate(DateTime updateDate) {
 		this.updateDate = updateDate;
+	}
+	public String getImageLocation() {
+		return imageLocation;
+	}
+	public void setImageLocation(String imageLocation) {
+		this.imageLocation = imageLocation;
 	}
 	
 }

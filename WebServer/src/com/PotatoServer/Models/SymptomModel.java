@@ -7,6 +7,8 @@ import java.util.LinkedList;
 
 import javax.sql.DataSource;
 
+import org.joda.time.DateTime;
+
 import com.PotatoServer.Stores.SymptomStore;
 import com.mysql.jdbc.PreparedStatement;
 
@@ -17,14 +19,14 @@ public class SymptomModel {
 		this._ds=_ds;
 		System.out.println("Set Data Source in Model"+_ds.toString());
 	}
-	
+
 	public LinkedList<SymptomStore> getAllSymptoms() {
 		LinkedList<SymptomStore> ssl = new LinkedList<SymptomStore>();
 		Connection Conn;
 		SymptomStore ss = null;
 		ResultSet rs = null;
 		try {
-				Conn = _ds.getConnection();
+			Conn = _ds.getConnection();
 		} catch (Exception et) {
 
 			System.out.println("No Connection in Problem Model");
@@ -60,7 +62,7 @@ public class SymptomModel {
 			while (rs.next()) {
 				System.out.println("Getting RS");
 				ss = new SymptomStore();
-				ss.setId(rs.getInt("P_ID"));
+				ss.setId(rs.getInt("s_ID"));
 				ss.setDescription(rs.getString("Description"));
 				ss.setParentSymptom(rs.getInt("parent_symptom"));
 				//ss.setUpdateDate(rs.getString("change_date"));
@@ -78,5 +80,46 @@ public class SymptomModel {
 			return null;
 		}
 		return ssl;
+	}
+
+	public boolean addSymptom(SymptomStore symptom) {
+		Connection Conn;
+		try {
+			Conn = _ds.getConnection();
+		} catch (Exception et) {
+
+			System.out.println("No Connection in Problem Model");
+			return false;
+		}
+
+		PreparedStatement pmst = null;
+		Statement stmt = null;
+		String sqlQuery = "INSERT IGNORE INTO symptoms SET `description` = '" + symptom.getDescription() + "', `parent_symptom` = '" + 
+		symptom.getParentSymptom() + "', `change_date` = '" + new DateTime().toString() + "';";
+		System.out.println("Potato Query " + sqlQuery);
+		try {
+			try {
+				// pmst = Conn.prepareStatement(sqlQuery);
+				stmt = Conn.createStatement();
+			} catch (Exception et) {
+				System.out.println("Can't create prepare statement");
+				return false;
+			}
+			System.out.println("Created prepare");
+			try {
+				// rs=pmst.executeQuery();
+				stmt.executeUpdate(sqlQuery);
+			} catch (Exception et) {
+				System.out.println("Can not execut query here " + et);
+				return false;
+			}
+			System.out.println("Statement executed");
+
+			return true;
+
+			} catch (Exception ex) {
+				System.out.println("Opps, error in query " + ex);
+				return false;
+			}
 	}
 }
