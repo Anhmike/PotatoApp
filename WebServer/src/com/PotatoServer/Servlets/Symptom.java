@@ -69,9 +69,10 @@ public class Symptom extends HttpServlet {
 		if(args.length > 2){
 			if(args[2].equals("delete")){
 				String dl = request.getParameter("id");
-				//SymptomModel.deleteprob(dl);
-
-				response.sendRedirect("/PotatoServer/ShowAllSymptoms.jsp");
+				SymptomModel.deleteSymptom(Integer.parseInt(dl));
+				request.setAttribute("symptoms", SymptomModel.getAllSymptoms());
+				RequestDispatcher rd = request.getRequestDispatcher("/ShowAllSymptoms.jsp"); 
+				rd.forward(request, response);
 
 			} else if (args[2].equals("edit")){
 				String edit = request.getParameter("id");

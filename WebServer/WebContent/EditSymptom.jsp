@@ -13,7 +13,7 @@
 <% SymptomStore symptom = (SymptomStore)request.getAttribute("symptom"); 
 %>
 
-<form name="editSymptom" action="Symptom" method="post" enctype="multipart/form-data">
+<form name="editSymptom" action="http://localhost:8080/PotatoServer/Symptom" method="post" enctype="multipart/form-data">
 <input type="text" name="id" value="<%= symptom.getId() %>" /><br />
 <label>Parent Symptom</label><br />
 <select name="parentSymptom">
@@ -31,7 +31,7 @@
 %>
 </select> <br />
 <label>Symptom Description</label><br />
-<input type="text" name="symptomDescription" placeholder="Symptom description" value="<%=symptom.getDescription() %>"/><br />
+<textarea name="symptomDescription" placeholder="Symptom description"><%=symptom.getDescription() %></textarea><br />
 <span id="uploadImageSpan">
 <label>Images</label><br />
 <input type="file" name="file1" /><br />

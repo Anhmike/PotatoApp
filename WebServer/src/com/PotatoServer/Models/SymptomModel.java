@@ -1,8 +1,10 @@
 package com.PotatoServer.Models;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Time;
 import java.util.LinkedList;
 
 import javax.sql.DataSource;
@@ -156,12 +158,57 @@ public class SymptomModel {
 		PreparedStatement pmst = null;
 		Statement stmt = null;
 		String sqlQuery;
+		Date date = new Date(System.currentTimeMillis());
+		Time time = new Time(System.currentTimeMillis());
+		String dateTime = date.toString() + " " + time.toString();
+		
 		if (isNew)
 			sqlQuery = "INSERT IGNORE INTO symptoms SET `description` = '" + symptom.getDescription() + "', `parent_symptom` = '" + 
-					symptom.getParentSymptom() + "', `change_date` = '" + new DateTime().toString() + "';";
+					symptom.getParentSymptom() + "', `change_date` = '" + dateTime + "';";
 		else 
 			sqlQuery = "UPDATE symptoms SET `description` = '" + symptom.getDescription() + "', `parent_symptom` = '" + 
-						symptom.getParentSymptom() + "', `change_date` = '" + new DateTime().toString() + "' where s_id ='" + symptom.getId() + "';";
+						symptom.getParentSymptom() + "', `change_date` = '" + dateTime + "' where s_id ='" + symptom.getId() + "';";
+
+		System.out.println("Potato Query " + sqlQuery);
+		try {
+			try {
+				// pmst = Conn.prepareStatement(sqlQuery);
+				stmt = Conn.createStatement();
+			} catch (Exception et) {
+				System.out.println("Can't create prepare statement");
+				return false;
+			}
+			System.out.println("Created prepare");
+			try {
+				// rs=pmst.executeQuery();
+				stmt.executeUpdate(sqlQuery);
+			} catch (Exception et) {
+				System.out.println("Can not execut query here " + et);
+				return false;
+			}
+			System.out.println("Statement executed");
+
+			return true;
+
+		} catch (Exception ex) {
+			System.out.println("Opps, error in query " + ex);
+			return false;
+		}
+	}
+
+	public boolean deleteSymptom(int id) {
+		Connection Conn;
+		try {
+			Conn = _ds.getConnection();
+		} catch (Exception et) {
+
+			System.out.println("No Connection in Problem Model");
+			return false;
+		}
+
+		PreparedStatement pmst = null;
+		Statement stmt = null;
+		String sqlQuery = "DELETE FROM SYMPTOMS WHERE S_ID = '" + id +"';";
 
 		System.out.println("Potato Query " + sqlQuery);
 		try {

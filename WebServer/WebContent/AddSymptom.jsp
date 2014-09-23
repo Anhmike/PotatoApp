@@ -28,7 +28,7 @@
 %>
 </select> <br />
 <label>Symptom Description</label><br />
-<input type="text" name="symptomDescription" placeholder="Symptom description" /><br />
+<textarea type="text" name="symptomDescription" placeholder="Symptom description" ></textarea><br />
 <span id="uploadImageSpan">
 <label>Images</label><br />
 <input type="file" name="file1" /><br />
