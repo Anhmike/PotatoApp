@@ -78,8 +78,10 @@ public class Problem extends HttpServlet {
 			
 		} else if (args[2].equals("edit")){
 			String edit = request.getParameter("id");
-			Problem.editprob(edit);
-			response.sendRedirect("/PotatoServer/Edit.jsp");
+			request.setAttribute("problems", Problem.getProblemByID(Integer.parseInt(edit), _ds));
+
+			RequestDispatcher rd = request.getRequestDispatcher("/Edit.jsp");
+			rd.forward(request, response);
 			//do edit stuff
 		}
 		}

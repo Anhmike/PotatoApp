@@ -43,7 +43,7 @@ while (iterator.hasNext()){
 	ProblemStore md = (ProblemStore)iterator.next();
 
 	%>
-	<input type= "radio" name="Select" value="<%=md.getId() %>" >ID:<%=md.getId() %>  <%=md.getDescription() %><br/>
+	<input type= "radio" name="Select" value="<%=md.getId() %>" >ID:<%=md.getId() %> <%= md.getName() %>  <%=md.getDescription() %><br/>
 	<%
 }
 }

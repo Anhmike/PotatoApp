@@ -6,7 +6,10 @@ import java.util.LinkedList;
 
 import javax.sql.DataSource;
 
+import org.joda.time.DateTime;
+
 import com.PotatoServer.Stores.ProblemStore;
+import com.PotatoServer.Stores.SymptomStore;
 import com.mysql.jdbc.PreparedStatement;
 
 public class ProblemModel {
@@ -23,7 +26,7 @@ public class ProblemModel {
 		
 	}
 	
-	public void editprob(String edit)
+	public void editprob(String editN, String editT, String editD)
 	{
 		Connection Conn = null;
 		ProblemStore ps = null;
@@ -43,9 +46,9 @@ public class ProblemModel {
 			stmt = Conn.createStatement();
 			PreparedStatement pmst = null;
 			
-			if(edit !=null)
+			if(editN !=null)
 			{
-			String sqlQuery = "call select_problem("+ edit +")";
+			String sqlQuery = "call edit_problem("+ editN + editT + editD + ")";
 			System.out.println("Potato Query " + sqlQuery);
 			rs = stmt.executeQuery(sqlQuery);
 			}
@@ -108,7 +111,7 @@ public class ProblemModel {
 
 		PreparedStatement pmst = null;
 		Statement stmt = null;
-		String sqlQuery = "select P_ID,description from problems";
+		String sqlQuery = "select P_ID, name, description from problems";
 		System.out.println("Potato Query " + sqlQuery);
 		try {
 			try {
@@ -136,6 +139,7 @@ public class ProblemModel {
 				System.out.println("Getting RS");
 				ps = new ProblemStore();
 				ps.setId(Integer.parseInt(rs.getString("P_ID")));
+				ps.setName(rs.getString("Name"));
 				ps.setDescription(rs.getString("Description"));
 				psl.add(ps);
 			}
@@ -152,5 +156,64 @@ public class ProblemModel {
 		}
 		return psl;
 
+	}
+    
+    public static ProblemStore getProblemByID(Integer id, DataSource ds) {
+		Connection Conn;
+		ProblemStore ss = null;
+		ResultSet rs = null;
+		try {
+			Conn = ds.getConnection();
+		} catch (Exception et) {
+
+			System.out.println("No Connection in Problem Model");
+			return null;
+		}
+
+		PreparedStatement pmst = null;
+		Statement stmt = null;
+		String sqlQuery = "select * from problems where P_ID ='" + id + "';";
+		System.out.println("Potato Query " + sqlQuery);
+		try {
+			try {
+				// pmst = Conn.prepareStatement(sqlQuery);
+				stmt = Conn.createStatement();
+			} catch (Exception et) {
+				System.out.println("Can't create prepare statement");
+				return null;
+			}
+			System.out.println("Created prepare");
+			try {
+				// rs=pmst.executeQuery();
+				rs = stmt.executeQuery(sqlQuery);
+			} catch (Exception et) {
+				System.out.println("Can not execut query here " + et);
+				return null;
+			}
+			System.out.println("Statement executed");
+			if (rs.wasNull()) {
+				System.out.println("result set was null");
+			} else {
+				System.out.println("Well it wasn't null");
+			}
+			while (rs.next()) {
+				System.out.println("Getting RS");
+				ss = new ProblemStore();
+				ss.setId(rs.getInt("P_ID"));
+				ss.setName(rs.getString("Name"));
+				ss.setDescription(rs.getString("Description"));
+			}
+		} catch (Exception ex) {
+			System.out.println("Opps, error in query " + ex);
+			return null;
+		}
+
+		try {
+
+			Conn.close();
+		} catch (Exception ex) {
+			return null;
+		}
+		return ss;
 	}
 }

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=US-ASCII"
     pageEncoding="US-ASCII"%>
+    <%@ page import="java.util.*" %>
+    <%@ page import="com.PotatoServer.Stores.*" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -24,10 +26,11 @@ $(document).ready(function () {
 </head>
 <body>
 <h1>Edit problem</h1>
-
+<% ProblemStore problem = (ProblemStore)request.getAttribute("problems"); 
+%>
 <form name="newProblem" action="Problem" method="post" enctype="multipart/form-data">
 <label>Problem Name</label><br />
-<input type="text" name="problemName" placeholder="Problem name"/><br />
+<input type="text" name="problemName" placeholder="Problem name" value="<%= problem.getName() %>"/><br />
 <label>Problem Type</label><br />
 <select name="problemType">
 	<option value="Pest" >Pest</option>
@@ -35,7 +38,7 @@ $(document).ready(function () {
 	<option value="Tubor">Tubor</option>
 </select> <br />
 <label>Problem Description</label><br />
-<textarea id="description" name = "description" rows = "10" cols ="60"></textarea></br>
+<textarea id="description" name = "description"  placeholder= "Description" rows = "10" cols ="60" > <%= problem.getDescription() %></textarea></br>
 
 <input type="submit" name="submit" value="Complete edit">
 </form>
