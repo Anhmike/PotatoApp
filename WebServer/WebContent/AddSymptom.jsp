@@ -12,8 +12,6 @@
 <h1>Add a new symptom</h1>
 
 <form name="newSymptom" action="Symptom" method="post" enctype="multipart/form-data">
-<label>Symptom Name</label><br />
-<input type="text" name="symptomName" placeholder="Symptom name"/><br />
 <label>Parent Symptom</label><br />
 <select name="parentSymptom">
 	<option value="null" >No parent</option>

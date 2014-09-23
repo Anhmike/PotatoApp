@@ -84,9 +84,10 @@ public class Symptom extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String name = request.getParameter("symptomName");
+		Integer id = request.getParameter("id") != null ? Integer.parseInt(request.getParameter("id")) : null;
 		String description = request.getParameter("symptomDescription");
 		Integer parentSymptom = !request.getParameter("parentSymptom").equals("null") ? Integer.parseInt(request.getParameter("parentSymptom")) : null;
+		boolean newSymptom = id == null ? true : false;
 
 		// constructs path of the directory to save uploaded file
 		String savePath = saveLocation + File.separator + saveDirectory;
@@ -100,17 +101,25 @@ public class Symptom extends HttpServlet {
 
 		Part part = request.getPart("file1");
 
-		String fileName = name;
+		String fileName = description;
 		if(part != null) { part.write(savePath + File.separator + fileName + ".png"); }
 		
-		SymptomStore symptom = new SymptomStore();
+		SymptomStore symptom;
+		if(newSymptom)
+			symptom = new SymptomStore();
+		else
+			symptom = SymptomModel.getSymptomByID(id, _ds);
+		
 		symptom.setDescription(description);
 		if(parentSymptom != null) { symptom.setParentSymptom(parentSymptom); }
-		symptom.setImageLocation(request.getPart("file1") == null ? null : name);
+		symptom.setImageLocation(request.getPart("file1") == null ? null : description);
 		
 		SymptomModel symptomModel = new SymptomModel();
 		symptomModel.setDatasource(_ds);
-		symptomModel.addSymptom(symptom);
+		if(newSymptom)
+			symptomModel.updateSymptom(symptom, newSymptom);
+		else
+			symptomModel.updateSymptom(symptom, newSymptom);
 		
 		doGet(request, response);
 
