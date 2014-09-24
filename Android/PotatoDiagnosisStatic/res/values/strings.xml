@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">PotatoDiagnosisStatic</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="pests">Pests</string>
+    <string name="leaf_stalk_">Leaf/Stalk</string>
+    <string name="tubor_root">Tubor/Root</string>
+    <string name="diagnostic_tools">Diagnostic Tools</string>
+    <string name="title_activity_symptom">SymptomActivity</string>
+    <string name="title_activity_disease">DiseaseActivity</string>
+    <string name="diseasedescription">diseaseDescription</string>
+    <string name="textview">TextView</string>
+    <string name="disease_header">disease_header</string>
+
+</resources>
