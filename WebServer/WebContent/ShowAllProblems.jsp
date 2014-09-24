@@ -6,30 +6,38 @@
 <html>
 <head> <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="http://localhost:8080/PotatoServer/css/main.css" />
 <script type="text/javascript">$(document).ready(function(){
-	$('#delete').on('click', function(e){
+	$('.deleteButton').on('click', function(e){
 
-		var id = $('input[name=Select]:checked').val();
-		window.location.replace("http://localhost:8080/PotatoServer/Problem/delete?id="+ id);
+		var id = $(this).attr('id');
+		window.location.assign("http://localhost:8080/PotatoServer/Problem/delete?id="+ id);
 	});
 	
-	$('#edit').on('click', function(e){
+	$('.editButton').on('click', function(e){
 
-		var id = $('input[name=Select]:checked').val();
-		window.location.replace("http://localhost:8080/PotatoServer/Problem/edit?id="+ id);
+		var id = $(this).attr('id');
+		window.location.assign("http://localhost:8080/PotatoServer/Problem/edit?id="+ id);
 	});
+	$('.addButton').on('click', function (e) {
+		window.location.assign("http://localhost:8080/PotatoServer/AddProblem.jsp");
+	})
 })</script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Problems Home</title>
 </head>
 <body>
-<h1> List of Problems </h1>
+<div class="container">
+<div class="pageMain">
+<div class="pageTitle">list of problems.</div>
+
+<div class="addButton">add a problem</div>
 <%
 System.out.println("In render");
 List<ProblemStore> problems = (List<ProblemStore>)request.getAttribute("Problems");
 if (problems==null){
  %>
-	<p>No faults found</p>
+	<div class="listEntry">No faults found</div>
 	<% 
 }else{
 %>
@@ -43,13 +51,12 @@ while (iterator.hasNext()){
 	ProblemStore md = (ProblemStore)iterator.next();
 
 	%>
-	<input type= "radio" name="Select" value="<%=md.getId() %>" >ID:<%=md.getId() %> <%= md.getName() %>  <%=md.getDescription() %><br/>
+	<div class="listEntry"><div class="entryDetails"><%= md.getName() %><%=md.getDescription() %></div><div id="<%=md.getId() %>" class="editButton">edit</div><div id="<%=md.getId() %>" class="deleteButton">remove</div></div>
 	<%
 }
 }
 %>
-
-<input id= "delete" type="submit" name="submit" value="Delete"> <input id= "edit" type="submit" name="submit" value="Edit">
-
+</div>
+</div>
 </body>
 </html>

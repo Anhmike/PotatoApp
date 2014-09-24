@@ -9,8 +9,8 @@
 </head>
 <body>
 	<div class="container">
-		<div class="main">
-			<div class="title">Potato Disease and Pest Database</div>
+		<div class="loginMain">
+			<div class="loginTitle">Potato Disease and Pest Database</div>
 			<form name="loginForm" action="Login" method="post">
 				<%
 					if (request.getParameter("r") != null) {
@@ -24,6 +24,7 @@
 				<input class="loginButton" type="submit" value="Login" />
 			</form>
 		</div>
+		<div class="loginFooter">Industrial Team Project Group 3</div>
 	</div>
 </body>
 </html>

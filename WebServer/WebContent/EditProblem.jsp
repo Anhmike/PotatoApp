@@ -26,9 +26,10 @@ $(document).ready(function () {
 </head>
 <body>
 <h1>Edit problem</h1>
-<% ProblemStore problem = (ProblemStore)request.getAttribute("problems"); 
+<% ProblemStore problem = (ProblemStore)request.getAttribute("problem"); 
 %>
-<form name="newProblem" action="Problem" method="post" enctype="multipart/form-data">
+<form name="newProblem" action="../Problem" method="post" enctype="multipart/form-data">
+<input name="id" value="<%=problem.getId() %>"/>
 <label>Problem Name</label><br />
 <input type="text" name="problemName" placeholder="Problem name" value="<%= problem.getName() %>"/><br />
 <label>Problem Type</label><br />
@@ -38,7 +39,7 @@ $(document).ready(function () {
 	<option value="Tubor">Tubor</option>
 </select> <br />
 <label>Problem Description</label><br />
-<textarea id="description" name = "description"  placeholder= "Description" rows = "10" cols ="60" > <%= problem.getDescription() %></textarea></br>
+<textarea id="problemDescription" name = "description"  placeholder= "Description" rows = "10" cols ="60" > <%= problem.getDescription() %></textarea></br>
 
 <input type="submit" name="submit" value="Complete edit">
 </form>
