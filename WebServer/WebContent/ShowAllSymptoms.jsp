@@ -22,7 +22,7 @@
 		window.location.assign("http://localhost:8080/PotatoServer/Symptom/edit?id="+ id);
 	});
 	$('.addButton').on('click', function (e) {
-		window.location.assign("http://localhost:8080/PotatoServer/AddSymptom.jsp");
+		window.location.assign("http://localhost:8080/PotatoServer/Symptom/add");
 	});
 })</script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">

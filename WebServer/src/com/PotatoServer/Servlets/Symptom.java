@@ -78,9 +78,14 @@ public class Symptom extends HttpServlet {
 				String edit = request.getParameter("id");
 				//SymptomModel.editprob(edit);
 				request.setAttribute("symptom", SymptomModel.getSymptomByID(Integer.parseInt(edit), _ds));
+				request.setAttribute("symptoms", symptomModel.getAllSymptoms());
 				RequestDispatcher rd = request.getRequestDispatcher("/EditSymptom.jsp"); 
 				rd.forward(request, response);
 				//do edit stuff
+			} else if (args[2].equals("add")) {
+				request.setAttribute("symptoms", symptomModel.getAllSymptoms());
+				RequestDispatcher rd = request.getRequestDispatcher("/AddSymptom.jsp"); 
+				rd.forward(request, response);
 			}
 		} else {
 
