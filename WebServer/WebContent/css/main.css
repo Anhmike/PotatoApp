@@ -60,7 +60,18 @@ body {
 *	add pages styling
 */
 
+.hiddenID {
+	display:none;
+}
 
+.potatoForm {
+	font-size: 0.9em;
+	line-height: 2em;
+}
+
+.potatoForm input {
+	
+}
 
 /*
 * Login page styling

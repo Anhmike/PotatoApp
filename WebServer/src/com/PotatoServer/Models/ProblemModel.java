@@ -50,7 +50,7 @@ public class ProblemModel {
 					problem.getName() + "', `change_date` = '" + dateTime + "', `type` = '" + problem.getType() + "';";
 		else 
 			sqlQuery = "UPDATE problems SET `description` = '" + problem.getDescription() + "', `name` = '" + 
-						problem.getName() + "', `type` = '" + problem.getType() + "', `change_date` = '" + dateTime + "' where s_id ='" + problem.getId() + "';";
+						problem.getName() + "', `type` = '" + problem.getType() + "', `change_date` = '" + dateTime + "' where p_id ='" + problem.getId() + "';";
 
 		System.out.println("Potato Query " + sqlQuery);
 		try {

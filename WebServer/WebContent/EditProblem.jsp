@@ -9,6 +9,7 @@
 <title>Edit a Problem</title>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/PotatoServer/css/main.css" />
 <script type="text/javascript">
 $(document).ready(function () {
 	var imageCount = 1;
@@ -28,8 +29,8 @@ $(document).ready(function () {
 <h1>Edit problem</h1>
 <% ProblemStore problem = (ProblemStore)request.getAttribute("problem"); 
 %>
-<form name="newProblem" action="../Problem" method="post" enctype="multipart/form-data">
-<input name="id" value="<%=problem.getId() %>"/>
+<form name="editProblem" action="../Problem" method="post" enctype="multipart/form-data">
+<input class="hiddenID" name="id" value="<%=problem.getId() %>"/>
 <label>Problem Name</label><br />
 <input type="text" name="problemName" placeholder="Problem name" value="<%= problem.getName() %>"/><br />
 <label>Problem Type</label><br />
@@ -39,7 +40,12 @@ $(document).ready(function () {
 	<option value="Tubor">Tubor</option>
 </select> <br />
 <label>Problem Description</label><br />
-<textarea id="problemDescription" name = "description"  placeholder= "Description" rows = "10" cols ="60" > <%= problem.getDescription() %></textarea></br>
+<textarea id="problemDescription" name = "problemDescription"  placeholder= "Description" rows = "10" cols ="60" ><%= problem.getDescription() %></textarea><br />
+<span id="uploadImageSpan">
+<label>Images</label><br />
+<input type="file" name="file1" /><br />
+</span>
+<button type="button" id="addImageButton">Add another image</button><br /><br />
 
 <input type="submit" name="submit" value="Complete edit">
 </form>

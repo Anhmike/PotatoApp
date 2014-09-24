@@ -6,7 +6,7 @@
 <html>
 <head> <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<link rel="stylesheet" type="text/css" href="http://localhost:8080/PotatoServer/css/main.css" />
+<link rel="stylesheet" type="text/css" href="/PotatoServer/css/main.css" />
 <script type="text/javascript">$(document).ready(function(){
 	$('.deleteButton').on('click', function(e){
 

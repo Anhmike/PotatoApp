@@ -1,6 +1,7 @@
 package com.PotatoServer.Servlets;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.LinkedList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -37,6 +39,7 @@ import com.PotatoServer.lib.Dbutils;
 initParams = { 
 		@WebInitParam(name = "data-source", value = "jdbc/potatodb")
 })
+@MultipartConfig
 public class Problem extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private DataSource _ds = null;
@@ -148,9 +151,14 @@ public class Problem extends HttpServlet {
 		int fileCount = 1;
 		for (Part part : imagesToUpload) {
 			String fileName = problemName + '_' + problemType + fileCount;
-			part.write(savePath + File.separator + fileName + ".png");
+			try {
+				part.write(savePath + File.separator + fileName + ".png");
+			} catch (IOException e) {
+				System.out.println("File not found exception");
+			}
 			fileCount++;
 		}
+		
 		
 		problemModel.updateProblem(problem, isNew);
 		

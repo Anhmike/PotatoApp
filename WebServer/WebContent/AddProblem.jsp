@@ -7,6 +7,7 @@
 <title>Add a Problem</title>
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/PotatoServer/css/main.css" />
 <script type="text/javascript">
 $(document).ready(function () {
 	var imageCount = 1;
@@ -23,19 +24,21 @@ $(document).ready(function () {
 </script>
 </head>
 <body>
-<h1>Add a new problem</h1>
+<div class="container">
+<div class="pageMain">
+<div class="pageTitle">add a new problem.</div>
 
-<form name="newProblem" action="Problem" method="post" enctype="multipart/form-data">
+<form  class="potatoForm" name="newProblem" action="Problem" method="post" enctype="multipart/form-data">
 <label>Problem Name</label><br />
-<input type="text" name="problemName" placeholder="Problem name"/><br />
+<input type="text" name="problemName" placeholder="Problem name"/><br /><br />
 <label>Problem Type</label><br />
 <select name="problemType">
 	<option value="Pest" >Pest</option>
 	<option value="Plant">Plant</option>
 	<option value="Tubor">Tubor</option>
-</select> <br />
+</select> <br /><br />
 <label>Problem Description</label><br />
-<input type="text" name="problemDescription" placeholder="Problem description" /><br />
+<textarea type="text" name="problemDescription" placeholder="Problem description"></textarea><br /><br />
 <span id="uploadImageSpan">
 <label>Images</label><br />
 <input type="file" name="file1" /><br />
@@ -44,5 +47,7 @@ $(document).ready(function () {
 
 <input type="submit" value="Add Symptoms" />
 </form>
+</div>
+</div>
 </body>
 </html>
