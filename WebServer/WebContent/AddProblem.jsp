@@ -28,7 +28,7 @@ $(document).ready(function () {
 <div class="pageMain">
 <div class="pageTitle">add a new problem.</div>
 
-<form  class="potatoForm" name="newProblem" action="Problem" method="post" enctype="multipart/form-data">
+<form  class="potatoForm" name="newProblem" action="Problem/addSymptoms" method="post" enctype="multipart/form-data">
 <label>Problem Name</label><br />
 <input type="text" name="problemName" placeholder="Problem name"/><br /><br />
 <label>Problem Type</label><br />
@@ -38,7 +38,7 @@ $(document).ready(function () {
 	<option value="Tubor">Tubor</option>
 </select> <br /><br />
 <label>Problem Description</label><br />
-<textarea type="text" name="problemDescription" placeholder="Problem description"></textarea><br /><br />
+<textarea type="text" name="problemDescription" placeholder="Problem description" rows="6" cols="80"></textarea><br /><br />
 <span id="uploadImageSpan">
 <label>Images</label><br />
 <input type="file" name="file1" /><br />

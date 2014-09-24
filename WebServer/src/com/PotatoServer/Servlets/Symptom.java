@@ -63,14 +63,14 @@ public class Symptom extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		SymptomModel SymptomModel = new SymptomModel();
-		SymptomModel.setDatasource(_ds);
+		SymptomModel symptomModel = new SymptomModel();
+		symptomModel.setDatasource(_ds);
 		String args[] = Convertors.SplitRequestPath(request);
 		if(args.length > 2){
 			if(args[2].equals("delete")){
 				String dl = request.getParameter("id");
-				SymptomModel.deleteSymptom(Integer.parseInt(dl));
-				request.setAttribute("symptoms", SymptomModel.getAllSymptoms());
+				symptomModel.deleteSymptom(Integer.parseInt(dl));
+				request.setAttribute("symptoms", symptomModel.getAllSymptoms());
 				RequestDispatcher rd = request.getRequestDispatcher("/ShowAllSymptoms.jsp"); 
 				rd.forward(request, response);
 
@@ -83,15 +83,7 @@ public class Symptom extends HttpServlet {
 				//do edit stuff
 			}
 		} else {
-			Connection con = null;
 
-
-			System.out.println("Starting GET");
-			//String args[]=Convertors.SplitRequestPath(request);
-			Iterator<SymptomStore> iterator;
-			SymptomModel symptomModel = new SymptomModel(); //Create a new instance of the model
-
-			symptomModel.setDatasource(_ds);
 			LinkedList<SymptomStore> psl = symptomModel.getAllSymptoms();
 			// Get a list of all faults
 
@@ -126,7 +118,13 @@ public class Symptom extends HttpServlet {
 		Part part = request.getPart("file1");
 
 		String fileName = description;
-		if(part != null) { part.write(savePath + File.separator + fileName + ".png"); }
+		if(part != null) {
+			try{
+			part.write(savePath + File.separator + fileName + ".png"); 
+			} catch (IOException e) {
+				System.out.println("IOException");
+			}
+		}
 
 		SymptomStore symptom;
 		if(newSymptom)

@@ -1,8 +1,29 @@
 @CHARSET "US-ASCII";
 
 body {
-	background-color: rgb(124,172,186);
+	background-color: rgb(174,204,212);
 	font-family: Arial, Helvetica, sans-serif;
+}
+
+.links {
+	width:100%;
+	text-align: right;
+}
+
+.links a{
+	margin-right:10px;
+	padding: 2px;
+	text-decoration:none;
+	
+	background-color: rgba(50,50,50,0.1);
+	
+	font-family: Monaco, Consolas, "Lucida Console", monospace;
+	font-size: 0.75em;
+	color: black;
+}
+
+.links a:visited {
+	color: black;
 }
 
 
@@ -53,6 +74,13 @@ body {
 
 .addButton:hover, .editButton:hover, .deleteButton:hover {
 	cursor: pointer;
+}
+
+.entryDescription {
+	font-size: 0.7em;
+	color: rgb(80,80,80);
+	padding-top: 5px;
+	padding-bottom: 10px;
 }
 
 

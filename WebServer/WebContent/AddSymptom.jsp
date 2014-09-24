@@ -6,12 +6,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<link rel="stylesheet" type="text/css" href="/PotatoServer/css/main.css" />
 <title>Add A Symptom</title>
 </head>
 <body>
-<h1>Add a new symptom</h1>
+<div class="containter">
+<div class="pageMain">
+<div class="pageTitle">add a symptom.</div>
 
-<form name="newSymptom" action="Symptom" method="post" enctype="multipart/form-data">
+<form class="potatoForm" name="newSymptom" action="Symptom" method="post" enctype="multipart/form-data">
 <label>Parent Symptom</label><br />
 <select name="parentSymptom">
 	<option value="null" >No parent</option>
@@ -26,14 +29,16 @@
 		}
 	}
 %>
-</select> <br />
+</select> <br /><br />
 <label>Symptom Description</label><br />
-<textarea type="text" name="symptomDescription" placeholder="Symptom description" ></textarea><br />
+<input type="text" name="symptomDescription" placeholder="Symptom description" /><br /><br />
 <span id="uploadImageSpan">
 <label>Images</label><br />
-<input type="file" name="file1" /><br />
+<input type="file" name="file1" /><br /><br />
 </span>
 <input type="submit" value="Add Symptom" />
 </form>
+</div>
+</div>
 </body>
 </html>

@@ -7,14 +7,17 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
 <title>Edit A Symptom</title>
+<link rel="stylesheet" type="text/css" href="/PotatoServer/css/main.css" />
 </head>
 <body>
-<h1>Update symptom information</h1>
+<div class="containter">
+<div class="pageMain">
+<div class="pageTitle">edit a symptom.</div>
 <% SymptomStore symptom = (SymptomStore)request.getAttribute("symptom"); 
 %>
 
-<form name="editSymptom" action="http://localhost:8080/PotatoServer/Symptom" method="post" enctype="multipart/form-data">
-<input type="text" name="id" value="<%= symptom.getId() %>" /><br />
+<form class="potatoForm" name="editSymptom" action="http://localhost:8080/PotatoServer/Symptom" method="post" enctype="multipart/form-data">
+<input class="hiddenID" type="text" name="id" value="<%= symptom.getId() %>" /><br />
 <label>Parent Symptom</label><br />
 <select name="parentSymptom">
 	<option value="null" >No parent</option>
@@ -29,14 +32,16 @@
 		}
 	}
 %>
-</select> <br />
+</select> <br /><br />
 <label>Symptom Description</label><br />
-<textarea name="symptomDescription" placeholder="Symptom description"><%=symptom.getDescription() %></textarea><br />
+<input name="symptomDescription" placeholder="Symptom description" value="<%=symptom.getDescription() %>" /><br /><br />
 <span id="uploadImageSpan">
 <label>Images</label><br />
-<input type="file" name="file1" /><br />
+<input type="file" name="file1" /><br /><br />
 </span>
 <input type="submit" value="Update Symptom" />
 </form>
+</div>
+</div>
 </body>
 </html>

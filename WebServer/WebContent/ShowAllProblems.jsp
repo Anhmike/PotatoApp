@@ -21,12 +21,13 @@
 	});
 	$('.addButton').on('click', function (e) {
 		window.location.assign("http://localhost:8080/PotatoServer/AddProblem.jsp");
-	})
+	});
 })</script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Problems Home</title>
 </head>
 <body>
+<div class="links"><a href="/PotatoServer/Problem">problems</a><a href="/PotatoServer/Symptom">symptoms</a></div>
 <div class="container">
 <div class="pageMain">
 <div class="pageTitle">list of problems.</div>
@@ -37,7 +38,7 @@ System.out.println("In render");
 List<ProblemStore> problems = (List<ProblemStore>)request.getAttribute("Problems");
 if (problems==null){
  %>
-	<div class="listEntry">No faults found</div>
+	<div class="listEntry">No problems found</div>
 	<% 
 }else{
 %>
@@ -49,9 +50,15 @@ Iterator<ProblemStore> iterator;
 iterator = problems.iterator();     
 while (iterator.hasNext()){
 	ProblemStore md = (ProblemStore)iterator.next();
+	String description = md.getDescription();
+	if(description != null)
+		description = description.substring(0, 200) + "...";
 
 	%>
-	<div class="listEntry"><div class="entryDetails"><%= md.getName() %><%=md.getDescription() %></div><div id="<%=md.getId() %>" class="editButton">edit</div><div id="<%=md.getId() %>" class="deleteButton">remove</div></div>
+	<div class="listEntry">
+	<div class="entryDetails"><%= md.getName() %></div><div id="<%=md.getId() %>" class="editButton">edit</div><div id="<%=md.getId() %>" class="deleteButton">remove</div>
+	<div class="entryDescription"><%if (description != null) out.print(description); %></div>
+	</div>
 	<%
 }
 }

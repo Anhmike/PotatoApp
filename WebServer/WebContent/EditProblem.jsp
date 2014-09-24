@@ -26,28 +26,32 @@ $(document).ready(function () {
 </script>
 </head>
 <body>
-<h1>Edit problem</h1>
+<div class="container">
+<div class="pageMain">
+<div class="pageTitle">edit a problem</div>
 <% ProblemStore problem = (ProblemStore)request.getAttribute("problem"); 
 %>
-<form name="editProblem" action="../Problem" method="post" enctype="multipart/form-data">
+<form class="potatoForm" name="editProblem" action="../Problem" method="post" enctype="multipart/form-data">
 <input class="hiddenID" name="id" value="<%=problem.getId() %>"/>
 <label>Problem Name</label><br />
 <input type="text" name="problemName" placeholder="Problem name" value="<%= problem.getName() %>"/><br />
 <label>Problem Type</label><br />
 <select name="problemType">
-	<option value="Pest" >Pest</option>
-	<option value="Plant">Plant</option>
-	<option value="Tubor">Tubor</option>
+	<option value="Pest" <% if(problem.getType().equals("Pest")) {out.print("selected"); } %>>Pest</option>
+	<option value="Plant" <% if(problem.getType().equals("Plant")) {out.print("selected"); } %>>Plant</option>
+	<option value="Tuber" <% if(problem.getType().equals("Tuber")) {out.print("selected"); } %>>Tuber</option>
 </select> <br />
 <label>Problem Description</label><br />
-<textarea id="problemDescription" name = "problemDescription"  placeholder= "Description" rows = "10" cols ="60" ><%= problem.getDescription() %></textarea><br />
+<textarea id="problemDescription" name = "problemDescription"  placeholder= "Description" rows = "10" cols ="80" ><%= problem.getDescription() %></textarea><br />
 <span id="uploadImageSpan">
 <label>Images</label><br />
 <input type="file" name="file1" /><br />
 </span>
 <button type="button" id="addImageButton">Add another image</button><br /><br />
 
-<input type="submit" name="submit" value="Complete edit">
+<input type="submit" name="submit" value="Save">
 </form>
+</div>
+</div>
 </body>
 </html>
