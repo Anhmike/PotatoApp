@@ -163,7 +163,8 @@ public class UpdatePhoneModel {
 		output.println("<problems>");
 		
 		for(ProblemStore problem: list) {
-			output.println("<problem id=\"" + problem.getId() + "\">");
+			output.println("<problem>");
+			output.println("<id>" + problem.getId() + "</id>");
 			output.println("<name>" + problem.getName() + "</name>");
 			output.println("<description>" + problem.getDescription() + "</description>");
 			output.println("<type>" + problem.getType() + "</type>");
@@ -189,7 +190,8 @@ public class UpdatePhoneModel {
 		output.println("<symptoms>");
 		
 		for (SymptomStore symptom: list) {
-			output.println("<symptom id=\"" + symptom.getId() + "\">");
+			output.println("<symptom>");
+			output.println("<id>"+ symptom.getId() + "</id>");
 			output.println("<description>" + symptom.getDescription() + "</description>");
 			output.println("<updateTime>" + symptom.getUpdateDate() + "</updateTime>");
 			output.println("<parent>" + symptom.getParentSymptom() + "</parent>");
