@@ -1,0 +1,91 @@
+<GridLayout 
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:id="@+id/gridview"
+    android:columnCount="3"
+    android:rowCount="3"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+     
+      <ImageView
+	    android:id="@+id/title_image"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_column="0"
+	    android:layout_row="0"
+	    android:layout_marginTop="31dp"
+	    android:src="@drawable/ic_launcher" 
+	    android:contentDescription="@string/problem_name"/>
+        
+    
+     <TextView 
+         android:id="@+id/problem_title_label"
+         android:layout_column="1"
+         android:layout_row="0"
+         android:height="50dp"
+         android:text="@string/problem_name"/> 
+         
+     
+     <!-- The main text body of the problem -->  
+     <TextView 
+         android:id="@+id/description_text_label"
+         android:layout_column="0"
+         android:layout_columnSpan="3"
+         android:layout_row="1"
+         android:layout_marginTop="20dp"
+         android:text="@string/disease_description"/> 
+       
+     <Gallery
+        android:id="@+id/gallery1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"> 
+     </Gallery>
+     
+     <ImageView
+        android:id="@+id/galery_image_1"
+        android:layout_marginTop="100dp"
+        android:layout_width="250dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_height="250dp"
+        android:contentDescription="@string/image_alt_text"
+        android:src="@drawable/ic_launcher" 
+     />
+</GridLayout>
+
+
+<!-- public class MainActivity extends Activity 
+{
+
+     ImageView selectedImage;  
+     private Integer[] mImageIds = {
+                R.drawable.image1,
+                R.drawable.image2,
+                R.drawable.image3,
+                R.drawable.image4,
+                R.drawable.image5,
+                R.drawable.image6,
+                R.drawable.image7,
+                R.drawable.image8
+        };
+    @Override
+    public void onCreate(Bundle savedInstanceState) 
+    {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main);
+       
+             Gallery gallery = (Gallery) findViewById(R.id.gallery1);
+        selectedImage=(ImageView)findViewById(R.id.imageView1);
+        gallery.setSpacing(1);
+        gallery.setAdapter(new GalleryImageAdapter(this));
+
+         // clicklistener for Gallery
+        gallery.setOnItemClickListener(new OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                Toast.makeText(MainActivity.this, "Your selected position = " + position, Toast.LENGTH_SHORT).show();
+                // show the selected Image
+                selectedImage.setImageResource(mImageIds[position]);
+            }
+        });
+    }
+  
+}
+ -->

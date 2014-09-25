@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+	<!-- General Strings -->
     <string name="app_name">PotatoApp</string>
-    <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
-
+    <string name="action_settings">Action settings</string>
+    
+    
+    <!-- Symptom Menu Strings -->
+    <string name="symptom_menu_header">symptom_page_title</string>
+    
+    
+    <!-- Main Menu Strings -->
+    <string name="pests">Pests</string>
+    <string name="leaf_stalk_">Leaf/Stalk</string>
+    <string name="tubor_root">Tuber/Root</string>
+    <string name="diagnostic_tools">Diagnostic Tools</string>
+    
+    <!-- Disease Page Strings -->
+    <string name="problem_name">Problem Name</string>
+    <string name="image_alt_text">A image</string>
+    <string name="disease_description">this is very long text, loads of it. dsefsef sef sef sef sef esf sf sf sef e fsf se fse</string>
+    
 </resources>
