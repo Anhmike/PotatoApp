@@ -1,17 +1,21 @@
 package com.potato.potatoapp;
 
+import org.joda.time.DateTime;
+
 public class Symptom {
 	int ID;
-	String symName;
+	String description;
 	int parent;
+	DateTime updateTime;
+	
 	public Symptom(){
 		
 	}
 	public int getId() {
 		return ID;
 	}
-	public String getName() {
-		return symName;
+	public String getDescription() {
+		return description;
 	}
 	public int getParent() {
 		return parent;
@@ -19,11 +23,17 @@ public class Symptom {
 	public void setId(int ID) {
 		this.ID = ID;
 	}
-	public void setName(String name) {
-		this.symName = name;
+	public void setDescription(String description) {
+		this.description = description;
 	}
-	public void setSymParent(int parent) {
+	public void setParent(int parent) {
 		this.parent = parent;
+	}
+	public DateTime getUpdateTime() {
+		return updateTime;
+	}
+	public void setUpdateTime(DateTime updateTime) {
+		this.updateTime = updateTime;
 	}
 	
 }

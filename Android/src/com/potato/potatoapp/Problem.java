@@ -10,6 +10,11 @@ public class Problem {
 	String description;
 	String type;
 	ArrayList<Integer> symptoms;
+	DateTime updateTime;
+	
+	public Problem() {
+		symptoms = new ArrayList();
+	}
 	
 	
 	public String getName() {
@@ -42,6 +47,15 @@ public class Problem {
 	}
 	public void setSymptoms(ArrayList<Integer> symptoms) {
 		this.symptoms = symptoms;
+	}
+	public void addSymptom(int symptomId) {
+		symptoms.add(symptomId);
+	}
+	public DateTime getUpdateTime() {
+		return updateTime;
+	}
+	public void setUpdateTime(DateTime updateTime) {
+		this.updateTime = updateTime;
 	}
 	
 }
