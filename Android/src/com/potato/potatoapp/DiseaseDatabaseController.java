@@ -30,7 +30,7 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper{
 	//Variables to handle field names within disease table
 	public static final String PROBLEM_ID = "P_ID";
 	public static final String PROBLEM_NAME = "Name";
-	public static final String PROBLEM_PART = "Type";
+	public static final String PROBLEM_TYPE = "Type";
 	public static final String PROBLEM_DESCRIPTION = "Description";
 	public static final String PROBLEM_UPDATE_TIME = "Change_Date";
 	
@@ -65,7 +65,7 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper{
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		// TODO Auto-generated method stub
-		String CREATE_PROBLEM_TABLE = "CREATE_TABLE "+TABLE_PROBLEM+"("+PROBLEM_ID+" INTEGER PRIMARY KEY, "+PROBLEM_NAME+" TEXT, "+PROBLEM_PART+" TEXT, "+PROBLEM_DESCRIPTION+" TEXT, "+PROBLEM_UPDATE_TIME+" TEXT"+")";
+		String CREATE_PROBLEM_TABLE = "CREATE_TABLE "+TABLE_PROBLEM+"("+PROBLEM_ID+" INTEGER PRIMARY KEY, "+PROBLEM_NAME+" TEXT, "+PROBLEM_TYPE+" TEXT, "+PROBLEM_DESCRIPTION+" TEXT, "+PROBLEM_UPDATE_TIME+" TEXT"+")";
 		db.execSQL(CREATE_PROBLEM_TABLE);
 		
 		String CREATE_SYMPTOM_TABLE = "CREATE_TABLE "+TABLE_SYMPTOM+"("+SYMPTOM_ID+" INTEGER PRIMARY KEY, "+SYMPTOM_NAME+" TEXT, "+SYMPTOM_PARENT+" INTEGER, "+SYMPTOM_CHANGE_DATE+" TEXT"+")";
@@ -98,13 +98,13 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper{
 	 * Method to add a new disease to the list
 	 * @author Stephanie Lee
 	 */
-	public void addProblem(Disease Problem)
+	public void addProblem(Problem problem)
 	{
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
-		values.put(PROBLEM_NAME, Problem.getProblemName());
-		values.put(PROBLEM_PART, Problem.getProblemPart());
-		values.put(PROBLEM_DESCRIPTION, Problem.getProblemDescription());
+		values.put(PROBLEM_NAME, problem.getName());
+		values.put(PROBLEM_TYPE, problem.getType());
+		values.put(PROBLEM_DESCRIPTION, problem.getDescription());
 		
 		db.insert(TABLE_PROBLEM, null, values);
 		db.close();
@@ -114,24 +114,24 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper{
 	{
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
-		values.put(SYMPTOM_NAME, sym.getSymName());
-		values.put(SYMPTOM_PARENT, sym.getSymParent());
+		values.put(SYMPTOM_NAME, sym.getName());
+		values.put(SYMPTOM_PARENT, sym.getParent());
 		
 		db.insert(TABLE_PROBLEM, null, values);
 		db.close();
 	}
 	
-	public Disease getDisease(int id)
+	public Problem getDisease(int id)
 	{
 		SQLiteDatabase db = this.getReadableDatabase();
 		
-		Cursor cursor = db.query(TABLE_PROBLEM, new String[] { PROBLEM_ID, PROBLEM_NAME, PROBLEM_PART, PROBLEM_DESCRIPTION, PROBLEM_UPDATE_TIME }, null, null, null, null, null);
+		Cursor cursor = db.query(TABLE_PROBLEM, new String[] { PROBLEM_ID, PROBLEM_NAME, PROBLEM_TYPE, PROBLEM_DESCRIPTION, PROBLEM_UPDATE_TIME }, null, null, null, null, null);
 		
 		if(cursor != null){
 			cursor.moveToFirst();
 		}
 		
-		Disease Problem = new Disease();
+		Problem Problem = new Problem();
 		
 		return Problem;
 	}
@@ -151,9 +151,9 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper{
 		return symptom;
 	}
 	
-	public List<Disease> getAllProblems()
+	public List<Problem> getAllProblems()
 	{
-		List<Disease> ProblemList = new ArrayList<Disease>();
+		List<Problem> ProblemList = new ArrayList<Problem>();
 		String query = "SELECT * FROM "+TABLE_PROBLEM;
 		
 		SQLiteDatabase db = this.getWritableDatabase();
@@ -161,14 +161,14 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper{
 		
 		if(cursor.moveToFirst()){
 			do{
-				Disease disease = new Disease();
-				disease.setProblemId(Integer.parseInt(cursor.getString(0)));
-				disease.setProblemName(cursor.getString(1));
-				disease.setProblemPart(cursor.getString(2));
-				disease.setProblemDescription(cursor.getString(3));
+				Problem problem = new Problem();
+				problem.setId(Integer.parseInt(cursor.getString(0)));
+				problem.setName(cursor.getString(1));
+				problem.setType(cursor.getString(2));
+				problem.setDescription(cursor.getString(3));
 				//disease.setUpdateTime(cursor.getString(4));
 				
-				ProblemList.add(disease);
+				ProblemList.add(problem);
 			}while(cursor.moveToNext());
 		}
 		return ProblemList;
@@ -185,8 +185,8 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper{
 		if(cursor.moveToFirst()){
 			do{
 				Symptom symptom = new Symptom();
-				symptom.setSymID(Integer.parseInt(cursor.getString(0)));
-				symptom.setSymName(cursor.getString(1));
+				symptom.setId(Integer.parseInt(cursor.getString(0)));
+				symptom.setName(cursor.getString(1));
 				symptom.setSymParent(Integer.parseInt(cursor.getString(2)));
 				//disease.setUpdateTime(cursor.getString(4));
 				
@@ -216,31 +216,31 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper{
 		return cursor.getCount();
 	}
 	
-	public int updateProblem(Disease Problem)
+	public int updateProblem(Problem Problem)
 	{
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
-		values.put(PROBLEM_NAME, Problem.getProblemName());
-		values.put(PROBLEM_PART, Problem.getProblemPart());
-		values.put(PROBLEM_DESCRIPTION, Problem.getProblemDescription());
+		values.put(PROBLEM_NAME, Problem.getName());
+		values.put(PROBLEM_TYPE, Problem.getType());
+		values.put(PROBLEM_DESCRIPTION, Problem.getDescription());
 		
-		return db.update(TABLE_PROBLEM, values, PROBLEM_ID + " =?", new String[] {String.valueOf(Problem.getProblemId())});
+		return db.update(TABLE_PROBLEM, values, PROBLEM_ID + " =?", new String[] {String.valueOf(Problem.getId())});
 	}
 	
 	public int updateSymptom(Symptom symptom)
 	{
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
-		values.put(SYMPTOM_NAME, symptom.getSymName());
-		values.put(SYMPTOM_PARENT, symptom.getSymParent());
+		values.put(SYMPTOM_NAME, symptom.getName());
+		values.put(SYMPTOM_PARENT, symptom.getParent());
 		
-		return db.update(TABLE_SYMPTOM, values, SYMPTOM_ID + " =?", new String[] {String.valueOf(symptom.getSymID())});
+		return db.update(TABLE_SYMPTOM, values, SYMPTOM_ID + " =?", new String[] {String.valueOf(symptom.getId())});
 	}
 	
-	public void deleteDisease(Disease disease)
+	public void deleteDisease(Problem disease)
 	{
 		SQLiteDatabase db = this.getWritableDatabase();
-		db.delete(TABLE_PROBLEM, PROBLEM_ID + " =?", new String[] {String.valueOf(disease.getProblemId())});
+		db.delete(TABLE_PROBLEM, PROBLEM_ID + " =?", new String[] {String.valueOf(disease.getId())});
 		db.close();
 	}
 }

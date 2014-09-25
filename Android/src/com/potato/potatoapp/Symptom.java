@@ -1,29 +1,29 @@
 package com.potato.potatoapp;
 
 public class Symptom {
-	int symID;
+	int ID;
 	String symName;
-	int symParent;
+	int parent;
 	public Symptom(){
 		
 	}
-	public int getSymID() {
-		return symID;
+	public int getId() {
+		return ID;
 	}
-	public String getSymName() {
+	public String getName() {
 		return symName;
 	}
-	public int getSymParent() {
-		return symParent;
+	public int getParent() {
+		return parent;
 	}
-	public void setSymID(int symID) {
-		this.symID = symID;
+	public void setId(int ID) {
+		this.ID = ID;
 	}
-	public void setSymName(String symName) {
-		this.symName = symName;
+	public void setName(String name) {
+		this.symName = name;
 	}
-	public void setSymParent(int symParent) {
-		this.symParent = symParent;
+	public void setSymParent(int parent) {
+		this.parent = parent;
 	}
 	
 }
