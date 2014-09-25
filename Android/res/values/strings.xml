@@ -15,9 +15,9 @@
     <string name="tubor_root">Tuber/Root</string>
     <string name="diagnostic_tools">Diagnostic Tools</string>
     
-    <!-- Disease Page Strings -->
+    <!-- Problem Page Strings -->
     <string name="problem_name">Problem Name</string>
     <string name="image_alt_text">A image</string>
-    <string name="disease_description">this is very long text, loads of it. dsefsef sef sef sef sef esf sf sf sef e fsf se fse</string>
+    <string name="disease_description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
     
 </resources>
