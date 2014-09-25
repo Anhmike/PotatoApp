@@ -1,4 +1,4 @@
-package com.example.potatodiagnosisstatic;
+package com.potato.potatoapp;
 
 public class Disease {
 	int diseaseId;
