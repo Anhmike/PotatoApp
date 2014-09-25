@@ -21,6 +21,7 @@ public class XMLParser {
 		NodeList nodes = xml.getElementsByTagName("problems");
 
 		ArrayList<Object> problems = extractProblems(nodes);
+		ArrayList<Object> symptoms = extractSymptoms(nodes);
 
 
 
@@ -31,7 +32,9 @@ public class XMLParser {
 	}
 
 	private static ArrayList<Object> extractProblems(NodeList nodes) {
-		// iterate the employees
+		
+		ArrayList<Object> problems = new ArrayList();
+		
 		for (int i = 0; i < nodes.getLength(); i++) {
 			Element element = (Element) nodes.item(i);
 			//ProblemStore problem = new ProblemStore();
@@ -56,11 +59,46 @@ public class XMLParser {
 			//problem.setUpdateTime(getCharacterDataFromElement(line));
 			System.out.println("updatetime: " + getCharacterDataFromElement(line));
 			
+			NodeList description = element.getElementsByTagName("description");
+			line = (Element) description.item(0);
+			//problem.setDescription(getCharacterDataFromElement(line));
+			System.out.println("description: " + getCharacterDataFromElement(line));
+			
 			NodeList symptoms = element.getElementsByTagName("symptom");
 			for (int j = 0; j < symptoms.getLength(); j++) {
 				Element symptom = (Element)symptoms.item(j);
 				//problem.addSymptom(getCharacterDataFromElement(symptom));
 			}
+			//problems.add(problem);
+		}
+		
+		return problems;
+	}
+	
+	private static ArrayList<Object> extractSymptoms(NodeList nodes) {
+		for (int i = 0; i < nodes.getLength(); i++) {
+			Element element = (Element) nodes.item(i);
+			//ProblemStore problem = new ProblemStore();
+
+			NodeList id = element.getElementsByTagName("id");
+			Element line = (Element) id.item(0);
+			//problem.setID(getCharacterDataFromElement(line));
+			System.out.println("id: " + getCharacterDataFromElement(line));
+
+			NodeList description = element.getElementsByTagName("description");
+			line = (Element) description.item(0);
+			//problem.setDescription(getCharacterDataFromElement(line));
+			System.out.println("description: " + getCharacterDataFromElement(line));
+
+			NodeList updatetime = element.getElementsByTagName("updatetime");
+			line = (Element) updatetime.item(0);
+			//problem.setUpdateTime(getCharacterDataFromElement(line));
+			System.out.println("updatetime: " + getCharacterDataFromElement(line));
+			
+			NodeList parentSymptom = element.getElementsByTagName("parent");
+			line = (Element) parentSymptom.item(0);
+			//problem.setParentSymptom(getCharacterDataFromElement(line));
+			System.out.println("parent: " + getCharacterDataFromElement(line));
 		}
 		
 		return null;
