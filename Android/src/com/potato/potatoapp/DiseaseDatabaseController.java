@@ -1,4 +1,4 @@
-package com.example.potatodiagnosisstatic;
+package com.potato.potatoapp;
 
 import java.util.ArrayList;
 import java.util.List;
