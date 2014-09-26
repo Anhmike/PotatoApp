@@ -4,6 +4,8 @@ public class Symptom {
 	int symID;
 	String symName;
 	int symParent;
+	String symPart;
+	
 	public Symptom(){
 		
 	}
@@ -16,6 +18,9 @@ public class Symptom {
 	public int getSymParent() {
 		return symParent;
 	}
+	public String getSymPart(){
+		return symPart;
+	}
 	public void setSymID(int symID) {
 		this.symID = symID;
 	}
@@ -24,6 +29,10 @@ public class Symptom {
 	}
 	public void setSymParent(int symParent) {
 		this.symParent = symParent;
+	}
+	public void setSymPart(String symPart) {
+		// TODO Auto-generated method stub
+		this.symPart = symPart;
 	}
 	
 }

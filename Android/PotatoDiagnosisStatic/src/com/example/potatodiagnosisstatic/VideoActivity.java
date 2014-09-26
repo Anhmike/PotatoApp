@@ -1,32 +1,22 @@
 package com.example.potatodiagnosisstatic;
 
 import android.support.v7.app.ActionBarActivity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
-public class DiseaseActivity extends ActionBarActivity {
+public class VideoActivity extends ActionBarActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_disease);
-		Intent intent = getIntent();
-		int position = intent.getIntExtra("position", 0);
-		String[] data_name = intent.getStringArrayExtra("array_names");
-		String[] data_description = intent.getStringArrayExtra("array_descriptions");
-		TextView name = (TextView)findViewById(R.id.problem_title_label);
-		TextView description = (TextView)findViewById(R.id.description_text_label);
-		name.setText(data_name[position]);
-		description.setText(data_description[position]);
+		setContentView(R.layout.activity_video);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.disease, menu);
+		getMenuInflater().inflate(R.menu.video, menu);
 		return true;
 	}
 

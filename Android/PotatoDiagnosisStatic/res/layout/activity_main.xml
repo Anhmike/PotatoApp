@@ -24,34 +24,37 @@
     <Button
         android:id="@+id/button1"
         style="@style/button_text"
-        android:layout_width="200dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="45dp"
         android:background="@drawable/button_style"
+        android:drawableRight="@drawable/apterousaphid"
         android:text="@string/pests"
         android:textSize="25sp" />
 
     <Button
         android:id="@+id/Button01"
         style="@style/button_text"
-        android:layout_width="200dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/button1"
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_style"
+        android:drawableRight="@drawable/earlyblight"
         android:text="@string/leaf_stalk_"
         android:textSize="25sp" />
 
     <Button
         android:id="@+id/Button02"
         style="@style/button_text"
-        android:layout_width="200dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/Button01"
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_style"
+        android:drawableRight="@drawable/scab"
         android:text="@string/tubor_root"
         android:textSize="25sp" />
 
