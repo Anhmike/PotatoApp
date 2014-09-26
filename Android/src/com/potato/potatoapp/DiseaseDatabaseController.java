@@ -36,7 +36,7 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper{
 	
 	//Variables to handle field names within symptom table
 	public static final String SYMPTOM_ID = "S_ID";
-	public static final String SYMPTOM_NAME = "Description";
+	public static final String SYMPTOM_DESCRIPTION = "Description";
 	public static final String SYMPTOM_PARENT = "Parent_Symptom";
 	public static final String SYMPTOM_CHANGE_DATE = "Change_Date";
 	
@@ -68,7 +68,7 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper{
 		String CREATE_PROBLEM_TABLE = "CREATE_TABLE "+TABLE_PROBLEM+"("+PROBLEM_ID+" INTEGER PRIMARY KEY, "+PROBLEM_NAME+" TEXT, "+PROBLEM_TYPE+" TEXT, "+PROBLEM_DESCRIPTION+" TEXT, "+PROBLEM_UPDATE_TIME+" TEXT"+")";
 		db.execSQL(CREATE_PROBLEM_TABLE);
 		
-		String CREATE_SYMPTOM_TABLE = "CREATE_TABLE "+TABLE_SYMPTOM+"("+SYMPTOM_ID+" INTEGER PRIMARY KEY, "+SYMPTOM_NAME+" TEXT, "+SYMPTOM_PARENT+" INTEGER, "+SYMPTOM_CHANGE_DATE+" TEXT"+")";
+		String CREATE_SYMPTOM_TABLE = "CREATE_TABLE "+TABLE_SYMPTOM+"("+SYMPTOM_ID+" INTEGER PRIMARY KEY, "+SYMPTOM_DESCRIPTION+" TEXT, "+SYMPTOM_PARENT+" INTEGER, "+SYMPTOM_CHANGE_DATE+" TEXT"+")";
 		db.execSQL(CREATE_SYMPTOM_TABLE);
 		
 		String CREATE_PICTURE_TABLE = "CREATE_TABLE "+TABLE_PICTURE+"("+PICTURE_ID+" INTEGER PRIMARY KEY, "+PICTURE_SYM_ID+" INTEGER, "+PICTURE_URL+" TEXT, "+PICTURE_CHANGE_DATE+" TEXT"+")";
@@ -114,7 +114,7 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper{
 	{
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
-		values.put(SYMPTOM_NAME, sym.getName());
+		values.put(SYMPTOM_DESCRIPTION, sym.getDescription());
 		values.put(SYMPTOM_PARENT, sym.getParent());
 		
 		db.insert(TABLE_PROBLEM, null, values);
@@ -140,7 +140,7 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper{
 	{
 		SQLiteDatabase db = this.getReadableDatabase();
 		
-		Cursor cursor = db.query(TABLE_SYMPTOM, new String[] { SYMPTOM_ID, SYMPTOM_NAME, SYMPTOM_PARENT }, null, null, null, null, null);
+		Cursor cursor = db.query(TABLE_SYMPTOM, new String[] { SYMPTOM_ID, SYMPTOM_DESCRIPTION, SYMPTOM_PARENT }, null, null, null, null, null);
 		
 		if(cursor != null){
 			cursor.moveToFirst();
@@ -186,8 +186,8 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper{
 			do{
 				Symptom symptom = new Symptom();
 				symptom.setId(Integer.parseInt(cursor.getString(0)));
-				symptom.setName(cursor.getString(1));
-				symptom.setSymParent(Integer.parseInt(cursor.getString(2)));
+				symptom.setDescription(cursor.getString(1));
+				symptom.setParent(Integer.parseInt(cursor.getString(2)));
 				//disease.setUpdateTime(cursor.getString(4));
 				
 				symptomList.add(symptom);
@@ -231,7 +231,7 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper{
 	{
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
-		values.put(SYMPTOM_NAME, symptom.getName());
+		values.put(SYMPTOM_DESCRIPTION, symptom.getDescription());
 		values.put(SYMPTOM_PARENT, symptom.getParent());
 		
 		return db.update(TABLE_SYMPTOM, values, SYMPTOM_ID + " =?", new String[] {String.valueOf(symptom.getId())});
