@@ -1,44 +1,38 @@
 <TableLayout
     android:layout_width="wrap_content"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
     android:id="@+id/gridview"
-    
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
     xmlns:android="http://schemas.android.com/apk/res/android">
      
-    <TableRow
-        android:id="@+id/tableRow1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-		<RelativeLayout
-		    android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-		    
-		    
-		    <!-- The top left image - should/ could be same as icon image -->
-	        <ImageView
-	            android:id="@+id/title_image"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_alignParentLeft="true"
-	            android:layout_marginRight="10dp"
-	            android:contentDescription="@string/problem_name"
-	            android:src="@drawable/ic_launcher" />
-	        
-	        <!-- The title - Problem Name -->
-	        <TextView
-	            android:id="@+id/problem_title_label"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_alignParentRight="true"
-	            android:layout_marginRight="10dp"
-	            android:layout_marginTop="10dp"
-	            android:text="@string/problem_name" />
-		</RelativeLayout>
-        
-    </TableRow>
+    <!-- relativelayout is not actually useless. Remove it and see what happens yourself... -->
+	<RelativeLayout
+        android:layout_height="wrap_content" >
+
+	    <!-- The top left image - should/ could be same as icon image -->
+	    <ImageView
+	        android:id="@+id/title_image"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:contentDescription="@string/problem_name"
+	        android:src="@drawable/ic_launcher" />
+	     
+	    <!-- The title - Problem Name -->
+	    <TextView
+	        android:id="@+id/problem_title_label"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_marginRight="10dp"
+	        android:layout_marginTop="10dp"
+	        android:textSize="25sp"
+	        android:text="@string/problem_name" />
+	</RelativeLayout>
     
     <TableRow 
-        android:id="@+id/tableRow2"
+        android:id="@+id/tableRow2_text_body"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         
@@ -48,69 +42,84 @@
 	        android:layout_width="wrap_content"
      	    android:layout_height="wrap_content"
      	    android:layout_marginTop="10dp"
-     	    android:layout_marginLeft="10dp"
-     	    android:layout_marginRight="10dp"
          	android:text="@string/disease_description"/>
     </TableRow>
     
     <TableRow 
-        android:id="@+id/tableRow3"
+        android:id="@+id/tableRow3_large_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-     	
          
-	    <Gallery
-	        android:id="@+id/gallery1"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content">
-	     	
-	     	
-	
-	     </Gallery>
-	     
 	    <ImageView
-     	    android:id="@+id/galery_image_1"
-     	    android:layout_width="match_parent"
-     	    android:layout_height="match_parent"
-     	    android:contentDescription="@string/image_alt_text"
-     	    android:src="@drawable/ic_launcher" />
+	        android:id="@+id/galery_image_1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="150dp"
+	        android:contentDescription="@string/image_alt_text"
+	        android:src="@drawable/ic_launcher" />
      </TableRow>
+     
+      <HorizontalScrollView
+		  android:id="@+id/horizontal_gallery"
+		  android:layout_width="wrap_content"
+		  android:layout_height="60dp"
+		  android:fillViewport="true"
+		  android:layout_marginTop="10dp">
+      
+	      <LinearLayout
+		      android:id="@+id/innerLay"
+		      android:layout_width="wrap_content"
+		      android:layout_height="wrap_content"
+		      android:gravity="center_vertical"
+		      android:orientation="horizontal" >
+		        
+	         <ImageView
+	             android:id="@+id/image1"
+	             android:layout_width="wrap_content"
+	             android:layout_height="wrap_content"
+	             android:contentDescription="@string/problem_name"
+	             android:src="@drawable/ic_launcher" />
+	         <ImageView
+	             android:id="@+id/image2"
+	             android:layout_width="wrap_content"
+	             android:layout_height="wrap_content"
+	             android:contentDescription="@string/problem_name"
+	             android:src="@drawable/ic_launcher" />
+	         <ImageView
+	             android:id="@+id/image3"
+	             android:layout_width="wrap_content"
+	             android:layout_height="wrap_content"
+	             android:contentDescription="@string/problem_name"
+	             android:src="@drawable/ic_launcher" />
+	         <ImageView
+	             android:id="@+id/image4"
+	             android:layout_width="wrap_content"
+	             android:layout_height="wrap_content"
+	             android:contentDescription="@string/problem_name"
+	             android:src="@drawable/ic_launcher" />
+	         <ImageView
+	             android:id="@+id/image5"
+	             android:layout_width="wrap_content"
+	             android:layout_height="wrap_content"
+	             android:contentDescription="@string/problem_name"
+	             android:src="@drawable/ic_launcher" />
+	         <ImageView
+	             android:id="@+id/image6"
+	             android:layout_width="wrap_content"
+	             android:layout_height="wrap_content"
+	             android:contentDescription="@string/problem_name"
+	             android:src="@drawable/ic_launcher" />           
+	         <ImageView
+	             android:id="@+id/image7"
+	             android:layout_width="wrap_content"
+	             android:layout_height="wrap_content"
+	             android:contentDescription="@string/problem_name"
+	             android:src="@drawable/ic_launcher" />
+	         <ImageView
+	             android:id="@+id/image8"
+	             android:layout_width="wrap_content"
+	             android:layout_height="wrap_content"
+	             android:contentDescription="@string/problem_name"
+	             android:src="@drawable/ic_launcher" />
+	        </LinearLayout>
+    </HorizontalScrollView>
 </TableLayout>
-
-<!-- public class MainActivity extends Activity 
-{
-
-     ImageView selectedImage;  
-     private Integer[] mImageIds = {
-                R.drawable.image1,
-                R.drawable.image2,
-                R.drawable.image3,
-                R.drawable.image4,
-                R.drawable.image5,
-                R.drawable.image6,
-                R.drawable.image7,
-                R.drawable.image8
-        };
-    @Override
-    public void onCreate(Bundle savedInstanceState) 
-    {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.main);
-       
-             Gallery gallery = (Gallery) findViewById(R.id.gallery1);
-        selectedImage=(ImageView)findViewById(R.id.imageView1);
-        gallery.setSpacing(1);
-        gallery.setAdapter(new GalleryImageAdapter(this));
-
-         // clicklistener for Gallery
-        gallery.setOnItemClickListener(new OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-                Toast.makeText(MainActivity.this, "Your selected position = " + position, Toast.LENGTH_SHORT).show();
-                // show the selected Image
-                selectedImage.setImageResource(mImageIds[position]);
-            }
-        });
-    }
-  
-}
- -->

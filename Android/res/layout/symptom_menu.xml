@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <!-- <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/gridView1"
+    android:numColumns="auto_fit"
+    android:gravity="center"
+    android:columnWidth="50dp"
+    android:stretchMode="columnWidth"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+</GridView> -->
+
+ <!-- <GridView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent" 
 	android:id="@+id/gridview"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:columnWidth="90dp"
     android:numColumns="auto_fit"
     android:verticalSpacing="10dp"
     android:horizontalSpacing="10dp"
     android:stretchMode="columnWidth"
-    android:gravity="center"
-</GridView> -->
+    android:gravity="center">
+</GridView> --> <!--
 <GridView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/gridview"
     android:layout_width="match_parent"
@@ -23,4 +30,28 @@
     android:horizontalSpacing="10dp"
     android:stretchMode="columnWidth"
     android:gravity="center"
-/>
+/>-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:padding="5dp" >
+ 
+    <ImageView
+        android:id="@+id/grid_item_image"
+        android:layout_width="50px"
+        android:layout_height="50px"
+        android:layout_marginRight="10px"
+        android:src="@drawable/ic_launcher" >
+    </ImageView>
+ 
+    <TextView
+        android:id="@+id/grid_item_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@+id/label"
+        android:layout_marginTop="5px"
+        android:textSize="15px" >
+    </TextView>
+ 
+</LinearLayout>
