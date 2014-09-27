@@ -5,15 +5,14 @@ import com.potato.potatoapp.beans.XMLReturn;
 import android.util.Log;
 
 public class GetUpdates {
-	static String URL = "";
 
 	public GetUpdates() {
 		
 	}
 	
-	public static XMLReturn getUpdates() {
+	public static XMLReturn getUpdates(String URL) {
 		
-		String xmlString = sendGetRequest();
+		String xmlString = sendGetRequest(URL);
 		try {
 			return XMLParser.parseXML(xmlString);
 		} catch (Exception e) {
@@ -25,7 +24,7 @@ public class GetUpdates {
 		
 	}
 	
-	private static String sendGetRequest() {
+	private static String sendGetRequest(String URL) {
 		GetDatabaseUpdatesRunnable runnable = new GetDatabaseUpdatesRunnable();
 		runnable.setURL(URL);
 			

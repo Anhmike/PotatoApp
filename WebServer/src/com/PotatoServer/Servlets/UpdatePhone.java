@@ -50,17 +50,10 @@ public class UpdatePhone extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UpdatePhoneModel uPM = new UpdatePhoneModel();
 		uPM.setDatasource(_ds);
 		
-		String lastUpdate = request.getParameter("lastUpdate");
+		String lastUpdate = request.getParameter("t");
 		
 		ServletOutputStream out = response.getOutputStream();
 		
@@ -71,6 +64,14 @@ public class UpdatePhone extends HttpServlet {
 		uPM.getUpdatedProblems(lastUpdate, out);
 		uPM.getUpdatesSymptoms(lastUpdate, out);
 		out.println("</data>");
+		
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		doGet(request, response);
 	}
 
 }

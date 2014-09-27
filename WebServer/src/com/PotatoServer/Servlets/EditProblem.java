@@ -32,6 +32,7 @@ import com.PotatoServer.lib.Dbutils;
 @WebServlet("/EditProblem")
 public class EditProblem extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private DataSource _ds = null;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -63,7 +64,7 @@ public class EditProblem extends HttpServlet {
 		String dl = request.getParameter("problemName");
 		String ed = request.getParameter("ProblemType");
 		String et = request.getParameter("description");
-		Problem.editprob(dl, ed, et );
+		//Problem.editprob(dl, ed, et );
 	}
 
 	/**
