@@ -20,25 +20,26 @@ public class XMLParser {
 
 	}
 
-	public static ArrayList<ArrayList<Object>> parseXML(String feed) throws Exception {
+	public static XMLReturn parseXML(String feed) throws Exception {
 
 		Document xml = loadXMLFromString(feed);
 		NodeList nodes = xml.getElementsByTagName("problems");
 
 		ArrayList<Problem> problems = extractProblems(nodes);
-		ArrayList<Object> symptoms = extractSymptoms(nodes);
+		ArrayList<Symptom> symptoms = extractSymptoms(nodes);
+		
+		
+		XMLReturn xmlReturn = new XMLReturn();
+		xmlReturn.setProblems(problems);
+		xmlReturn.setSymptoms(symptoms);
+		
 
-
-
-
-
-
-		return null;
+		return xmlReturn;
 	}
 
 	private static ArrayList<Problem> extractProblems(NodeList nodes) {
 		
-		ArrayList<Problem> problems = new ArrayList();
+		ArrayList<Problem> problems = new ArrayList<Problem>();
 		
 		for (int i = 0; i < nodes.getLength(); i++) {
 			Element element = (Element) nodes.item(i);
@@ -80,8 +81,8 @@ public class XMLParser {
 		return problems;
 	}
 	
-	private static ArrayList<Object> extractSymptoms(NodeList nodes) {
-		ArrayList<Symptom> symptoms = new ArrayList();
+	private static ArrayList<Symptom> extractSymptoms(NodeList nodes) {
+		ArrayList<Symptom> symptoms = new ArrayList<Symptom>();
 		for (int i = 0; i < nodes.getLength(); i++) {
 			Element element = (Element) nodes.item(i);
 			Symptom symptom = new Symptom();

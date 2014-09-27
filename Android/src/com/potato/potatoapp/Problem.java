@@ -13,7 +13,7 @@ public class Problem {
 	DateTime updateTime;
 	
 	public Problem() {
-		symptoms = new ArrayList();
+		symptoms = new ArrayList<Integer>();
 	}
 	
 	
