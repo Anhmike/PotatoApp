@@ -7,6 +7,7 @@ public class Symptom {
 	String description;
 	int parent;
 	DateTime updateTime;
+	String part;
 	
 	public Symptom(){
 		
@@ -34,6 +35,12 @@ public class Symptom {
 	}
 	public void setUpdateTime(DateTime updateTime) {
 		this.updateTime = updateTime;
+	}
+	public String getPart() {
+		return part;
+	}
+	public void setPart(String part) {
+		this.part = part;
 	}
 	
 }

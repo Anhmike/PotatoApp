@@ -1,4 +1,4 @@
-package com.example.potatodiagnosisstatic;
+package com.potato.potatoapp;
 
 import android.app.Activity;
 import android.view.LayoutInflater;

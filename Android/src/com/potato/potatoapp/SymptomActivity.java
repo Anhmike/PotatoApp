@@ -1,4 +1,4 @@
-package com.example.potatodiagnosisstatic;
+package com.potato.potatoapp;
 
 import java.util.List;
 
@@ -34,8 +34,8 @@ public class SymptomActivity extends ListActivity {
 		Integer imageId = R.drawable.apterousaphid;
 		db = new DiseaseDatabaseController(this);
 		Symptom aphids = new Symptom();
-		aphids.setSymName("Aphids");
-		aphids.setSymPart("Pest");
+		aphids.setDescription("Aphids");
+		aphids.setPart("Pest");
 		db.addSymptom(aphids);
 		Intent button = getIntent();
 		String part = button.getStringExtra("name");
@@ -79,7 +79,7 @@ public class SymptomActivity extends ListActivity {
 		List<Symptom> pests = db.getSymptom("Pest");
 		Log.v("pest", ""+pests.size());
 		for(int i = 0; i<pests.size();i++){
-			symptom_names[i] = pests.get(i).getSymName();
+			symptom_names[i] = pests.get(i).getDescription();
 		}
 	}
 	

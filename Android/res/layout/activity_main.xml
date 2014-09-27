@@ -6,11 +6,56 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity" >
+    tools:context="com.example.potatodiagnosisstatic.MainActivity" 
+    android:background="#222222">
 
-    <TextView
+    <Button
+        android:id="@+id/Button03"
+        style="@style/button_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="53dp"
+        android:background="@drawable/button_style"
+        android:text="@string/diagnostic_tools"
+        android:textSize="25sp" />
+
+    <Button
+        android:id="@+id/button1"
+        style="@style/button_text"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="45dp"
+        android:background="@drawable/button_style"
+        android:drawableRight="@drawable/apterousaphid"
+        android:text="@string/pests"
+        android:textSize="25sp" />
+
+    <Button
+        android:id="@+id/Button01"
+        style="@style/button_text"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button1"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/button_style"
+        android:drawableRight="@drawable/earlyblight"
+        android:text="@string/leaf_stalk_"
+        android:textSize="25sp" />
+
+    <Button
+        android:id="@+id/Button02"
+        style="@style/button_text"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Button01"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/button_style"
+        android:drawableRight="@drawable/scab"
+        android:text="@string/tubor_root"
+        android:textSize="25sp" />
 
 </RelativeLayout>
