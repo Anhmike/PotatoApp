@@ -1,4 +1,6 @@
-package com.potato.potatoapp;
+package com.potato.potatoapp.database;
+
+import com.potato.potatoapp.beans.XMLReturn;
 
 import android.util.Log;
 

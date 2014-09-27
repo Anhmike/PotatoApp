@@ -1,4 +1,4 @@
-package com.potato.potatoapp;
+package com.potato.potatoapp.beans;
 
 import org.joda.time.DateTime;
 

@@ -1,7 +1,10 @@
-package com.potato.potatoapp;
+package com.potato.potatoapp.database;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.potato.potatoapp.beans.Problem;
+import com.potato.potatoapp.beans.Symptom;
 
 import android.content.ContentValues;
 import android.content.Context;

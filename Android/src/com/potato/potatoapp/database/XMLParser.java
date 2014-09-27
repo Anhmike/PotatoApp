@@ -1,4 +1,4 @@
-package com.potato.potatoapp;
+package com.potato.potatoapp.database;
 
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -13,6 +13,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
+
+import com.potato.potatoapp.beans.Problem;
+import com.potato.potatoapp.beans.Symptom;
+import com.potato.potatoapp.beans.XMLReturn;
 
 public class XMLParser {
 

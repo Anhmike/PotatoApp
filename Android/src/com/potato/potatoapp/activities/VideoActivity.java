@@ -1,4 +1,9 @@
-package com.potato.potatoapp;
+package com.potato.potatoapp.activities;
+
+import com.potato.potatoapp.R;
+import com.potato.potatoapp.R.id;
+import com.potato.potatoapp.R.layout;
+import com.potato.potatoapp.R.menu;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;

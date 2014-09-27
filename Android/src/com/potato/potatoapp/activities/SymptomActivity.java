@@ -1,6 +1,16 @@
-package com.potato.potatoapp;
+package com.potato.potatoapp.activities;
 
 import java.util.List;
+
+import com.potato.potatoapp.ListAdapter;
+import com.potato.potatoapp.R;
+import com.potato.potatoapp.R.drawable;
+import com.potato.potatoapp.R.id;
+import com.potato.potatoapp.R.layout;
+import com.potato.potatoapp.R.menu;
+import com.potato.potatoapp.beans.Symptom;
+import com.potato.potatoapp.database.DiseaseDatabaseController;
+
 
 import android.support.v7.app.ActionBarActivity;
 import android.app.ListActivity;

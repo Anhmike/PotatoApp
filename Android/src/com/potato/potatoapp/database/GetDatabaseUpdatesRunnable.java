@@ -1,4 +1,4 @@
-package com.potato.potatoapp;
+package com.potato.potatoapp.database;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

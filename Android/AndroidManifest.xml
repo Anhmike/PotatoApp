@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name="com.potato.potatoapp.activities.MainActivity"
             android:label="Potato Diagnostics" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,17 +23,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SymptomActivity"
+            android:name="com.potato.potatoapp.activities.SymptomActivity"
             android:label="Potato Diagnostics" >
         </activity>
-        <activity
-            android:name=".DiseaseActivity"
+        <acticom.potato.potatoapp.activities.DiseaseActivity android:name=".DiseaseActivity"
             android:label="Potato Diagnostics" >
-        </activity>
-        <activity
-            android:name=".VideoActivity"
+        </acticom.potato.potatoapp.activities.DiseaseActivity>
+        <acticom.potato.potatoapp.activities.VideoActivity   android:name=".VideoActivity"
             android:label="@string/title_activity_video" >
-        </activity>
+        </acticom.potato.potatoapp.activities.VideoActivity>
     </application>
 
 </manifest>
