@@ -1,8 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">PotatoApp</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">PotatoDiagnosisStatic</string>
     <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="pests">Pests</string>
+    <string name="leaf_stalk_">Leaf/Stalk</string>
+    <string name="tubor_root">Tubor/Root</string>
+    <string name="diagnostic_tools">Diagnostic Tools</string>
+    <string name="title_activity_symptom">SymptomActivity</string>
+    <string name="title_activity_disease">DiseaseActivity</string>
+    <string name="diseasedescription">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam. Sed nisi. Nulla quis sem at nibh elementum imperdiet. Duis sagittis ipsum. Praesent mauris. Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget nulla. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. </string>
+    <string name="textview">TextView</string>
+    <string name="disease_header">disease_header</string>
+    <string name="title_activity_video">VideoActivity</string>
+    <string name="problem_name">Problem Name</string>
+    <string name="image">image</string>
 
 </resources>

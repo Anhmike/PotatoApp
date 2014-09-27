@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+    android:layout_marginRight="5dp" 
+    android:layout_marginLeft="5dp" 
+    android:id="@+id/gridview" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content">
+
+<!-- relativelayout is not actually useless. Remove it and see what happens yourself... -->
+
+
+
+<RelativeLayout 
+    android:layout_height="wrap_content">
+
+<!-- The top left image - should/ could be same as icon image -->
+
+
+<ImageView 
+    android:id="@+id/title_image" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content" android:src="@drawable/ic_launcher" 
+    android:contentDescription="@string/problem_name" 
+    android:layout_alignParentLeft="true"/>
+
+<!-- The title - Problem Name -->
+
+
+<TextView 
+    android:layout_marginRight="10dp" 
+    android:id="@+id/problem_title_label" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content" 
+    android:text="@string/problem_name" 
+    android:textSize="25sp" 
+    android:layout_marginTop="10dp" 
+    android:layout_alignParentRight="true"/>
+
+</RelativeLayout>
+
+
+<TableRow 
+    android:id="@+id/tableRow2_text_body" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content">
+
+<!-- The main text body of the problem -->
+
+
+<TextView 
+    android:id="@+id/description_text_label" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content" 
+    android:text="@string/diseasedescription" 
+    android:layout_marginTop="10dp"/>
+
+</TableRow>
+
+
+<TableRow 
+    android:id="@+id/tableRow3_large_image" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content">
+
+<ImageView 
+    android:id="@+id/galery_image_1" 
+    android:layout_height="150dp" 
+    android:layout_width="wrap_content" 
+    android:src="@drawable/ic_launcher" 
+    android:contentDescription="@string/image"/>
+
+</TableRow>
+
+
+<HorizontalScrollView 
+    android:id="@+id/horizontal_gallery" 
+    android:layout_height="60dp" 
+    android:layout_width="wrap_content" 
+    android:layout_marginTop="10dp" 
+    android:fillViewport="true">
+
+
+<LinearLayout 
+    android:id="@+id/innerLay" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content" 
+    android:orientation="horizontal" 
+    android:gravity="center_vertical">
+
+<ImageView 
+    android:id="@+id/image1" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content" 
+    android:src="@drawable/ic_launcher" 
+    android:contentDescription="@string/problem_name"/>
+
+<ImageView 
+    android:id="@+id/image2" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content" 
+    android:src="@drawable/ic_launcher" 
+    android:contentDescription="@string/problem_name"/>
+
+<ImageView 
+    android:id="@+id/image3" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content" 
+    android:src="@drawable/ic_launcher" 
+    android:contentDescription="@string/problem_name"/>
+
+<ImageView 
+    android:id="@+id/image4" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content" 
+    android:src="@drawable/ic_launcher" 
+    android:contentDescription="@string/problem_name"/>
+
+<ImageView 
+    android:id="@+id/image5" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content" 
+    android:src="@drawable/ic_launcher" 
+    android:contentDescription="@string/problem_name"/>
+
+<ImageView 
+    android:id="@+id/image6" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content" 
+    android:src="@drawable/ic_launcher" 
+    android:contentDescription="@string/problem_name"/>
+
+<ImageView 
+    android:id="@+id/image7" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content" 
+    android:src="@drawable/ic_launcher" 
+    android:contentDescription="@string/problem_name"/>
+
+<ImageView 
+    android:id="@+id/image8" 
+    android:layout_height="wrap_content" 
+    android:layout_width="wrap_content" 
+    android:src="@drawable/ic_launcher" 
+    android:contentDescription="@string/problem_name"/>
+
+</LinearLayout>
+
+</HorizontalScrollView>
+
+</TableLayout>
