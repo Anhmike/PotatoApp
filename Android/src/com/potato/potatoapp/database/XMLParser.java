@@ -31,20 +31,20 @@ public class XMLParser {
 
 		ArrayList<Problem> problems = extractProblems(nodes);
 		ArrayList<Symptom> symptoms = extractSymptoms(nodes);
-		
-		
+
+
 		XMLReturn xmlReturn = new XMLReturn();
 		xmlReturn.setProblems(problems);
 		xmlReturn.setSymptoms(symptoms);
-		
+
 
 		return xmlReturn;
 	}
 
 	private static ArrayList<Problem> extractProblems(NodeList nodes) {
-		
+
 		ArrayList<Problem> problems = new ArrayList<Problem>();
-		
+
 		for (int i = 0; i < nodes.getLength(); i++) {
 			Element element = (Element) nodes.item(i);
 			Problem problem = new Problem();
@@ -57,34 +57,32 @@ public class XMLParser {
 			NodeList name = element.getElementsByTagName("name");
 			line = (Element) name.item(0);
 			problem.setName(getCharacterDataFromElement(line));
-			System.out.println("name: " + getCharacterDataFromElement(line));
 
 			NodeList type = element.getElementsByTagName("type");
 			line = (Element) type.item(0);
 			problem.setType(getCharacterDataFromElement(line));
-			System.out.println("type: " + getCharacterDataFromElement(line));
 
-			NodeList updatetime = element.getElementsByTagName("updatetime");
+			NodeList updatetime = element.getElementsByTagName("updateTime");
 			line = (Element) updatetime.item(0);
-			problem.setUpdateTime(new DateTime(getCharacterDataFromElement(line)));
-			System.out.println("updatetime: " + getCharacterDataFromElement(line));
-			
+			problem.setUpdateTime(new DateTime(Long.parseLong(getCharacterDataFromElement(line))));
+
 			NodeList description = element.getElementsByTagName("description");
 			line = (Element) description.item(0);
 			problem.setDescription(getCharacterDataFromElement(line));
-			System.out.println("description: " + getCharacterDataFromElement(line));
-			
+
 			NodeList symptoms = element.getElementsByTagName("symptom");
-			for (int j = 0; j < symptoms.getLength(); j++) {
-				Element symptom = (Element)symptoms.item(j);
-				problem.addSymptom(Integer.parseInt(getCharacterDataFromElement(symptom)));
+			if(symptoms != null) {
+				for (int j = 0; j < symptoms.getLength(); j++) {
+					Element symptom = (Element)symptoms.item(j);
+					problem.addSymptom(Integer.parseInt(getCharacterDataFromElement(symptom)));
+				}
 			}
 			problems.add(problem);
 		}
-		
+
 		return problems;
 	}
-	
+
 	private static ArrayList<Symptom> extractSymptoms(NodeList nodes) {
 		ArrayList<Symptom> symptoms = new ArrayList<Symptom>();
 		for (int i = 0; i < nodes.getLength(); i++) {
@@ -94,26 +92,23 @@ public class XMLParser {
 			NodeList id = element.getElementsByTagName("id");
 			Element line = (Element) id.item(0);
 			symptom.setId(Integer.parseInt(getCharacterDataFromElement(line)));
-			System.out.println("id: " + getCharacterDataFromElement(line));
 
 			NodeList description = element.getElementsByTagName("description");
 			line = (Element) description.item(0);
 			symptom.setDescription(getCharacterDataFromElement(line));
-			System.out.println("description: " + getCharacterDataFromElement(line));
 
-			NodeList updatetime = element.getElementsByTagName("updatetime");
+			NodeList updatetime = element.getElementsByTagName("updateTime");
 			line = (Element) updatetime.item(0);
-			symptom.setUpdateTime(new DateTime(getCharacterDataFromElement(line)));
-			System.out.println("updatetime: " + getCharacterDataFromElement(line));
-			
-			NodeList parentSymptom = element.getElementsByTagName("parent");
-			line = (Element) parentSymptom.item(0);
-			symptom.setParent(Integer.parseInt(getCharacterDataFromElement(line)));
-			System.out.println("parent: " + getCharacterDataFromElement(line));
-			
+			symptom.setUpdateTime(new DateTime(Long.parseLong(getCharacterDataFromElement(line))));
+
+			//cannot find parent symptom tag
+//			NodeList parentSymptom = element.getElementsByTagName("parentSymptom");
+//			line = (Element) parentSymptom.item(0);
+//			symptom.setParent(Integer.parseInt(getCharacterDataFromElement(line)));
+
 			symptoms.add(symptom);
 		}
-		
+
 		return null;
 	}
 

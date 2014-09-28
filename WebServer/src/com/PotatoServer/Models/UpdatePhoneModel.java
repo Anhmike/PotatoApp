@@ -7,7 +7,6 @@ import java.sql.Statement;
 import java.util.LinkedList;
 
 import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import org.joda.time.DateTime;
@@ -74,7 +73,8 @@ public class UpdatePhoneModel {
 				ps.setName(rs.getString("name"));
 				ps.setDescription(rs.getString("description"));
 				ps.setType(rs.getString("type"));
-				//ps.setUpdateDate(DateTime.parse(rs.getString("change_date")));
+				ps.setUpdateDate(new DateTime((rs.getDate("change_date").getTime())));
+				System.out.println("millis : " + (rs.getDate("change_date").getTime()));
 				psl.add(ps);
 			}
 		} catch (Exception ex) {
@@ -138,6 +138,7 @@ public class UpdatePhoneModel {
 				ss.setId(Integer.parseInt(rs.getString("s_id")));
 				ss.setDescription(rs.getString("description"));
 				if(rs.getString("parent_symptom") != null ) { ss.setParentSymptom(Integer.parseInt(rs.getString("parent_symptom")));}
+				ss.setUpdateDate(new DateTime((rs.getDate("change_date").getTime())));
 				psl.add(ss);
 			}
 		} catch (Exception ex) {
@@ -168,7 +169,7 @@ public class UpdatePhoneModel {
 			output.println("<name>" + problem.getName() + "</name>");
 			output.println("<description>" + problem.getDescription() + "</description>");
 			output.println("<type>" + problem.getType() + "</type>");
-			output.println("<updateTime>" + problem.getUpdateDate() + "</updateTime>");
+			output.println("<updateTime>" + problem.getUpdateDate().getMillis() + "</updateTime>");
 			
 			if(problem.getSymptoms() != null) {
 				for(Integer i: problem.getSymptoms()){
@@ -193,8 +194,8 @@ public class UpdatePhoneModel {
 			output.println("<symptom>");
 			output.println("<id>"+ symptom.getId() + "</id>");
 			output.println("<description>" + symptom.getDescription() + "</description>");
-			output.println("<updateTime>" + symptom.getUpdateDate() + "</updateTime>");
-			output.println("<parent>" + symptom.getParentSymptom() + "</parent>");
+			output.println("<updateTime>" + symptom.getUpdateDate().getMillis() + "</updateTime>");
+			output.println("<parentSymptom>" + symptom.getParentSymptom() + "</parentSymptom>");
 			output.println("</symptom>");
 		}
 		
