@@ -25,6 +25,9 @@ public class MainActivity extends ActionBarActivity {
 		db.rebuildDatabase();
 		
 		//start xmlParser test
+		//genymotion ip
+		//GetUpdates.getUpdates("http://10.0.3.2:8080/PotatoServer/UpdatePhone?t=00000000000000", db);
+		//other ip
 		GetUpdates.getUpdates("http://192.168.0.3:8080/PotatoServer/UpdatePhone?t=00000000000000", db);
 		
 		setContentView(R.layout.activity_main);
