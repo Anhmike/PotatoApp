@@ -10,6 +10,7 @@ import android.widget.Button;
 
 import com.potato.potatoapp.R;
 import com.potato.potatoapp.beans.XMLReturn;
+import com.potato.potatoapp.database.DiseaseDatabaseController;
 import com.potato.potatoapp.database.GetUpdates;
 
 public class MainActivity extends ActionBarActivity {
@@ -18,8 +19,11 @@ public class MainActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+		//creates a db to be used by the whole application
+		DiseaseDatabaseController db = new DiseaseDatabaseController(this);
+		
 		//start xmlParser test
-		XMLReturn toDB = GetUpdates.getUpdates("http://192.168.0.3:8080/PotatoServer/UpdatePhone?t=00000000000000");
+		GetUpdates.getUpdates("http://192.168.0.3:8080/PotatoServer/UpdatePhone?t=00000000000000", db);
 		
 		setContentView(R.layout.activity_main);
 		final Button pestButton = (Button) findViewById(R.id.button1);

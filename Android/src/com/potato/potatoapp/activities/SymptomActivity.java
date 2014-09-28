@@ -88,6 +88,7 @@ public class SymptomActivity extends ListActivity {
 		disease_descriptions = new String[]{"Apply insecticide treatments on emergence to control PLRV.  To avoid virus infection it is essential to grow seed crops in areas with low aphid prevalence", "Monitor populations during growing season with pheromone traps and apply insecticide treatment if needed; ensure proper ridging of plants to prevent exposure of tubers during growing season; protect tubers after harvest by storing under cover and ensure seed stores are clean and free of debris and old potatoes"};
 		List<Symptom> pests = db.getSymptom("Pest");
 		Log.v("pest", ""+pests.size());
+		symptom_names = new String[pests.size()];
 		for(int i = 0; i<pests.size();i++){
 			symptom_names[i] = pests.get(i).getDescription();
 		}
