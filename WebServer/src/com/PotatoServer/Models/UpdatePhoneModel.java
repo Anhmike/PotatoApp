@@ -139,6 +139,7 @@ public class UpdatePhoneModel {
 				ss.setDescription(rs.getString("description"));
 				if(rs.getString("parent_symptom") != null ) { ss.setParentSymptom(Integer.parseInt(rs.getString("parent_symptom")));}
 				ss.setUpdateDate(new DateTime((rs.getDate("change_date").getTime())));
+				ss.setType(rs.getString("type"));
 				psl.add(ss);
 			}
 		} catch (Exception ex) {
@@ -196,6 +197,7 @@ public class UpdatePhoneModel {
 			output.println("<description>" + symptom.getDescription() + "</description>");
 			output.println("<updateTime>" + symptom.getUpdateDate().getMillis() + "</updateTime>");
 			output.println("<parentSymptom>" + symptom.getParentSymptom() + "</parentSymptom>");
+			output.println("<type>" + symptom.getType() + "</type>");
 			output.println("</symptom>");
 		}
 		

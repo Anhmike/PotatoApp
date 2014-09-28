@@ -14,6 +14,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import android.util.Log;
+
 import com.potato.potatoapp.beans.Problem;
 import com.potato.potatoapp.beans.Symptom;
 import com.potato.potatoapp.beans.XMLReturn;
@@ -27,9 +29,9 @@ public class XMLParser {
 	public static XMLReturn parseXML(String feed) throws Exception {
 
 		Document xml = loadXMLFromString(feed);
-		NodeList nodes = xml.getElementsByTagName("problems");
-
+		NodeList nodes = xml.getElementsByTagName("problem");
 		ArrayList<Problem> problems = extractProblems(nodes);
+		nodes = xml.getElementsByTagName("symptom");
 		ArrayList<Symptom> symptoms = extractSymptoms(nodes);
 
 
@@ -100,6 +102,11 @@ public class XMLParser {
 			NodeList updatetime = element.getElementsByTagName("updateTime");
 			line = (Element) updatetime.item(0);
 			symptom.setUpdateTime(new DateTime(Long.parseLong(getCharacterDataFromElement(line))));
+			
+			NodeList type = element.getElementsByTagName("type");
+			line = (Element) type.item(0);
+			symptom.setPart(getCharacterDataFromElement(line));
+			Log.e("part", symptom.getPart());
 
 			//cannot find parent symptom tag
 //			NodeList parentSymptom = element.getElementsByTagName("parentSymptom");
@@ -109,7 +116,7 @@ public class XMLParser {
 			symptoms.add(symptom);
 		}
 
-		return null;
+		return symptoms;
 	}
 
 	private static Document loadXMLFromString(String xml) throws Exception

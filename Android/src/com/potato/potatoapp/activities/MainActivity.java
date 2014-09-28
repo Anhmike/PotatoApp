@@ -21,6 +21,8 @@ public class MainActivity extends ActionBarActivity {
 		
 		//creates a db to be used by the whole application
 		DiseaseDatabaseController db = new DiseaseDatabaseController(this);
+		//Remove after testing
+		db.rebuildDatabase();
 		
 		//start xmlParser test
 		GetUpdates.getUpdates("http://192.168.0.3:8080/PotatoServer/UpdatePhone?t=00000000000000", db);

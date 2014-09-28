@@ -8,6 +8,7 @@ public class SymptomStore {
 	Integer parentSymptom;
 	DateTime updateDate;
 	String imageLocation;
+	String type;
 	
 	public int getId() {
 		return id;
@@ -38,6 +39,12 @@ public class SymptomStore {
 	}
 	public void setImageLocation(String imageLocation) {
 		this.imageLocation = imageLocation;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 }

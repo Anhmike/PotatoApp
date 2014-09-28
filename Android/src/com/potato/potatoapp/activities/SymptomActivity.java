@@ -43,10 +43,6 @@ public class SymptomActivity extends ListActivity {
 		setContentView(R.layout.activity_symptom);
 		Integer imageId = R.drawable.apterousaphid;
 		db = new DiseaseDatabaseController(this);
-		Symptom aphids = new Symptom();
-		aphids.setDescription("Aphids");
-		aphids.setPart("Pest");
-		db.addSymptom(aphids);
 		Intent button = getIntent();
 		String part = button.getStringExtra("name");
 		if(part.equals("pest")){
