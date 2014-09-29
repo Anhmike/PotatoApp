@@ -7,7 +7,8 @@
     <uses-sdk
         android:minSdkVersion="11"
         android:targetSdkVersion="21" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -15,7 +16,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.potato.potatoapp.activities.MainActivity"
+            android:name=".activities.MainActivity"
             android:label="Potato Diagnostics" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,7 +25,6 @@
             </intent-filter>
         </activity>
         <activity
-<<<<<<< HEAD
             android:name=".activities.SymptomActivity"
             android:label="Symptoms" >
         </activity>
@@ -32,27 +32,18 @@
             android:name=".activities.DiseaseActivity"
             android:label="Potato Diagnostics" >
         </activity>
-        <activity 
-            android:name = ".activities.VideoActivity"
+        <activity
+            android:name=".activities.VideoActivity"
             android:label="@string/title_activity_video" >
-        </activity>
-        <activity 
-            android:name = ".activities.VideoMenuActivity"
-            android:label="Potato Diagnostics" >
-        </activity>
-=======
-            android:name="com.potato.potatoapp.activities.SymptomActivity"
-            android:label="Symptoms" >
         </activity>
         <activity
-            android:name="com.potato.potatoapp.activities.DiseaseActivity"
+            android:name=".activities.VideoMenuActivity"
             android:label="Potato Diagnostics" >
         </activity>
-        <activity 
-            android:name = "com.potato.potatoapp.activities.VideoActivity"
-            android:label="@string/title_activity_video" >
+        <activity
+            android:name=".activities.SymptomChildActivity"
+            android:label="@string/title_activity_symptom_child" >
         </activity>
->>>>>>> origin/master
     </application>
 
 </manifest>

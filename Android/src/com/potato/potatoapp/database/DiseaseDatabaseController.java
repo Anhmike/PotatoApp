@@ -138,6 +138,36 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper{
 		db.insert(TABLE_SYMPTOM, null, values);
 		db.close();
 	}
+	
+	public int getProblemId(int id){
+		int problem = 0;
+		String query = "SELECT * FROM "+TABLE_LINK+" WHERE "+ LINK_SYM_ID+"="+id;
+		SQLiteDatabase db = this.getWritableDatabase();
+		Cursor cursor = db.rawQuery(query, null);
+		if(cursor.moveToFirst()){
+			do{
+				problem = (Integer.parseInt(cursor.getString(1)));
+			}while(cursor.moveToNext());
+		}
+		return problem;
+	}
+	
+	public Problem getProblem(int id)
+	{
+		Problem problem = new Problem();
+		String query = "SELECT * FROM "+TABLE_PROBLEM+" WHERE "+ PROBLEM_ID+"="+id;
+		SQLiteDatabase db = this.getWritableDatabase();
+		Cursor cursor = db.rawQuery(query, null);
+		if(cursor.moveToFirst()){
+			do{
+				problem.setId(Integer.parseInt(cursor.getString(0)));
+				problem.setDescription(cursor.getString(3));
+				problem.setName(cursor.getString(1));
+				//disease.setUpdateTime(cursor.getString(4));
+			}while(cursor.moveToNext());
+		}
+		return problem;
+	}
 
 	public Problem getDisease(int id)
 	{
@@ -167,8 +197,7 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper{
 				Symptom symptom = new Symptom();
 				symptom.setId(Integer.parseInt(cursor.getString(0)));
 				symptom.setDescription(cursor.getString(1));
-				symptom.setPart(cursor.getString(2));
-				//symptom.setSymParent(Integer.parseInt(cursor.getString(3)));
+				symptom.setParent(Integer.parseInt(cursor.getString(2)));
 				//disease.setUpdateTime(cursor.getString(4));
 
 				symList.add(symptom);
@@ -204,6 +233,28 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper{
 	{
 		List<Symptom> symptomList = new ArrayList<Symptom>();
 		String query = "SELECT * FROM "+TABLE_SYMPTOM;
+
+		SQLiteDatabase db = this.getWritableDatabase();
+		Cursor cursor = db.rawQuery(query, null);
+
+		if(cursor.moveToFirst()){
+			do{
+				Symptom symptom = new Symptom();
+				symptom.setId(Integer.parseInt(cursor.getString(0)));
+				symptom.setDescription(cursor.getString(1));
+				symptom.setParent(Integer.parseInt(cursor.getString(2)));
+				//disease.setUpdateTime(cursor.getString(4));
+
+				symptomList.add(symptom);
+			}while(cursor.moveToNext());
+		}
+		return symptomList;
+	}
+	
+	public List<Symptom> getSymptomFromParent(int parent)
+	{
+		List<Symptom> symptomList = new ArrayList<Symptom>();
+		String query = "SELECT * FROM "+TABLE_SYMPTOM+" WHERE "+SYMPTOM_PARENT+"="+parent;
 
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.rawQuery(query, null);
