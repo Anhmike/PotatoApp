@@ -1,12 +1,12 @@
 package com.PotatoServer.Servlets;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -43,8 +43,8 @@ initParams = {
 public class Problem extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private DataSource _ds = null;
-	private String saveDirectory = "/Users/tombutterwith/Desktop"; 
-	private String saveLocation = "images";
+	//private String saveDirectory = "/Users/tombutterwith/Desktop"; 
+	private String SAVE_DIR = "problemImages";
 	private int allowedImages = 5;
 
 	/**
@@ -131,28 +131,30 @@ public class Problem extends HttpServlet {
 		problem.setUpdateDate(new DateTime());
 
 		// gets absolute path of the web application
-		//String appPath = request.getServletContext().getRealPath("");
-		// constructs path of the directory to save uploaded file
-		String savePath = saveLocation + File.separator + saveDirectory;
-
-		// creates the save directory if it does not exists
-		File fileSaveDir = new File(savePath);
-		if (!fileSaveDir.exists()) {
-			fileSaveDir.mkdir();
-		}
+        String appPath = request.getServletContext().getRealPath("");
+        // constructs path of the directory to save uploaded file
+        String savePath = appPath + File.separator + SAVE_DIR;
+         
+        // creates the save directory if it does not exists
+        File fileSaveDir = new File(savePath);
+        if (!fileSaveDir.exists()) {
+            fileSaveDir.mkdir();
+        }
 
 		ArrayList <Part> imagesToUpload = new ArrayList<Part>();
 		for(int i = 1; i <= allowedImages; i++) {
 			Part part = request.getPart("file" + i);
 			if(part != null) { imagesToUpload.add(part); }
 		}
-
-
+		
+        ArrayList<String> fileURLs = new ArrayList<String>();
 		int fileCount = 1;
 		for (Part part : imagesToUpload) {
 			String fileName = problemName + '_' + problemType + fileCount;
+			
 			try {
 				part.write(savePath + File.separator + fileName + ".png");
+				fileURLs.add(SAVE_DIR + File.separator + fileName + ".png");
 			} catch (IOException e) {
 				System.out.println("File not found exception");
 			}
@@ -161,6 +163,7 @@ public class Problem extends HttpServlet {
 		
 		
 		problemModel.updateProblem(problem, isNew);
+		problemModel.updateImageURLs(fileURLs, problemId, problemName);
 		
 		doGet(request, response);
 

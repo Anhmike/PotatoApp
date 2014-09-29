@@ -25,12 +25,20 @@ Change_Date DATETIME,
 PRIMARY KEY(S_ID),
 );
 
-CREATE TABLE Picture(
+CREATE TABLE symtom_pictures(
 Picture_ID int NOT NULL,
 S_ID int NOT NULL,
-URL char(100),
+URL char(250),
 Change_Date DATETIME,
 FOREIGN KEY (S_ID) REFERENCES Symptoms(S_ID)
+);
+
+CREATE TABLE problem_pictures(
+Picture_ID int NOT NULL,
+p_ID int NOT NULL,
+URL char(250),
+Change_Date DATETIME,
+FOREIGN KEY (p_ID) REFERENCES problems(p_ID)
 );
 
 CREATE TABLE Link_Symptoms(

@@ -39,8 +39,8 @@ initParams = {
 public class Symptom extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private DataSource _ds = null;
-	private String saveLocation = "/Users/tombutterwith/Desktop";
-	private String saveDirectory = "symptomImages";
+	//private String saveLocation = "/Users/tombutterwith/Desktop";
+	private String SAVE_DIR = "symptomImages";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -110,22 +110,29 @@ public class Symptom extends HttpServlet {
 		Integer parentSymptom = !request.getParameter("parentSymptom").equals("null") ? Integer.parseInt(request.getParameter("parentSymptom")) : null;
 		boolean newSymptom = id == null ? true : false;
 
-		// constructs path of the directory to save uploaded file
-		String savePath = saveLocation + File.separator + saveDirectory;
-
-		// creates the save directory if it does not exists
-		File fileSaveDir = new File(savePath);
-		if (!fileSaveDir.exists()) {
-			fileSaveDir.mkdir();
-		}
+		// gets absolute path of the web application
+        String appPath = request.getServletContext().getRealPath("");
+        // constructs path of the directory to save uploaded file
+        String savePath = appPath + File.separator + SAVE_DIR;
+        
+        System.out.println(savePath);
+         
+        // creates the save directory if it does not exists
+        File fileSaveDir = new File(savePath);
+        if (!fileSaveDir.exists()) {
+            fileSaveDir.mkdir();
+        }
 
 
 		Part part = request.getPart("file1");
+		
+		String url;
 
 		String fileName = description;
 		if(part != null) {
 			try{
 			part.write(savePath + File.separator + fileName + ".png"); 
+			url = SAVE_DIR + File.separator + fileName + ".png";
 			} catch (IOException e) {
 				System.out.println("IOException");
 			}

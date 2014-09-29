@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Time;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import javax.sql.DataSource;
@@ -11,12 +12,11 @@ import javax.sql.DataSource;
 import org.joda.time.DateTime;
 
 import com.PotatoServer.Stores.ProblemStore;
-import com.PotatoServer.Stores.SymptomStore;
 import com.mysql.jdbc.PreparedStatement;
 
 public class ProblemModel {
 
-	
+
 	private DataSource _ds = null;
 	public ProblemModel(){
 
@@ -25,9 +25,9 @@ public class ProblemModel {
 	public void setDatasource(DataSource _ds){
 		this._ds=_ds;
 		System.out.println("Set Data Source in Model"+_ds.toString());
-		
+
 	}
-	
+
 	public boolean updateProblem(ProblemStore problem, boolean isNew) {
 		Connection Conn;
 		try {
@@ -38,19 +38,18 @@ public class ProblemModel {
 			return false;
 		}
 
-		PreparedStatement pmst = null;
 		Statement stmt = null;
 		String sqlQuery;
 		Date date = new Date(System.currentTimeMillis());
 		Time time = new Time(System.currentTimeMillis());
 		String dateTime = date.toString() + " " + time.toString();
-		
+
 		if (isNew)
 			sqlQuery = "INSERT IGNORE INTO problems SET `description` = '" + problem.getDescription() + "', `name` = '" + 
 					problem.getName() + "', `change_date` = '" + dateTime + "', `type` = '" + problem.getType() + "';";
 		else 
 			sqlQuery = "UPDATE problems SET `description` = '" + problem.getDescription() + "', `name` = '" + 
-						problem.getName() + "', `type` = '" + problem.getType() + "', `change_date` = '" + dateTime + "' where p_id ='" + problem.getId() + "';";
+					problem.getName() + "', `type` = '" + problem.getType() + "', `change_date` = '" + dateTime + "' where p_id ='" + problem.getId() + "';";
 
 		System.out.println("Potato Query " + sqlQuery);
 		try {
@@ -78,50 +77,50 @@ public class ProblemModel {
 			return false;
 		}
 	}
-	
-	
+
+
 	public void deleteprob(String id)
 	{
 		Connection Conn = null;
 		ProblemStore ps = null;
 		ResultSet rs = null;
 		Statement stmt = null;
-		
+
 		try {
-				Conn = _ds.getConnection();
+			Conn = _ds.getConnection();
 		} catch (Exception et) {
 
 			System.out.println("No Connection in Problem Model");
 		}
-		
+
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
-		
+
 			stmt = Conn.createStatement();
 			PreparedStatement pmst = null;
-			
+
 			if(id !=null)
 			{
-			String sqlQuery = "call delete_problem("+ id +")";
-			System.out.println("Potato Query " + sqlQuery);
-			rs = stmt.executeQuery(sqlQuery);
+				String sqlQuery = "call delete_problem("+ id +")";
+				System.out.println("Potato Query " + sqlQuery);
+				rs = stmt.executeQuery(sqlQuery);
 			}
-			
+
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
-		
+
 	}
 
-    public LinkedList<ProblemStore> getDES(){
+	public LinkedList<ProblemStore> getDES(){
 		LinkedList<ProblemStore> psl = new LinkedList<ProblemStore>();
 		Connection Conn;
 		ProblemStore ps = null;
 		ResultSet rs = null;
 		try {
-				Conn = _ds.getConnection();
+			Conn = _ds.getConnection();
 		} catch (Exception et) {
 
 			System.out.println("No Connection in Problem Model");
@@ -176,8 +175,8 @@ public class ProblemModel {
 		return psl;
 
 	}
-    
-    public static ProblemStore getProblemByID(Integer id, DataSource ds) {
+
+	public static ProblemStore getProblemByID(Integer id, DataSource ds) {
 		Connection Conn;
 		ProblemStore ps = null;
 		ResultSet rs = null;
@@ -236,5 +235,104 @@ public class ProblemModel {
 			return null;
 		}
 		return ps;
+	}
+
+	public boolean updateImageURLs(ArrayList<String> urls, String id, String name) {
+		if(urls.size() == 0) { return false; }
+		Connection Conn;
+		int problemID = 0;
+
+		ResultSet rs = null;
+		try {
+			Conn = _ds.getConnection();
+		} catch (Exception et) {
+
+			System.out.println("No Connection in Problem Model");
+			return false;
+		}
+
+		PreparedStatement pmst = null;
+		Statement stmt = null;
+
+		if(id == null) {
+			String sqlQuery = "select p_id from problems where name ='" + name + "';";
+			System.out.println("Potato Query " + sqlQuery);
+			try {
+				try {
+					// pmst = Conn.prepareStatement(sqlQuery);
+					stmt = Conn.createStatement();
+				} catch (Exception et) {
+					System.out.println("Can't create prepare statement");
+					return false;
+				}
+				System.out.println("Created prepare");
+				try {
+					// rs=pmst.executeQuery();
+					rs = stmt.executeQuery(sqlQuery);
+				} catch (Exception et) {
+					System.out.println("Can not execut query here " + et);
+					return false;
+				}
+				System.out.println("Statement executed");
+				if (rs.wasNull()) {
+					System.out.println("result set was null");
+				} else {
+					System.out.println("Well it wasn't null");
+				}
+				while (rs.next()) {
+					problemID = rs.getInt("p_id");
+				}
+			} catch (Exception ex) {
+				System.out.println("Opps, error in query " + ex);
+				return false;
+			}
+		} else {
+			problemID = Integer.parseInt(id);
+		}
+
+		stmt = null;
+		String sqlQuery;
+		Date date = new Date(System.currentTimeMillis());
+		Time time = new Time(System.currentTimeMillis());
+		String dateTime = date.toString() + " " + time.toString();
+
+		sqlQuery = "INSERT IGNORE INTO problem_pictures (`p_id`, `url`, `change_date`) VALUES ";
+		for (String url : urls){
+			sqlQuery += "('" + problemID + "', '" + url + "', '" + dateTime + "'),";
+		}
+		
+		sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1) + ";";
+
+		System.out.println("Potato Query " + sqlQuery);
+		try {
+			try {
+				// pmst = Conn.prepareStatement(sqlQuery);
+				stmt = Conn.createStatement();
+			} catch (Exception et) {
+				System.out.println("Can't create prepare statement");
+				return false;
+			}
+			System.out.println("Created prepare");
+			try {
+				// rs=pmst.executeQuery();
+				stmt.executeUpdate(sqlQuery);
+			} catch (Exception et) {
+				System.out.println("Can not execut query here " + et);
+				return false;
+			}
+			System.out.println("Statement executed");
+
+		} catch (Exception ex) {
+			System.out.println("Opps, error in query " + ex);
+			return false;
+		}
+
+		try {
+
+			Conn.close();
+		} catch (Exception ex) {
+			return false;
+		}
+		return true;
 	}
 }
