@@ -13,6 +13,7 @@ import com.potato.potatoapp.database.DiseaseDatabaseController;
 
 
 import android.support.v7.app.ActionBarActivity;
+import android.app.ActionBar;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -41,6 +42,8 @@ public class SymptomActivity extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_symptom);
+		ActionBar actionBar = getActionBar();
+		actionBar.setDisplayHomeAsUpEnabled(true);
 		Integer imageId = R.drawable.apterousaphid;
 		db = new DiseaseDatabaseController(this);
 		Intent button = getIntent();
@@ -123,11 +126,8 @@ public class SymptomActivity extends ListActivity {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
+		finish();
+		return true;
 	}
 
 }

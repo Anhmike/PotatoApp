@@ -16,5 +16,7 @@
     <string name="title_activity_video">VideoActivity</string>
     <string name="problem_name">Problem Name</string>
     <string name="image">image</string>
+    <string name="lfd_test_tutorial">LFD Field Test Tutorial</string>
+    <string name="fda_test_tutorial">FDA Test Tutorial</string>
 
 </resources>

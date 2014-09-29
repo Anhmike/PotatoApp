@@ -67,6 +67,18 @@ public class MainActivity extends ActionBarActivity {
             }
         });
         
+        final Button testButton = (Button) findViewById(R.id.Button03);
+        testButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent intent = new Intent(MainActivity.this, VideoMenuActivity.class);
+				MainActivity.this.startActivity(intent);
+				
+			}
+		});
+        
 	}
 
 	@Override
