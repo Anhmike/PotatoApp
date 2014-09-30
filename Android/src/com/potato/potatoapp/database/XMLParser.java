@@ -108,11 +108,12 @@ public class XMLParser {
 			symptom.setPart(getCharacterDataFromElement(line));
 			Log.e("part", symptom.getPart());
 
-			//cannot find parent symptom tag
-//			NodeList parentSymptom = element.getElementsByTagName("parentSymptom");
-//			line = (Element) parentSymptom.item(0);
-//			symptom.setParent(Integer.parseInt(getCharacterDataFromElement(line)));
-
+			// cannot find parent symptom tag
+			NodeList parentSymptom =
+			element.getElementsByTagName("parentSymptom");
+			line = (Element) parentSymptom.item(0);
+			symptom.setParent(Integer.parseInt(getCharacterDataFromElement(line)));
+			
 			symptoms.add(symptom);
 		}
 
