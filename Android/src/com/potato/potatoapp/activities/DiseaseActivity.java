@@ -4,6 +4,8 @@ import com.potato.potatoapp.R;
 import com.potato.potatoapp.R.id;
 import com.potato.potatoapp.R.layout;
 import com.potato.potatoapp.R.menu;
+import com.potato.potatoapp.beans.Problem;
+import com.potato.potatoapp.database.DiseaseDatabaseController;
 
 import android.support.v7.app.ActionBarActivity;
 import android.app.ActionBar;
@@ -14,7 +16,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 public class DiseaseActivity extends ActionBarActivity {
-
+	DiseaseDatabaseController db;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -22,13 +24,14 @@ public class DiseaseActivity extends ActionBarActivity {
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		Intent intent = getIntent();
-		int position = intent.getIntExtra("position", 0);
-		String[] data_name = intent.getStringArrayExtra("array_names");
-		String[] data_description = intent.getStringArrayExtra("array_descriptions");
+		int position = intent.getIntExtra("problem", 0);
+		db = new DiseaseDatabaseController(this);
+		Problem problem = new Problem();
+		problem = db.getProblem(position);
 		TextView name = (TextView)findViewById(R.id.problem_title_label);
 		TextView description = (TextView)findViewById(R.id.description_text_label);
-		name.setText(data_name[position]);
-		description.setText(data_description[position]);
+		name.setText(problem.getName());
+		description.setText(problem.getDescription());
 	}
 
 	@Override

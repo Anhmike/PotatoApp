@@ -30,7 +30,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class SymptomActivity extends ListActivity {
+public class SymptomChildActivity extends ListActivity {
 
 	String symptom_names[];
 	String disease_names[];
@@ -44,18 +44,12 @@ public class SymptomActivity extends ListActivity {
 		setContentView(R.layout.activity_symptom);
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
+		Intent parent = getIntent();
+		int parentID = parent.getIntExtra("parent", 0);
+		setSymptoms(parentID);
 		Integer imageId = R.drawable.apterousaphid;
 		db = new DiseaseDatabaseController(this);
-		Intent button = getIntent();
-		String part = button.getStringExtra("name");
-		if (part.equals("pest")) {
-			setPests();
-		} else if (part.equals("leaf")) {
-			setLeaves();
-		} else {
-			setTubers();
-		}
-		ListAdapter adapters = new ListAdapter(SymptomActivity.this,
+		ListAdapter adapters = new ListAdapter(SymptomChildActivity.this,
 				symptom_names, imageId);
 		ListView list = (ListView) findViewById(android.R.id.list);
 		list.setAdapter(adapters);
@@ -74,42 +68,18 @@ public class SymptomActivity extends ListActivity {
 		int pos = position;
 		// intent.putExtra("position", pos);
 		int symParent = symptoms.get(pos).getId();
-		int symParents = symptoms.get(pos).getParent();
-		Log.v("parent", ""+symParent+" "+symParents);
 		symptoms = db.getSymptomFromParent(symParent);
 		if (symptoms.size() > 0) {
-			Intent intent = new Intent(SymptomActivity.this,
+			Intent intent = new Intent(SymptomChildActivity.this,
 					SymptomChildActivity.class);
 			intent.putExtra("parent", symParent);
-			SymptomActivity.this.startActivity(intent);
-		}else{
-			int problem = db.getProblemId(symParent);
-			Intent intent = new Intent(SymptomActivity.this,
-					DiseaseActivity.class);
-			intent.putExtra("problem", problem);
-			SymptomActivity.this.startActivity(intent);
-		}
-		
-	}
 
-	public void setPests() {
-		symptoms = db.getSymptom("Pest");
-		symptom_names = new String[symptoms.size()];
-		for (int i = 0; i < symptoms.size(); i++) {
-			symptom_names[i] = symptoms.get(i).getDescription();
 		}
 	}
 
-	public void setLeaves() {
-		symptoms = db.getSymptom("Plant");
-		symptom_names = new String[symptoms.size()];
-		for (int i = 0; i < symptoms.size(); i++) {
-			symptom_names[i] = symptoms.get(i).getDescription();
-		}
-	}
 
-	public void setTubers() {
-		symptoms = db.getSymptom("Tuber");
+	public void setSymptoms(int parent) {
+		symptoms = db.getSymptomFromParent(parent);
 		symptom_names = new String[symptoms.size()];
 		for (int i = 0; i < symptoms.size(); i++) {
 			symptom_names[i] = symptoms.get(i).getDescription();

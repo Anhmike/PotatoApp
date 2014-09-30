@@ -18,5 +18,6 @@
     <string name="image">image</string>
     <string name="lfd_test_tutorial">LFD Field Test Tutorial</string>
     <string name="fda_test_tutorial">FDA Test Tutorial</string>
+    <string name="title_activity_symptom_child">SymptomChildActivity</string>
 
 </resources>
