@@ -42,13 +42,13 @@ public class SymptomChildActivity extends ListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_symptom);
+		db = new DiseaseDatabaseController(this);
 		ActionBar actionBar = getActionBar();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		Intent parent = getIntent();
 		int parentID = parent.getIntExtra("parent", 0);
 		setSymptoms(parentID);
 		Integer imageId = R.drawable.apterousaphid;
-		db = new DiseaseDatabaseController(this);
 		ListAdapter adapters = new ListAdapter(SymptomChildActivity.this,
 				symptom_names, imageId);
 		ListView list = (ListView) findViewById(android.R.id.list);
@@ -74,6 +74,12 @@ public class SymptomChildActivity extends ListActivity {
 					SymptomChildActivity.class);
 			intent.putExtra("parent", symParent);
 
+		}else{
+			int problem = db.getProblemId(symParent);
+			Intent intent = new Intent(SymptomChildActivity.this,
+					DiseaseActivity.class);
+			intent.putExtra("problem", problem);
+			SymptomChildActivity.this.startActivity(intent);
 		}
 	}
 
