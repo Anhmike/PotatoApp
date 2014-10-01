@@ -1,5 +1,6 @@
 package com.potato.potatoapp.activities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.potato.potatoapp.ListAdapter;
@@ -38,6 +39,7 @@ public class SymptomChildActivity extends ListActivity {
 	String disease_descriptions[];
 	DiseaseDatabaseController db;
 	List<Symptom> symptoms;
+	UserDecisionStore decisions;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class SymptomChildActivity extends ListActivity {
 		setContentView(R.layout.activity_symptom);
 		db = new DiseaseDatabaseController(this);
 		ActionBar actionBar = getActionBar();
+		decisions = UserDecisionStore.getInstance();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		Intent parent = getIntent();
 		int parentID = parent.getIntExtra("parent", 0);
@@ -69,10 +72,12 @@ public class SymptomChildActivity extends ListActivity {
 		int pos = position;
 		// intent.putExtra("position", pos);
 		int symParent = symptoms.get(pos).getId();
+		int symParents = symptoms.get(pos).getParent();
 		symptoms = db.getSymptomFromParent(symParent);
-		UserDecisionStore decisions = UserDecisionStore.getInstance();
-		decisions.addNewSelection(symParent);
+		Log.v("parent", ""+symParent+" "+symParents);
+		
 		if (symptoms.size() > 0) {
+			decisions.addNewSelection(symParent);
 			Intent intent = new Intent(SymptomChildActivity.this,
 					SymptomChildActivity.class);
 			intent.putExtra("parent", symParent);
@@ -107,8 +112,17 @@ public class SymptomChildActivity extends ListActivity {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
+		decisions.removeLastSelection();
 		finish();
 		return true;
+	}
+	
+	@Override
+	public void onResume(){
+		super.onResume();
+		ArrayList<Integer> symptomChoices = decisions.getSelectedSymptoms();
+		if(symptomChoices.size()>0)
+			setSymptoms(symptomChoices.get(symptomChoices.size() - 1));
 	}
 
 }

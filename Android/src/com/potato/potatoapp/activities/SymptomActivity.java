@@ -1,5 +1,6 @@
 package com.potato.potatoapp.activities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.potato.potatoapp.ListAdapter;
@@ -38,17 +39,20 @@ public class SymptomActivity extends ListActivity {
 	String disease_descriptions[];
 	DiseaseDatabaseController db;
 	List<Symptom> symptoms;
+	UserDecisionStore decisions;
+	String part;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_symptom);
 		ActionBar actionBar = getActionBar();
+		decisions = UserDecisionStore.getInstance();
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		Integer imageId = R.drawable.apterousaphid;
 		db = new DiseaseDatabaseController(this);
 		Intent button = getIntent();
-		String part = button.getStringExtra("name");
+		part = button.getStringExtra("name");
 		if (part.equals("pest")) {
 			setPests();
 		} else if (part.equals("leaf")) {
@@ -78,10 +82,10 @@ public class SymptomActivity extends ListActivity {
 		symParent++;
 		int symParents = symptoms.get(pos).getParent();
 		Log.v("parent", ""+symParent+" "+symParents);
-		UserDecisionStore decisions = UserDecisionStore.getInstance();
-		decisions.addNewSelection(symParent);
+		
 		symptoms = db.getSymptomFromParent(symParent);
 		if (symptoms.size() > 0) {
+			decisions.addNewSelection(symParent);
 			Intent intent = new Intent(SymptomActivity.this,
 					SymptomChildActivity.class);
 			intent.putExtra("parent", symParent);
@@ -132,8 +136,34 @@ public class SymptomActivity extends ListActivity {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
+		decisions.removeLastSelection();
 		finish();
 		return true;
+	}
+	
+	public void setSymptoms(int parent) {
+		symptoms = db.getSymptomFromParent(parent);
+		symptom_names = new String[symptoms.size()];
+		for (int i = 0; i < symptoms.size(); i++) {
+			symptom_names[i] = symptoms.get(i).getDescription();
+		}
+	}
+	
+	@Override
+	public void onResume(){
+		super.onResume();
+		ArrayList<Integer> symptomChoices = decisions.getSelectedSymptoms();
+		if(symptomChoices.size()>0)
+			setSymptoms(symptomChoices.get(symptomChoices.size() - 1));
+		else{
+			if (part.equals("pest")) {
+				setPests();
+			} else if (part.equals("leaf")) {
+				setLeaves();
+			} else {
+				setTubers();
+			}
+		}
 	}
 
 }
