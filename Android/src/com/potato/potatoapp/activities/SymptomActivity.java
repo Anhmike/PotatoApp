@@ -9,6 +9,7 @@ import com.potato.potatoapp.R.id;
 import com.potato.potatoapp.R.layout;
 import com.potato.potatoapp.R.menu;
 import com.potato.potatoapp.beans.Symptom;
+import com.potato.potatoapp.beans.UserDecisionStore;
 import com.potato.potatoapp.database.DiseaseDatabaseController;
 
 import android.support.v7.app.ActionBarActivity;
@@ -77,6 +78,8 @@ public class SymptomActivity extends ListActivity {
 		symParent++;
 		int symParents = symptoms.get(pos).getParent();
 		Log.v("parent", ""+symParent+" "+symParents);
+		UserDecisionStore decisions = UserDecisionStore.getInstance();
+		decisions.addNewSelection(symParent);
 		symptoms = db.getSymptomFromParent(symParent);
 		if (symptoms.size() > 0) {
 			Intent intent = new Intent(SymptomActivity.this,

@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 public class UserDecisionStore {
 
-	private UserDecisionStore instance;
+	private static UserDecisionStore instance;
 	private ArrayList<Integer> selectedSymptoms;
 	
 	protected UserDecisionStore () {
 		selectedSymptoms = new ArrayList<Integer>();
 	}
 	
-	public UserDecisionStore getInstance() {
+	public static UserDecisionStore getInstance() {
 		if(instance == null) {
 			instance = new UserDecisionStore();
 		}
