@@ -18,21 +18,23 @@
 <form action="/PotatoServer/Problem/saveSymptoms" method="post" class="potatoForm">
 <input type="text" class="hiddenID" value="<%=problemName %>" name="problemName"/>
 <%
+	ArrayList<Integer> selectedSymptoms = (ArrayList<Integer>)request.getAttribute("selected");
+
 	List<SymptomStore> symptoms = (List<SymptomStore>)request.getAttribute("symptoms");
 	if(symptoms != null)
 	{
 		for(int i = 0; i < symptoms.size(); i++) {
 			%>
-			<div class="checkBox"><input type="checkbox" name="symptom" value="<%=symptoms.get(i).getId() %>"><%=symptoms.get(i).getDescription() %></div>
+			<div class="checkBox"><input type="checkbox" name="symptom" value="<%=symptoms.get(i).getId() %>" <% if(selectedSymptoms.contains(symptoms.get(i).getId())) { out.print("checked"); }  %>><%=symptoms.get(i).getDescription() %></div>
 			<%if (i+1 < symptoms.size())
 			{ %>
-			<div class="checkBox"><input type="checkbox" name="symptom" value="<%=symptoms.get(i+1).getId() %>"><%=symptoms.get(i+1).getDescription() %></div>
+			<div class="checkBox"><input type="checkbox" name="symptom" value="<%=symptoms.get(i+1).getId() %>" <% if(selectedSymptoms.contains(symptoms.get(i+1).getId())) { out.print("checked"); }  %>><%=symptoms.get(i+1).getDescription() %></div>
 			<% 
 			}
 			i++;
 		}
-	}
-%>
+	} 
+%><br /><br />
 <input type="submit" value="Save Symptoms" />
 </form>
 </div>

@@ -32,6 +32,12 @@
 </select> <br /><br />
 <label>Symptom Description</label><br />
 <input type="text" name="symptomDescription" placeholder="Symptom description" /><br /><br />
+<label>Symptom Type</label><br />
+<select name="type">
+	<option value="Plant">Plant</option>
+	<option value="Pest">Pest</option>
+	<option value="Tuber">Tuber</option>
+</select><br /><br />
 <span id="uploadImageSpan">
 <label>Images</label><br />
 <input type="file" name="file1" /><br /><br />

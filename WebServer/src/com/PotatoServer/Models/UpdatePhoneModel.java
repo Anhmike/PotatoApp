@@ -81,6 +81,43 @@ public class UpdatePhoneModel {
 			System.out.println("Opps, error in query " + ex);
 			return false;
 		}
+		
+
+		for(ProblemStore problem: psl) {
+			//PreparedStatement pmst = null;
+			stmt = null;
+			sqlQuery = "select s_id from link_symptoms where p_id = '" + problem.getId() + "';";
+			System.out.println("Problem Query " + sqlQuery);
+			try {
+				try {
+					// pmst = Conn.prepareStatement(sqlQuery);
+					stmt = Conn.createStatement();
+				} catch (Exception et) {
+					System.out.println("Can't create prepare statement");
+					return false;
+				}
+				System.out.println("Created prepare");
+				try {
+					// rs=pmst.executeQuery();
+					rs = stmt.executeQuery(sqlQuery);
+				} catch (Exception et) {
+					System.out.println("Can not execut query here " + et);
+					return false;
+				}
+				System.out.println("Statement executed");
+				if (rs.wasNull()) {
+					System.out.println("result set was null");
+				} else {
+					System.out.println("Well it wasn't null");
+				}
+				while (rs.next()) {
+					problem.getSymptoms().add(rs.getInt("s_id"));
+				}
+			} catch (Exception ex) {
+				System.out.println("Opps, error in query " + ex);
+				return false;
+			}
+		}
 
 		try {
 

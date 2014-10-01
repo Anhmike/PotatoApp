@@ -180,7 +180,7 @@ public class Problem extends HttpServlet {
 		} else if (args[2].equals("saveSymptoms")) {
 			String[] checkedIds = request.getParameterValues("symptom");
 			String problemName = request.getParameter("problemName");
-			int problemID = problemModel.addSymptoms(problemName, checkedIds);
+			problemModel.addSymptoms(problemName, checkedIds);
 			
 			LinkedList<ProblemStore> psl = problemModel.getDES();
 			// Get a list of all faults

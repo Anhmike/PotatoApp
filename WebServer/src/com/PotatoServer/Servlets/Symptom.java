@@ -108,6 +108,7 @@ public class Symptom extends HttpServlet {
 		Integer id = request.getParameter("id") != null ? Integer.parseInt(request.getParameter("id")) : null;
 		String description = request.getParameter("symptomDescription");
 		Integer parentSymptom = !request.getParameter("parentSymptom").equals("null") ? Integer.parseInt(request.getParameter("parentSymptom")) : null;
+		String type = request.getParameter("type");
 		boolean newSymptom = id == null ? true : false;
 
 		// gets absolute path of the web application
@@ -147,6 +148,7 @@ public class Symptom extends HttpServlet {
 		symptom.setDescription(description);
 		if(parentSymptom != null) { symptom.setParentSymptom(parentSymptom); }
 		symptom.setImageLocation(request.getPart("file1") == null ? null : description);
+		symptom.setType(type);
 
 		SymptomModel symptomModel = new SymptomModel();
 		symptomModel.setDatasource(_ds);

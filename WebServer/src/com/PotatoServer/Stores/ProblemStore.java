@@ -12,6 +12,10 @@ public class ProblemStore {
 	DateTime updateDate;
 	ArrayList<Integer> symptoms;
 	
+	public ProblemStore() {
+		symptoms = new ArrayList<Integer>();
+	}
+	
 	
 	public String getName() {
 		return name;

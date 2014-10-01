@@ -5,7 +5,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Time;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import javax.sql.DataSource;
@@ -165,10 +165,10 @@ public class SymptomModel {
 		
 		if (isNew)
 			sqlQuery = "INSERT IGNORE INTO symptoms SET `description` = '" + symptom.getDescription() + "', `parent_symptom` = '" + 
-					symptom.getParentSymptom() + "', `change_date` = '" + dateTime + "';";
+					symptom.getParentSymptom() + "', `change_date` = '" + dateTime + "', `type` = '" + symptom.getType() + "';";
 		else 
 			sqlQuery = "UPDATE symptoms SET `description` = '" + symptom.getDescription() + "', `parent_symptom` = '" + 
-						symptom.getParentSymptom() + "', `change_date` = '" + dateTime + "' where s_id ='" + symptom.getId() + "';";
+						symptom.getParentSymptom() + "', `change_date` = '" + dateTime + "', `type` = '" + symptom.getType() + "' where s_id ='" + symptom.getId() + "';";
 
 		System.out.println("Potato Query " + sqlQuery);
 		try {
@@ -333,8 +333,8 @@ public class SymptomModel {
 		}
 		return true;
 	}
-	public HashMap<Integer, SymptomStore> getAllSymptomsForProblem(int problemID) {
-		HashMap<Integer, SymptomStore> ssl = new HashMap<Integer, SymptomStore>();
+	public ArrayList<Integer> getAllSymptomsForProblem(int problemID) {
+		ArrayList<Integer> ssl = new ArrayList<Integer>();
 		Connection Conn;
 		SymptomStore ss = null;
 		ResultSet rs = null;
@@ -348,7 +348,7 @@ public class SymptomModel {
 
 		PreparedStatement pmst = null;
 		Statement stmt = null;
-		String sqlQuery = "SELECT symptoms.s_id, description, parent_symptom, change_date FROM Symptoms INNER JOIN link_symptoms ON symptoms.s_id = link_symptoms.s_id WHERE link_symptoms.p_id ='" + problemID + "';" ;
+		String sqlQuery = "SELECT symptoms.s_id FROM Symptoms INNER JOIN link_symptoms ON symptoms.s_id = link_symptoms.s_id WHERE link_symptoms.p_id ='" + problemID + "';" ;
 		System.out.println("Potato Query " + sqlQuery);
 		try {
 			try {
@@ -373,13 +373,7 @@ public class SymptomModel {
 				System.out.println("Well it wasn't null");
 			}
 			while (rs.next()) {
-				System.out.println("Getting RS");
-				ss = new SymptomStore();
-				ss.setId(rs.getInt("s_ID"));
-				ss.setDescription(rs.getString("Description"));
-				ss.setParentSymptom(rs.getInt("parent_symptom"));
-				ss.setUpdateDate(new DateTime(rs.getDate("change_date")));
-				ssl.put(ss.getId(), ss);
+				ssl.add(rs.getInt("s_id"));
 			}
 		} catch (Exception ex) {
 			System.out.println("Opps, error in query " + ex);

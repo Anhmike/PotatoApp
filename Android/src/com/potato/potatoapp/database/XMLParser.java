@@ -72,7 +72,7 @@ public class XMLParser {
 			line = (Element) description.item(0);
 			problem.setDescription(getCharacterDataFromElement(line));
 
-			NodeList symptoms = element.getElementsByTagName("symptom");
+			NodeList symptoms = element.getElementsByTagName("symptoms");
 			if(symptoms != null) {
 				for (int j = 0; j < symptoms.getLength(); j++) {
 					Element symptom = (Element)symptoms.item(j);

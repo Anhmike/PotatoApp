@@ -31,7 +31,7 @@ $(document).ready(function () {
 <div class="pageTitle">edit a problem</div>
 <% ProblemStore problem = (ProblemStore)request.getAttribute("problem"); 
 %>
-<form class="potatoForm" name="editProblem" action="../Problem" method="post" enctype="multipart/form-data">
+<form class="potatoForm" name="editProblem" action="../Problem/addSymptoms" method="post" enctype="multipart/form-data">
 <input class="hiddenID" name="id" value="<%=problem.getId() %>"/>
 <label>Problem Name</label><br />
 <input type="text" name="problemName" placeholder="Problem name" value="<%= problem.getName() %>"/><br />
@@ -49,7 +49,7 @@ $(document).ready(function () {
 </span>
 <button type="button" id="addImageButton">Add another image</button><br /><br />
 
-<input type="submit" name="submit" value="Save">
+<input type="submit" name="submit" value="Edit Symptoms">
 </form>
 </div>
 </div>
