@@ -32,6 +32,7 @@ public class UserDecisionStore {
 	}
 	
 	public void removeLastSelection() {
-		selectedSymptoms.remove(selectedSymptoms.size() -1);
+		if(selectedSymptoms.size() > 0)
+			selectedSymptoms.remove(selectedSymptoms.size() -1);
 	}
 }
