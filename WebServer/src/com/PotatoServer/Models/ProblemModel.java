@@ -12,7 +12,6 @@ import javax.sql.DataSource;
 import org.joda.time.DateTime;
 
 import com.PotatoServer.Stores.ProblemStore;
-import com.mysql.jdbc.PreparedStatement;
 
 public class ProblemModel {
 
@@ -82,8 +81,6 @@ public class ProblemModel {
 	public void deleteprob(String id)
 	{
 		Connection Conn = null;
-		ProblemStore ps = null;
-		ResultSet rs = null;
 		Statement stmt = null;
 
 		try {
@@ -97,13 +94,12 @@ public class ProblemModel {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 
 			stmt = Conn.createStatement();
-			PreparedStatement pmst = null;
 
 			if(id !=null)
 			{
 				String sqlQuery = "call delete_problem("+ id +")";
 				System.out.println("Potato Query " + sqlQuery);
-				rs = stmt.executeQuery(sqlQuery);
+				stmt.executeQuery(sqlQuery);
 			}
 
 		}
@@ -127,7 +123,6 @@ public class ProblemModel {
 			return null;
 		}
 
-		PreparedStatement pmst = null;
 		Statement stmt = null;
 		String sqlQuery = "select P_ID, name, description from problems";
 		System.out.println("Potato Query " + sqlQuery);
@@ -188,7 +183,6 @@ public class ProblemModel {
 			return null;
 		}
 
-		PreparedStatement pmst = null;
 		Statement stmt = null;
 		String sqlQuery = "select * from problems where P_ID ='" + id + "';";
 		System.out.println("Potato Query " + sqlQuery);
@@ -251,7 +245,6 @@ public class ProblemModel {
 			return false;
 		}
 
-		PreparedStatement pmst = null;
 		Statement stmt = null;
 
 		if(id == null) {
@@ -334,5 +327,116 @@ public class ProblemModel {
 			return false;
 		}
 		return true;
+	}
+	
+	public int addSymptoms(String problemName, String[] symptomIDs) {
+		Connection Conn;
+		int problemID = 0;
+		ResultSet rs = null;
+		try {
+			Conn = _ds.getConnection();
+		} catch (Exception et) {
+
+			System.out.println("No Connection in Problem Model");
+			return 0;
+		}
+
+		Statement stmt = null;
+		String sqlQuery = "select p_id from problems where name ='" + problemName + "';";
+		System.out.println("Potato Query " + sqlQuery);
+		try {
+			try {
+				// pmst = Conn.prepareStatement(sqlQuery);
+				stmt = Conn.createStatement();
+			} catch (Exception et) {
+				System.out.println("Can't create prepare statement");
+				return 0;
+			}
+			System.out.println("Created prepare");
+			try {
+				// rs=pmst.executeQuery();
+				rs = stmt.executeQuery(sqlQuery);
+			} catch (Exception et) {
+				System.out.println("Can not execut query here " + et);
+				return 0;
+			}
+			System.out.println("Statement executed");
+			if (rs.wasNull()) {
+				System.out.println("result set was null");
+			} else {
+				System.out.println("Well it wasn't null");
+			}
+			while (rs.next()) {
+				System.out.println("Getting RS");
+				problemID = rs.getInt("P_ID");
+			}
+		} catch (Exception ex) {
+			System.out.println("Opps, error in query " + ex);
+			return 0;
+		}
+		
+		stmt = null;
+		sqlQuery = "Delete FROM link_symptoms where p_id ='" + problemID + "';";
+		System.out.println("Potato Query " + sqlQuery);
+		try {
+			try {
+				// pmst = Conn.prepareStatement(sqlQuery);
+				stmt = Conn.createStatement();
+			} catch (Exception et) {
+				System.out.println("Can't create prepare statement");
+				return 0;
+			}
+			System.out.println("Created prepare");
+			try {
+				// rs=pmst.executeQuery();
+				stmt.executeUpdate(sqlQuery);
+			} catch (Exception et) {
+				System.out.println("Can not execut query here " + et);
+				return 0;
+			}
+			System.out.println("Statement executed");
+		} catch (Exception ex) {
+			System.out.println("Opps, error in query " + ex);
+			return 0;
+		}
+		
+		if(symptomIDs.length > 0) {
+		stmt = null;
+		sqlQuery = "INSERT INTO link_symptoms (`p_id`, `s_id`) VALUES ";
+		for(int i = 0 ; i < symptomIDs.length; i++) {
+			sqlQuery += "('" + problemID + "', '" + symptomIDs[i] + "'),";
+		}
+		sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1 ) + ";";
+		System.out.println("Potato Query " + sqlQuery);
+		try {
+			try {
+				// pmst = Conn.prepareStatement(sqlQuery);
+				stmt = Conn.createStatement();
+			} catch (Exception et) {
+				System.out.println("Can't create prepare statement");
+				return 0;
+			}
+			System.out.println("Created prepare");
+			try {
+				// rs=pmst.executeQuery();
+				stmt.executeUpdate(sqlQuery);
+			} catch (Exception et) {
+				System.out.println("Can not execut query here " + et);
+				return 0;
+			}
+			System.out.println("Statement executed");
+		} catch (Exception ex) {
+			System.out.println("Opps, error in query " + ex);
+			return 0;
+		}
+		}
+
+		try {
+
+			Conn.close();
+		} catch (Exception ex) {
+			return 0;
+		}
+		return problemID;
 	}
 }

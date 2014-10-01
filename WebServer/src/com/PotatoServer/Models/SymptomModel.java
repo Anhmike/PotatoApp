@@ -5,7 +5,7 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.sql.Time;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import javax.sql.DataSource;
@@ -332,5 +332,66 @@ public class SymptomModel {
 			return false;
 		}
 		return true;
+	}
+	public HashMap<Integer, SymptomStore> getAllSymptomsForProblem(int problemID) {
+		HashMap<Integer, SymptomStore> ssl = new HashMap<Integer, SymptomStore>();
+		Connection Conn;
+		SymptomStore ss = null;
+		ResultSet rs = null;
+		try {
+			Conn = _ds.getConnection();
+		} catch (Exception et) {
+
+			System.out.println("No Connection in Problem Model");
+			return null;
+		}
+
+		PreparedStatement pmst = null;
+		Statement stmt = null;
+		String sqlQuery = "SELECT symptoms.s_id, description, parent_symptom, change_date FROM Symptoms INNER JOIN link_symptoms ON symptoms.s_id = link_symptoms.s_id WHERE link_symptoms.p_id ='" + problemID + "';" ;
+		System.out.println("Potato Query " + sqlQuery);
+		try {
+			try {
+				// pmst = Conn.prepareStatement(sqlQuery);
+				stmt = Conn.createStatement();
+			} catch (Exception et) {
+				System.out.println("Can't create prepare statement");
+				return null;
+			}
+			System.out.println("Created prepare");
+			try {
+				// rs=pmst.executeQuery();
+				rs = stmt.executeQuery(sqlQuery);
+			} catch (Exception et) {
+				System.out.println("Can not execut query here " + et);
+				return null;
+			}
+			System.out.println("Statement executed");
+			if (rs.wasNull()) {
+				System.out.println("result set was null");
+			} else {
+				System.out.println("Well it wasn't null");
+			}
+			while (rs.next()) {
+				System.out.println("Getting RS");
+				ss = new SymptomStore();
+				ss.setId(rs.getInt("s_ID"));
+				ss.setDescription(rs.getString("Description"));
+				ss.setParentSymptom(rs.getInt("parent_symptom"));
+				ss.setUpdateDate(new DateTime(rs.getDate("change_date")));
+				ssl.put(ss.getId(), ss);
+			}
+		} catch (Exception ex) {
+			System.out.println("Opps, error in query " + ex);
+			return null;
+		}
+
+		try {
+
+			Conn.close();
+		} catch (Exception ex) {
+			return null;
+		}
+		return ssl;
 	}
 }

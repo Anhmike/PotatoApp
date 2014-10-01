@@ -101,6 +101,12 @@ body {
 	
 }
 
+.checkBox {
+	width: 250px;
+	display: inline-block;
+	
+}
+
 /*
 * Login page styling
 */

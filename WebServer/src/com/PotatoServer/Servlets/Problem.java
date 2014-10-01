@@ -2,11 +2,8 @@ package com.PotatoServer.Servlets;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -23,7 +20,9 @@ import javax.sql.DataSource;
 import org.joda.time.DateTime;
 
 import com.PotatoServer.Models.ProblemModel;
+import com.PotatoServer.Models.SymptomModel;
 import com.PotatoServer.Stores.ProblemStore;
+import com.PotatoServer.Stores.SymptomStore;
 import com.PotatoServer.lib.Convertors;
 import com.PotatoServer.lib.Dbutils;
 
@@ -72,7 +71,6 @@ public class Problem extends HttpServlet {
 		Problem.setDatasource(_ds);
 		String args[] = Convertors.SplitRequestPath(request);
 		if(args.length > 2){
-			System.out.print("dis start ere m8" + args[2]);
 			if(args[2].equals("delete")){
 				String dl = request.getParameter("id");
 				Problem.deleteprob(dl);
@@ -88,12 +86,6 @@ public class Problem extends HttpServlet {
 				//do edit stuff
 			} 
 		} else {
-			Connection con = null;
-			System.out.println("Starting GET");
-			//String args[]=Convertors.SplitRequestPath(request);
-			Iterator<ProblemStore> iterator;
-			//ProblemModel Problem = new ProblemModel(); //Create a new instance of the model
-			Problem.setDatasource(_ds);
 			LinkedList<ProblemStore> psl = Problem.getDES();
 			// Get a list of all faults
 			/* If we want to forward to a jsp page do this */
@@ -108,64 +100,98 @@ public class Problem extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String problemId = request.getParameter("id");
-		String problemName = request.getParameter("problemName");
-		String problemType = request.getParameter("problemType");
-		String problemDescription = request.getParameter("problemDescription");
-		
 		ProblemModel problemModel = new ProblemModel();
 		problemModel.setDatasource(_ds);
-		
-		ProblemStore problem;
-		boolean isNew = false;
-		if(problemId == null) {
-			problem = new ProblemStore();
-			isNew = true;
-		}
-		else 
-			problem = ProblemModel.getProblemByID(Integer.parseInt(problemId), _ds);
-		
-		problem.setDescription(problemDescription);
-		problem.setName(problemName);
-		problem.setType(problemType);
-		problem.setUpdateDate(new DateTime());
+		String args[] = Convertors.SplitRequestPath(request);
+		if(args[2].equals("addSymptoms")){
+			String problemId = request.getParameter("id");
+			String problemName = request.getParameter("problemName");
+			String problemType = request.getParameter("problemType");
+			String problemDescription = request.getParameter("problemDescription");
 
-		// gets absolute path of the web application
-        String appPath = request.getServletContext().getRealPath("");
-        // constructs path of the directory to save uploaded file
-        String savePath = appPath + File.separator + SAVE_DIR;
-         
-        // creates the save directory if it does not exists
-        File fileSaveDir = new File(savePath);
-        if (!fileSaveDir.exists()) {
-            fileSaveDir.mkdir();
-        }
-
-		ArrayList <Part> imagesToUpload = new ArrayList<Part>();
-		for(int i = 1; i <= allowedImages; i++) {
-			Part part = request.getPart("file" + i);
-			if(part != null) { imagesToUpload.add(part); }
-		}
-		
-        ArrayList<String> fileURLs = new ArrayList<String>();
-		int fileCount = 1;
-		for (Part part : imagesToUpload) {
-			String fileName = problemName + '_' + problemType + fileCount;
-			
-			try {
-				part.write(savePath + File.separator + fileName + ".png");
-				fileURLs.add(SAVE_DIR + File.separator + fileName + ".png");
-			} catch (IOException e) {
-				System.out.println("File not found exception");
+			ProblemStore problem;
+			boolean isNew = false;
+			if(problemId == null) {
+				problem = new ProblemStore();
+				isNew = true;
 			}
-			fileCount++;
+			else 
+				problem = ProblemModel.getProblemByID(Integer.parseInt(problemId), _ds);
+
+			problem.setDescription(problemDescription);
+			problem.setName(problemName);
+			problem.setType(problemType);
+			problem.setUpdateDate(new DateTime());
+
+			// gets absolute path of the web application
+			String appPath = request.getServletContext().getRealPath("");
+			// constructs path of the directory to save uploaded file
+			String savePath = appPath + File.separator + SAVE_DIR;
+
+			savePath = "/Users/tombutterwith/Desktop";
+
+			// creates the save directory if it does not exists
+			File fileSaveDir = new File(savePath);
+			if (!fileSaveDir.exists()) {
+				fileSaveDir.mkdir();
+			}
+
+			ArrayList <Part> imagesToUpload = new ArrayList<Part>();
+			for(int i = 1; i <= allowedImages; i++) {
+				Part part = request.getPart("file" + i);
+				try {
+					if (part.getSize() > 0)
+						imagesToUpload.add(part);
+				} catch (NullPointerException e) {
+					System.out.println("no file to upload");
+				}
+			}
+
+			ArrayList<String> fileURLs = new ArrayList<String>();
+			int fileCount = 1;
+			for (Part part : imagesToUpload) {
+				String fileName = problemName.replace(" ", "_") + '_' + problemType + fileCount;
+
+				try {
+					part.write(savePath + File.separator + fileName + ".png");
+					fileURLs.add(SAVE_DIR + File.separator + fileName + ".png");
+				} catch (IOException e) {
+					System.out.println("File not found exception");
+				}
+				fileCount++;
+			}
+
+
+			problemModel.updateProblem(problem, isNew);
+			problemModel.updateImageURLs(fileURLs, problemId, problemName);
+
+			SymptomModel symModel = new SymptomModel();
+			symModel.setDatasource(_ds);
+			LinkedList<SymptomStore> ssl = symModel.getAllSymptoms();
+			// Get a list of all faults
+			/* If we want to forward to a jsp page do this */
+			request.setAttribute("problemName", problemName);
+			request.setAttribute("symptoms", ssl); //Set a bean with the list in it
+			if(!isNew)
+				request.setAttribute("selected", symModel.getAllSymptomsForProblem(Integer.parseInt(problemId)));
+			RequestDispatcher rd = request
+					.getRequestDispatcher("/AddSymptoms.jsp");
+			rd.forward(request, response);
+		} else if (args[2].equals("saveSymptoms")) {
+			String[] checkedIds = request.getParameterValues("symptom");
+			String problemName = request.getParameter("problemName");
+			int problemID = problemModel.addSymptoms(problemName, checkedIds);
+			
+			LinkedList<ProblemStore> psl = problemModel.getDES();
+			// Get a list of all faults
+			/* If we want to forward to a jsp page do this */
+			request.setAttribute("Problems", psl); //Set a bean with the list in it
+			RequestDispatcher rd = request
+					.getRequestDispatcher("/ShowAllProblems.jsp");
+			rd.forward(request, response);
+			
+			
 		}
-		
-		
-		problemModel.updateProblem(problem, isNew);
-		problemModel.updateImageURLs(fileURLs, problemId, problemName);
-		
-		doGet(request, response);
 
 	}
 
