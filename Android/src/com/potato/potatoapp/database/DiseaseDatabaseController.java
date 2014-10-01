@@ -139,11 +139,20 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper {
 		Log.d("db entry", "entering a problem");
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
+		values.put(PROBLEM_ID, problem.getId());
 		values.put(PROBLEM_NAME, problem.getName());
 		values.put(PROBLEM_TYPE, problem.getType());
 		values.put(PROBLEM_DESCRIPTION, problem.getDescription());
 
 		db.insert(TABLE_PROBLEM, null, values);
+		
+		for(Integer id: problem.getSymptoms()){
+			values = new ContentValues();
+			values.put(PROBLEM_ID, problem.getId());
+			values.put(SYMPTOM_ID, id);
+			
+			db.insert(TABLE_LINK, null, values);
+		}
 		db.close();
 	}
 
@@ -151,6 +160,7 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper {
 		Log.d("db entry", "entering a problem");
 		SQLiteDatabase db = this.getWritableDatabase();
 		ContentValues values = new ContentValues();
+		values.put(SYMPTOM_ID, sym.getId());
 		values.put(SYMPTOM_DESCRIPTION, sym.getDescription());
 		values.put(SYMPTOM_PARENT, sym.getParent());
 		values.put(SYMPTOM_TYPE, sym.getPart());
