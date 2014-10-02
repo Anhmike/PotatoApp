@@ -3,6 +3,8 @@ package com.potato.potatoapp.database;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.DateTime;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -31,6 +33,7 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper {
 	private static final String TABLE_SYMPTOM = "symptoms";
 	private static final String TABLE_PICTURE = "picture";
 	private static final String TABLE_LINK = "link_symptoms";
+	private static final String TABLE_VERSION = "database_version";
 
 	// Variables to handle field names within disease table
 	private static final String PROBLEM_ID = "P_ID";
@@ -56,7 +59,11 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper {
 	private static final String LINK_ID = "LS_ID";
 	private static final String LINK_DIS_ID = "P_ID";
 	private static final String LINK_SYM_ID = "S_ID";
-
+	
+	// Variables to handle the field names within the version table
+	private static final String VERSION_ID = "v_id";
+	private static final String VERSION_NUMBER = "v_number";
+	
 	UserDecisionStore decisions;
 
 	public DiseaseDatabaseController(Context context) {
@@ -100,6 +107,11 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper {
 				+ "(" + LINK_ID + " INTEGER PRIMARY KEY, " + LINK_DIS_ID
 				+ " INTEGER, " + LINK_SYM_ID + " INTEGER" + ")";
 		db.execSQL(CREATE_LINK_TABLE);
+		
+		String CREATE_VERSION_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_VERSION
+				+ "(" + VERSION_ID + " INTEGER PRIMARY KEY, " + VERSION_NUMBER 
+				+ " TEXT )";
+		db.execSQL(CREATE_VERSION_TABLE);
 	}
 
 	/*
@@ -118,6 +130,7 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_SYMPTOM);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_PICTURE);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_LINK);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_VERSION);
 
 		onCreate(db);
 	}
@@ -128,6 +141,7 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper {
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_SYMPTOM);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_PICTURE);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_LINK);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_VERSION);
 
 		onCreate(db);
 	}
@@ -357,4 +371,31 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper {
 				new String[] { String.valueOf(disease.getId()) });
 		db.close();
 	}
+	
+	public void setNewVersion() {
+		DateTime date = new DateTime();
+		SQLiteDatabase db = this.getWritableDatabase();
+		Log.d("input version", String.valueOf(date.getMillis()));
+		db.execSQL("INSERT OR REPLACE INTO " + TABLE_VERSION + " VALUES ( '1' ," +String.valueOf(date.getMillis()) +
+				")");
+		db.close();
+	}
+	
+	public String getVersionNumber() {
+		String query = "SELECT " + VERSION_NUMBER + " FROM " + TABLE_VERSION + " WHERE " + VERSION_ID + " = 1 ";
+
+		SQLiteDatabase db = this.getWritableDatabase();
+		Cursor cursor = db.rawQuery(query, null);
+		String version = null;
+		if (cursor.moveToFirst()) {
+				version = cursor.getString(0);
+		}
+		else
+			return null;
+		
+		Log.d("db version", version);
+		return version;
+	}
+	
+	
 }

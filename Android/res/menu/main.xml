@@ -1,12 +1,20 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.example.potatodiagnosisstatic.MainActivity" >
+    tools:context="com.potato.potatoapp.MainActivity" >
 
+    <item
+        android:id="@+id/update_database"
+        android:icon="@drawable/ic_action_refresh"
+        android:title="@string/update_database"
+       	android:showAsAction="always" 
+       	android:visible="true"/>
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"
         android:showAsAction="never"/>
+    
+    
 
 </menu>
