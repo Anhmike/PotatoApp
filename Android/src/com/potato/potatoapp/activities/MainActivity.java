@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -115,12 +116,13 @@ public class MainActivity extends ActionBarActivity {
 			String versionString = db.getVersionNumber();
 			String version;
 			if(versionString != null){
-			DateTime date =  new DateTime(db.getVersionNumber());
+			DateTime date =  new DateTime(Long.parseLong(db.getVersionNumber()));
 			DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyyMMddkkmmss");
 			version = fmt.print(date);
 			} else {
 				version = "00000000000000";
 			}
+			Log.d("version", version);
 			if(GetUpdates.getUpdates("http://134.36.36.188:8080/PotatoServer/UpdatePhone?t=" + version, db)) {
 				db.setNewVersion();
 				text = "Application Updated";

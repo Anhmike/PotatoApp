@@ -374,8 +374,9 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper {
 	public void setNewVersion() {
 		DateTime date = new DateTime();
 		SQLiteDatabase db = this.getWritableDatabase();
-		db.execSQL("UPDATE " + TABLE_VERSION + " SET " + VERSION_NUMBER + " = " + String.valueOf(date.getMillis()) +
-				" WHERE " + VERSION_ID + " = 1");
+		Log.d("input version", String.valueOf(date.getMillis()));
+		db.execSQL("INSERT OR REPLACE INTO " + TABLE_VERSION + " VALUES ( '1' ," +String.valueOf(date.getMillis()) +
+				")");
 		db.close();
 	}
 	
@@ -391,6 +392,7 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper {
 		else
 			return null;
 		
+		Log.d("db version", version);
 		return version;
 	}
 	
