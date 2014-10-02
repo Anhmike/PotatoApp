@@ -54,7 +54,7 @@ public class XMLParser {
 			NodeList id = element.getElementsByTagName("id");
 			Element line = (Element) id.item(0);
 			problem.setId(Integer.parseInt(getCharacterDataFromElement(line)));
-			
+			System.out.println("id: " + getCharacterDataFromElement(line));
 
 			NodeList name = element.getElementsByTagName("name");
 			line = (Element) name.item(0);
@@ -106,6 +106,7 @@ public class XMLParser {
 			NodeList type = element.getElementsByTagName("type");
 			line = (Element) type.item(0);
 			symptom.setPart(getCharacterDataFromElement(line));
+			Log.e("part", symptom.getPart());
 
 			NodeList parentSymptom =
 			element.getElementsByTagName("parentSymptom");

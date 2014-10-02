@@ -24,7 +24,7 @@ public class GetUpdates {
 
 	}
 
-	public static boolean getUpdates(final String URL, DiseaseDatabaseController db) {
+	public static void getUpdates(final String URL, DiseaseDatabaseController db) {
 
 		final MutableString xmlString = new MutableString();
 		Thread getDetails = new Thread(new Runnable() {
@@ -39,7 +39,6 @@ public class GetUpdates {
 		} catch (InterruptedException e1) {
 			Log.e("Thread error", e1.toString());
 			e1.printStackTrace();
-			return false;
 		}
 		
 		XMLReturn xml = null;
@@ -48,17 +47,10 @@ public class GetUpdates {
 		} catch (Exception e) {
 			Log.e("XMLParser", e.toString());
 			e.printStackTrace();
-			return false;
 		}
 		
-		if(xml != null ) {
+		if(xml != null )
 			placeDataInDatabase(db, xml);
-			return true;
-		}
-		
-		return false;
-		
-		
 		
 
 	}

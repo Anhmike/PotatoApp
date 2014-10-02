@@ -83,6 +83,7 @@ public class SymptomChildActivity extends ListActivity {
 			intent.putExtra("parent", symParent);
 
 		}else{
+			decisions.addNewSelection(symParent);
 			int problem = db.getProblemId(symParent);
 			Intent intent = new Intent(SymptomChildActivity.this,
 					DiseaseActivity.class);

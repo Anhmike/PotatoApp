@@ -8,6 +8,7 @@ import com.potato.potatoapp.beans.Problem;
 import com.potato.potatoapp.database.DiseaseDatabaseController;
 
 import android.support.v7.app.ActionBarActivity;
+import android.text.method.ScrollingMovementMethod;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
@@ -30,6 +31,7 @@ public class DiseaseActivity extends ActionBarActivity {
 		problem = db.getProblem(position);
 		TextView name = (TextView)findViewById(R.id.problem_title_label);
 		TextView description = (TextView)findViewById(R.id.description_text_label);
+		description.setMovementMethod(new ScrollingMovementMethod());
 		name.setText(problem.getName());
 		description.setText(problem.getDescription());
 	}

@@ -79,7 +79,6 @@ public class SymptomActivity extends ListActivity {
 		int pos = position;
 		// intent.putExtra("position", pos);
 		int symParent = symptoms.get(pos).getId();
-		symParent++;
 		int symParents = symptoms.get(pos).getParent();
 		Log.v("parent", ""+symParent+" "+symParents);
 		
