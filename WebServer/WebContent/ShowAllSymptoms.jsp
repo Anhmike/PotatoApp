@@ -13,16 +13,16 @@
 	$('.deleteButton').on('click', function(e){
 
 		var id = $(this).attr('id');
-		window.location.assign("http://localhost:8080/PotatoServer/Symptom/delete?id="+ id);
+		window.location.assign("/PotatoServer/Symptom/delete?id="+ id);
 	});
 	
 	$('.editButton').on('click', function(e){
 
 		var id = $(this).attr('id');
-		window.location.assign("http://localhost:8080/PotatoServer/Symptom/edit?id="+ id);
+		window.location.assign("/PotatoServer/Symptom/edit?id="+ id);
 	});
 	$('.addButton').on('click', function (e) {
-		window.location.assign("http://localhost:8080/PotatoServer/Symptom/add");
+		window.location.assign("/PotatoServer/Symptom/add");
 	});
 })</script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">

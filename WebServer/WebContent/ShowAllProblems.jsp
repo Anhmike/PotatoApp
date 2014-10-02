@@ -11,16 +11,16 @@
 	$('.deleteButton').on('click', function(e){
 
 		var id = $(this).attr('id');
-		window.location.assign("http://localhost:8080/PotatoServer/Problem/delete?id="+ id);
+		window.location.assign("/PotatoServer/Problem/delete?id="+ id);
 	});
 	
 	$('.editButton').on('click', function(e){
 
 		var id = $(this).attr('id');
-		window.location.assign("http://localhost:8080/PotatoServer/Problem/edit?id="+ id);
+		window.location.assign("/PotatoServer/Problem/edit?id="+ id);
 	});
 	$('.addButton').on('click', function (e) {
-		window.location.assign("http://localhost:8080/PotatoServer/AddProblem.jsp");
+		window.location.assign("/PotatoServer/AddProblem.jsp");
 	});
 })</script>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
