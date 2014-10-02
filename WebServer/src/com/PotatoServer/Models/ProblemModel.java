@@ -230,11 +230,64 @@ public class ProblemModel {
 		}
 		return ps;
 	}
-
-	public boolean updateImageURLs(ArrayList<String> urls, String id, String name) {
-		if(urls.size() == 0) { return false; }
+	
+	public int getID(String name) {
 		Connection Conn;
 		int problemID = 0;
+
+		ResultSet rs = null;
+		try {
+			Conn = _ds.getConnection();
+		} catch (Exception et) {
+
+			System.out.println("No Connection in Problem Model");
+			return 0;
+		}
+		
+		Statement stmt = null;
+		String sqlQuery = "select p_id from problems where name ='" + name + "';";
+		System.out.println("Potato Query " + sqlQuery);
+		try {
+			try {
+				// pmst = Conn.prepareStatement(sqlQuery);
+				stmt = Conn.createStatement();
+			} catch (Exception et) {
+				System.out.println("Can't create prepare statement");
+				return 0;
+			}
+			System.out.println("Created prepare");
+			try {
+				// rs=pmst.executeQuery();
+				rs = stmt.executeQuery(sqlQuery);
+			} catch (Exception et) {
+				System.out.println("Can not execut query here " + et);
+				return 0;
+			}
+			System.out.println("Statement executed");
+			if (rs.wasNull()) {
+				System.out.println("result set was null");
+			} else {
+				System.out.println("Well it wasn't null");
+			}
+			while (rs.next()) {
+				problemID = rs.getInt("p_id");
+			}
+		} catch (Exception ex) {
+			System.out.println("Opps, error in query " + ex);
+			return 0;
+		}
+		try {
+			Conn.close();
+		} catch (Exception ex) {
+			return 0;
+		}
+		
+		return problemID;
+	}
+
+	public boolean updateImageURLs(ArrayList<String> urls, int id, String name) {
+		if(urls.size() == 0) { return false; }
+		Connection Conn;
 
 		ResultSet rs = null;
 		try {
@@ -247,42 +300,6 @@ public class ProblemModel {
 
 		Statement stmt = null;
 
-		if(id == null) {
-			String sqlQuery = "select p_id from problems where name ='" + name + "';";
-			System.out.println("Potato Query " + sqlQuery);
-			try {
-				try {
-					// pmst = Conn.prepareStatement(sqlQuery);
-					stmt = Conn.createStatement();
-				} catch (Exception et) {
-					System.out.println("Can't create prepare statement");
-					return false;
-				}
-				System.out.println("Created prepare");
-				try {
-					// rs=pmst.executeQuery();
-					rs = stmt.executeQuery(sqlQuery);
-				} catch (Exception et) {
-					System.out.println("Can not execut query here " + et);
-					return false;
-				}
-				System.out.println("Statement executed");
-				if (rs.wasNull()) {
-					System.out.println("result set was null");
-				} else {
-					System.out.println("Well it wasn't null");
-				}
-				while (rs.next()) {
-					problemID = rs.getInt("p_id");
-				}
-			} catch (Exception ex) {
-				System.out.println("Opps, error in query " + ex);
-				return false;
-			}
-		} else {
-			problemID = Integer.parseInt(id);
-		}
-
 		stmt = null;
 		String sqlQuery;
 		Date date = new Date(System.currentTimeMillis());
@@ -291,7 +308,7 @@ public class ProblemModel {
 
 		sqlQuery = "INSERT IGNORE INTO problem_pictures (`p_id`, `url`, `change_date`) VALUES ";
 		for (String url : urls){
-			sqlQuery += "('" + problemID + "', '" + url + "', '" + dateTime + "'),";
+			sqlQuery += "('" + id + "', '" + url + "', '" + dateTime + "'),";
 		}
 		
 		sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1) + ";";
@@ -341,42 +358,10 @@ public class ProblemModel {
 			return 0;
 		}
 
-		Statement stmt = null;
-		String sqlQuery = "select p_id from problems where name ='" + problemName + "';";
-		System.out.println("Potato Query " + sqlQuery);
-		try {
-			try {
-				// pmst = Conn.prepareStatement(sqlQuery);
-				stmt = Conn.createStatement();
-			} catch (Exception et) {
-				System.out.println("Can't create prepare statement");
-				return 0;
-			}
-			System.out.println("Created prepare");
-			try {
-				// rs=pmst.executeQuery();
-				rs = stmt.executeQuery(sqlQuery);
-			} catch (Exception et) {
-				System.out.println("Can not execut query here " + et);
-				return 0;
-			}
-			System.out.println("Statement executed");
-			if (rs.wasNull()) {
-				System.out.println("result set was null");
-			} else {
-				System.out.println("Well it wasn't null");
-			}
-			while (rs.next()) {
-				System.out.println("Getting RS");
-				problemID = rs.getInt("P_ID");
-			}
-		} catch (Exception ex) {
-			System.out.println("Opps, error in query " + ex);
-			return 0;
-		}
+		problemID = getID(problemName);
 		
-		stmt = null;
-		sqlQuery = "Delete FROM link_symptoms where p_id ='" + problemID + "';";
+		Statement stmt = null;
+		String sqlQuery = "Delete FROM link_symptoms where p_id ='" + problemID + "';";
 		System.out.println("Potato Query " + sqlQuery);
 		try {
 			try {

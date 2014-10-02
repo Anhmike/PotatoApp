@@ -122,13 +122,15 @@ public class Problem extends HttpServlet {
 			problem.setName(problemName);
 			problem.setType(problemType);
 			problem.setUpdateDate(new DateTime());
+			problemModel.updateProblem(problem, isNew);
+			int probID = problemModel.getID(problemName);
 
 			// gets absolute path of the web application
 			String appPath = request.getServletContext().getRealPath("");
 			// constructs path of the directory to save uploaded file
 			String savePath = appPath + File.separator + SAVE_DIR;
 
-			savePath = "/Users/tombutterwith/Desktop";
+			//savePath = "/Users/tombutterwith/Desktop";
 
 			// creates the save directory if it does not exists
 			File fileSaveDir = new File(savePath);
@@ -150,7 +152,7 @@ public class Problem extends HttpServlet {
 			ArrayList<String> fileURLs = new ArrayList<String>();
 			int fileCount = 1;
 			for (Part part : imagesToUpload) {
-				String fileName = problemName.replace(" ", "_") + '_' + problemType + fileCount;
+				String fileName = probID + "_" + fileCount;
 
 				try {
 					part.write(savePath + File.separator + fileName + ".png");
@@ -161,9 +163,7 @@ public class Problem extends HttpServlet {
 				fileCount++;
 			}
 
-
-			problemModel.updateProblem(problem, isNew);
-			problemModel.updateImageURLs(fileURLs, problemId, problemName);
+			problemModel.updateImageURLs(fileURLs, probID, problemName);
 
 			SymptomModel symModel = new SymptomModel();
 			symModel.setDatasource(_ds);
