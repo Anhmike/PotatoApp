@@ -11,13 +11,13 @@ import android.widget.TextView;
 public class ListAdapter extends ArrayAdapter<String> {
 	private final Activity context;
 	private final String[] web;
-	private final Integer imageId;
+	private final int[] imageId;
 
-	public ListAdapter(Activity context, String[] web, Integer imageId) {
+	public ListAdapter(Activity context, String[] web, int[] symptom_images) {
 		super(context, R.layout.listviewlayout, web);
 		this.context = context;
 		this.web = web;
-		this.imageId = imageId;
+		this.imageId = symptom_images;
 	}
 
 	@Override
@@ -27,7 +27,7 @@ public class ListAdapter extends ArrayAdapter<String> {
 		TextView txtTitle = (TextView) rowView.findViewById(R.id.txt);
 		ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
 		txtTitle.setText(web[position]);
-		imageView.setImageResource(imageId);
+		imageView.setImageResource(imageId[position]);
 		return rowView;
 	}
 }

@@ -190,10 +190,11 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper {
 		String query;
 		ArrayList<Integer> ids = decisions.getSelectedSymptoms();
 		int problem = 0;
+		String csv = ids.toString().replace("[", "").replace("]", "");
 		if (ids.size() == 0) {
 			query = "SELECT * FROM " + TABLE_LINK + " WHERE " + SYMPTOM_ID+"="+id;
 		} else {
-			query = "SELECT "+ PROBLEM_ID +" from "+ TABLE_LINK +" where "+ SYMPTOM_ID + " in ("+ids+") group by "+PROBLEM_ID+" having count(distinct "+SYMPTOM_ID+") = "+ids.size();
+			query = "SELECT "+ PROBLEM_ID +" from "+ TABLE_LINK +" where "+ SYMPTOM_ID + " in ("+csv+") group by "+PROBLEM_ID+" having count(distinct "+SYMPTOM_ID+") = "+ids.size();
 		}
 		Log.v("query", query);
 		SQLiteDatabase db = this.getWritableDatabase();

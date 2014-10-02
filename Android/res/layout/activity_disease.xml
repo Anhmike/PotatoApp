@@ -69,7 +69,7 @@
     android:id="@+id/galery_image_1" 
     android:layout_height="150dp" 
     android:layout_width="wrap_content" 
-    android:src="@drawable/ic_launcher" 
+    android:src="@drawable/blacklegmain" 
     android:contentDescription="@string/image"/>
 
 </TableRow>
@@ -94,7 +94,7 @@
     android:id="@+id/image1" 
     android:layout_height="wrap_content" 
     android:layout_width="wrap_content" 
-    android:src="@drawable/ic_launcher" 
+    android:src="@drawable/blacklegmain" 
     android:contentDescription="@string/problem_name"
     android:clickable="true"/>
 
@@ -102,7 +102,7 @@
     android:id="@+id/image2" 
     android:layout_height="wrap_content" 
     android:layout_width="wrap_content" 
-    android:src="@drawable/ic_launcher" 
+    android:src="@drawable/blackscurfmainimage" 
     android:contentDescription="@string/problem_name"
     android:clickable="true"/>
 
@@ -110,7 +110,7 @@
     android:id="@+id/image3" 
     android:layout_height="wrap_content" 
     android:layout_width="wrap_content" 
-    android:src="@drawable/ic_launcher" 
+    android:src="@drawable/blackscurfpits" 
     android:contentDescription="@string/problem_name"
     android:clickable="true"/>
 
@@ -118,7 +118,7 @@
     android:id="@+id/image4" 
     android:layout_height="wrap_content" 
     android:layout_width="wrap_content" 
-    android:src="@drawable/ic_launcher" 
+    android:src="@drawable/commonscab1" 
     android:contentDescription="@string/problem_name"
     android:clickable="true"/>
 
@@ -126,7 +126,7 @@
     android:id="@+id/image5" 
     android:layout_height="wrap_content" 
     android:layout_width="wrap_content" 
-    android:src="@drawable/ic_launcher" 
+    android:src="@drawable/dickeyasolanistem" 
     android:contentDescription="@string/problem_name"
     android:clickable="true"/>
 
@@ -134,7 +134,7 @@
     android:id="@+id/image6" 
     android:layout_height="wrap_content" 
     android:layout_width="wrap_content" 
-    android:src="@drawable/ic_launcher" 
+    android:src="@drawable/earlyblight" 
     android:contentDescription="@string/problem_name"
     android:clickable="true"/>
 
@@ -142,7 +142,7 @@
     android:id="@+id/image7" 
     android:layout_height="wrap_content" 
     android:layout_width="wrap_content" 
-    android:src="@drawable/ic_launcher" 
+    android:src="@drawable/earlyblightmainimage" 
     android:contentDescription="@string/problem_name"
     android:clickable="true"/>
 
@@ -150,7 +150,7 @@
     android:id="@+id/image8" 
     android:layout_height="wrap_content" 
     android:layout_width="wrap_content" 
-    android:src="@drawable/ic_launcher" 
+    android:src="@drawable/lateblighttuber" 
     android:contentDescription="@string/problem_name"
     android:clickable="true"/>
 
