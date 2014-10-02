@@ -37,6 +37,7 @@ public class SymptomChildActivity extends ListActivity {
 	String symptom_names[];
 	String disease_names[];
 	String disease_descriptions[];
+	int symptom_images[];
 	DiseaseDatabaseController db;
 	List<Symptom> symptoms;
 	UserDecisionStore decisions;
@@ -51,10 +52,11 @@ public class SymptomChildActivity extends ListActivity {
 		actionBar.setDisplayHomeAsUpEnabled(true);
 		Intent parent = getIntent();
 		int parentID = parent.getIntExtra("parent", 0);
+		symptom_images = parent.getIntArrayExtra("images");
 		setSymptoms(parentID);
 		Integer imageId = R.drawable.apterousaphid;
 		ListAdapter adapters = new ListAdapter(SymptomChildActivity.this,
-				symptom_names, imageId);
+				symptom_names, symptom_images);
 		ListView list = (ListView) findViewById(android.R.id.list);
 		list.setAdapter(adapters);
 		list.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -6,7 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="pests">Pests</string>
     <string name="leaf_stalk_">Leaf/Stalk</string>
-    <string name="tubor_root">Tubor/Root</string>
+    <string name="tuber_root">Tuber/Root</string>
     <string name="diagnostic_tools">Diagnostic Tools</string>
     <string name="title_activity_symptom">SymptomActivity</string>
     <string name="title_activity_disease">DiseaseActivity</string>

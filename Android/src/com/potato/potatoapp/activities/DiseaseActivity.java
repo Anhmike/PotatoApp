@@ -32,6 +32,7 @@ public class DiseaseActivity extends ActionBarActivity {
 		TextView name = (TextView)findViewById(R.id.problem_title_label);
 		TextView description = (TextView)findViewById(R.id.description_text_label);
 		description.setMovementMethod(new ScrollingMovementMethod());
+		description.setScrollbarFadingEnabled(false);
 		name.setText(problem.getName());
 		description.setText(problem.getDescription());
 	}

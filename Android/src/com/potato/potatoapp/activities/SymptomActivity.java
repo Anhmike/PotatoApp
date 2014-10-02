@@ -37,6 +37,7 @@ public class SymptomActivity extends ListActivity {
 	String symptom_names[];
 	String disease_names[];
 	String disease_descriptions[];
+	int symptom_images[];
 	DiseaseDatabaseController db;
 	List<Symptom> symptoms;
 	UserDecisionStore decisions;
@@ -61,7 +62,7 @@ public class SymptomActivity extends ListActivity {
 			setTubers();
 		}
 		ListAdapter adapters = new ListAdapter(SymptomActivity.this,
-				symptom_names, imageId);
+				symptom_names, symptom_images);
 		ListView list = (ListView) findViewById(android.R.id.list);
 		list.setAdapter(adapters);
 		list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -88,6 +89,7 @@ public class SymptomActivity extends ListActivity {
 			Intent intent = new Intent(SymptomActivity.this,
 					SymptomChildActivity.class);
 			intent.putExtra("parent", symParent);
+			intent.putExtra("images", symptom_images);
 			SymptomActivity.this.startActivity(intent);
 		}else{
 			int problem = db.getProblemId(symParent);
@@ -105,6 +107,8 @@ public class SymptomActivity extends ListActivity {
 		for (int i = 0; i < symptoms.size(); i++) {
 			symptom_names[i] = symptoms.get(i).getDescription();
 		}
+		symptom_images = new int[]{R.drawable.tubermothadultmainimage, R.drawable.apterousaphid};
+
 	}
 
 	public void setLeaves() {
@@ -113,6 +117,7 @@ public class SymptomActivity extends ListActivity {
 		for (int i = 0; i < symptoms.size(); i++) {
 			symptom_names[i] = symptoms.get(i).getDescription();
 		}
+		symptom_images = new int[]{R.drawable.pvxmainimage, R.drawable.earlyblightmainimage, R.drawable.dickeyasolanistem, R.drawable.leafrollvirusleaves1, R.drawable.lateblightmainimage};
 	}
 
 	public void setTubers() {
@@ -120,7 +125,8 @@ public class SymptomActivity extends ListActivity {
 		symptom_names = new String[symptoms.size()];
 		for (int i = 0; i < symptoms.size(); i++) {
 			symptom_names[i] = symptoms.get(i).getDescription();
-		}
+		}		
+		symptom_images = new int[]{R.drawable.blackscurfmainimage, R.drawable.lateblighttuber, R.drawable.softrot, R.drawable.blackscurfpits, R.drawable.blackscurfmainimage, R.drawable.lateblighttuber, R.drawable.softrot, R.drawable.blackscurfpits, R.drawable.blackscurfmainimage, R.drawable.lateblighttuber, R.drawable.softrot, R.drawable.blackscurfpits};
 	}
 
 	@Override
