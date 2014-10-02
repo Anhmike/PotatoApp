@@ -14,8 +14,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import android.util.Log;
-
+import com.potato.potatoapp.beans.Picture;
 import com.potato.potatoapp.beans.Problem;
 import com.potato.potatoapp.beans.Symptom;
 import com.potato.potatoapp.beans.XMLReturn;
@@ -33,11 +32,14 @@ public class XMLParser {
 		ArrayList<Problem> problems = extractProblems(nodes);
 		nodes = xml.getElementsByTagName("symptom");
 		ArrayList<Symptom> symptoms = extractSymptoms(nodes);
+		nodes = xml.getElementsByTagName("images");
+		ArrayList<Picture> images = extractPictures(nodes);
 
 
 		XMLReturn xmlReturn = new XMLReturn();
 		xmlReturn.setProblems(problems);
 		xmlReturn.setSymptoms(symptoms);
+		xmlReturn.setImages(images);
 
 
 		return xmlReturn;
@@ -107,8 +109,7 @@ public class XMLParser {
 			line = (Element) type.item(0);
 			symptom.setPart(getCharacterDataFromElement(line));
 
-			NodeList parentSymptom =
-			element.getElementsByTagName("parentSymptom");
+			NodeList parentSymptom = element.getElementsByTagName("parentSymptom");
 			line = (Element) parentSymptom.item(0);
 			symptom.setParent(Integer.parseInt(getCharacterDataFromElement(line)));
 			
@@ -116,6 +117,40 @@ public class XMLParser {
 		}
 
 		return symptoms;
+	}
+	
+	private static ArrayList<Picture> extractPictures(NodeList nodes){
+		ArrayList<Picture> pictures = new ArrayList<Picture>();
+		
+		for (int i = 0; i < nodes.getLength(); i++) {
+			Element element = (Element) nodes.item(i);
+			Picture picture = new Picture();
+			
+			NodeList id = element.getElementsByTagName("id");
+			Element line = (Element) id.item(0);
+			picture.setId(Integer.parseInt(getCharacterDataFromElement(line)));
+			
+			NodeList entityID = element.getElementsByTagName("entityID");
+			line = (Element) entityID.item(0);
+			picture.setEntityID(Integer.parseInt(getCharacterDataFromElement(line)));
+			
+			NodeList type = element.getElementsByTagName("type");
+			line = (Element) type.item(0);
+			picture.setType(getCharacterDataFromElement(line));
+			
+			NodeList url = element.getElementsByTagName("url");
+			line = (Element) url.item(0);
+			picture.setUrl(getCharacterDataFromElement(line));
+			
+			NodeList updateDate = element.getElementsByTagName("updateDate");
+			line = (Element) updateDate.item(0);
+			picture.setUpdateTime(new DateTime(Long.parseLong(getCharacterDataFromElement(line))));
+			
+			pictures.add(picture);
+			
+		}
+		
+		return pictures;
 	}
 
 	private static Document loadXMLFromString(String xml) throws Exception

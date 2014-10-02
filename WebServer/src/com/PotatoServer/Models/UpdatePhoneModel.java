@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import javax.servlet.ServletOutputStream;
@@ -11,6 +12,7 @@ import javax.sql.DataSource;
 
 import org.joda.time.DateTime;
 
+import com.PotatoServer.Stores.Picture;
 import com.PotatoServer.Stores.ProblemStore;
 import com.PotatoServer.Stores.SymptomStore;
 
@@ -130,7 +132,7 @@ public class UpdatePhoneModel {
 		
 	}
 	
-	public boolean getUpdatesSymptoms (String userTime, ServletOutputStream output) throws IOException {
+	public boolean getUpdatedSymptoms (String userTime, ServletOutputStream output) throws IOException {
 		LinkedList<SymptomStore> psl = new LinkedList<SymptomStore>();
 		Connection Conn;
 		SymptomStore ss = null;
@@ -193,9 +195,132 @@ public class UpdatePhoneModel {
 		return parseSymptoms(psl, output);
 		
 	}
+	public boolean getUpdatedImages(String lastUpdate, ServletOutputStream out) throws IOException {
+		Connection Conn;
+		ResultSet rs;
+		ArrayList<Picture> pictures = new ArrayList<Picture>();
+
+		try {
+			Conn = _ds.getConnection();
+		} catch (Exception et) {
+
+			System.out.println("No Connection in Faults Model");
+			return false;
+		}
+
+		//PreparedStatement pmst = null;
+		Statement stmt = null;
+		String sqlQuery = "select * from problem_pictures where change_date > " + lastUpdate;
+		System.out.println("Problem Query " + sqlQuery);
+		try {
+			try {
+				// pmst = Conn.prepareStatement(sqlQuery);
+				stmt = Conn.createStatement();
+			} catch (Exception et) {
+				System.out.println("Can't create prepare statement");
+				return false;
+			}
+			System.out.println("Created prepare");
+			try {
+				// rs=pmst.executeQuery();
+				rs = stmt.executeQuery(sqlQuery);
+			} catch (Exception et) {
+				System.out.println("Can not execut query here " + et);
+				return false;
+			}
+			System.out.println("Statement executed");
+			if (rs.wasNull()) {
+				System.out.println("result set was null");
+			} else {
+				System.out.println("Well it wasn't null");
+			}
+			while (rs.next()) {
+				Picture picture = new Picture();
+				picture.setId(rs.getInt("picture_id"));
+				picture.setType("problem");
+				picture.setEntityID(rs.getInt("p_id"));
+				picture.setUrl(rs.getString("url"));
+				picture.setUpdateTime(new DateTime((rs.getDate("change_date").getTime())));
+				
+				pictures.add(picture);
+			}
+		} catch (Exception ex) {
+			System.out.println("Opps, error in query " + ex);
+			return false;
+		}
+		
+		//PreparedStatement pmst = null;
+		stmt = null;
+		sqlQuery = "select * from symptom_pictures where change_date > " + lastUpdate;
+		System.out.println("Problem Query " + sqlQuery);
+		try {
+			try {
+				// pmst = Conn.prepareStatement(sqlQuery);
+				stmt = Conn.createStatement();
+			} catch (Exception et) {
+				System.out.println("Can't create prepare statement");
+				return false;
+			}
+			System.out.println("Created prepare");
+			try {
+				// rs=pmst.executeQuery();
+				rs = stmt.executeQuery(sqlQuery);
+			} catch (Exception et) {
+				System.out.println("Can not execut query here " + et);
+				return false;
+			}
+			System.out.println("Statement executed");
+			if (rs.wasNull()) {
+				System.out.println("result set was null");
+			} else {
+				System.out.println("Well it wasn't null");
+			}
+			while (rs.next()) {
+				Picture picture = new Picture();
+				picture.setId(rs.getInt("picture_id"));
+				picture.setType("symptom");
+				picture.setEntityID(rs.getInt("s_id"));
+				picture.setUrl(rs.getString("url"));
+				picture.setUpdateTime(new DateTime((rs.getDate("change_date").getTime())));
+
+				pictures.add(picture);
+			}
+		} catch (Exception ex) {
+			System.out.println("Opps, error in query " + ex);
+			return false;
+		}
+
+		try {
+
+			Conn.close();
+		} catch (Exception ex) {
+			return false;
+		}
+		return parsePictures(pictures, out);
+
+	}
 	
+	private boolean parsePictures(ArrayList<Picture> pictures, ServletOutputStream out) throws IOException {
+		if(pictures == null) { return false; }
+		
+		out.println("<images>");
+		for(Picture image: pictures) {
+			out.println("<image>");
+			out.println("<id>" + image.getId() + "</id>");
+			out.println("<entityID>" + image.getEntityID() + "</entityID>");
+			out.println("<type>" + image.getType() + "</type>");
+			out.println("<url>" + image.getUrl() + "</url>");
+			out.println("<updateDate>" + image.getUpdateTime().getMillis() + "</updateDate>");
+			out.println("</image>");
+		}
+		
+		out.println("</images>");
+		
+		return true;
+	}
+
 	private boolean parseProblems(LinkedList<ProblemStore> list, ServletOutputStream output) throws IOException {
-		if(list == null) { return false;}
+		if(list == null) { return false; }
 		
 		
 		
@@ -242,4 +367,6 @@ public class UpdatePhoneModel {
 		
 		return true;	
 	}
+
+	
 }

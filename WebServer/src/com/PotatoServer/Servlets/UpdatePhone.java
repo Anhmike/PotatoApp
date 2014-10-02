@@ -111,7 +111,8 @@ public class UpdatePhone extends HttpServlet {
 			out.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
 			out.println("<data>");
 			uPM.getUpdatedProblems(lastUpdate, out);
-			uPM.getUpdatesSymptoms(lastUpdate, out);
+			uPM.getUpdatedSymptoms(lastUpdate, out);
+			uPM.getUpdatedImages(lastUpdate, out);
 			out.println("</data>");
 		}
 		

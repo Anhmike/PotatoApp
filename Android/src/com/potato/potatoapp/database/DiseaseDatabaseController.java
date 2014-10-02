@@ -12,6 +12,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.potato.potatoapp.beans.Picture;
 import com.potato.potatoapp.beans.Problem;
 import com.potato.potatoapp.beans.Symptom;
 import com.potato.potatoapp.beans.UserDecisionStore;
@@ -31,7 +32,8 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper {
 	// Variables to handle names of specific tables
 	private static final String TABLE_PROBLEM = "problems";
 	private static final String TABLE_SYMPTOM = "symptoms";
-	private static final String TABLE_PICTURE = "picture";
+	private static final String TABLE_PROBLEM_PICTURE = "problem_picture";
+	private static final String TABLE_SYMPTOM_PICTURE = "symptom_picture";
 	private static final String TABLE_LINK = "link_symptoms";
 	private static final String TABLE_VERSION = "database_version";
 
@@ -50,10 +52,16 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper {
 	private static final String SYMPTOM_TYPE = "Type";
 
 	// Variables to handle the field names within the picture table
-	private static final String PICTURE_ID = "Picture_ID";
-	private static final String PICTURE_SYM_ID = "S_ID";
-	private static final String PICTURE_URL = "URL";
-	private static final String PICTURE_CHANGE_DATE = "Change_Date";
+	private static final String PROBLEM_PICTURE_ID = "Picture_ID";
+	private static final String PROBLEM_PICTURE_PROBLEM_ID = "P_ID";
+	private static final String PROBLEM_PICTURE_URL = "URL";
+	private static final String PROBLEM_PICTURE_CHANGE_DATE = "Change_Date";
+	
+	// Variables to handle the field names within the picture table
+	private static final String SYMPTOM_PICTURE_ID = "Picture_ID";
+	private static final String SYMPTOM_PICTURE_SYMPTOM_ID = "S_ID";
+	private static final String SYMPTOM_PICTURE_URL = "URL";
+	private static final String SYMPTOM_PICTURE_CHANGE_DATE = "Change_Date";
 
 	// Variables to handle the field names within the disease/symptom link table
 	private static final String LINK_ID = "LS_ID";
@@ -97,11 +105,17 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper {
 				+ " TEXT" + ")";
 		db.execSQL(CREATE_SYMPTOM_TABLE);
 
-		String CREATE_PICTURE_TABLE = "CREATE TABLE IF NOT EXISTS "
-				+ TABLE_PICTURE + "(" + PICTURE_ID + " INTEGER PRIMARY KEY, "
-				+ PICTURE_SYM_ID + " INTEGER, " + PICTURE_URL + " TEXT, "
-				+ PICTURE_CHANGE_DATE + " TEXT" + ")";
-		db.execSQL(CREATE_PICTURE_TABLE);
+		String CREATE_PROBLEM_PICTURE_TABLE = "CREATE TABLE IF NOT EXISTS "
+				+ TABLE_PROBLEM_PICTURE + "(" + PROBLEM_PICTURE_ID + " INTEGER PRIMARY KEY, "
+				+ PROBLEM_PICTURE_PROBLEM_ID + " INTEGER, " + PROBLEM_PICTURE_URL + " TEXT, "
+				+ PROBLEM_PICTURE_CHANGE_DATE + " TEXT" + ")";
+		db.execSQL(CREATE_PROBLEM_PICTURE_TABLE);
+		
+		String CREATE_SYMPTOM_PICTURE_TABLE = "CREATE TABLE IF NOT EXISTS "
+				+ TABLE_SYMPTOM_PICTURE + "(" + SYMPTOM_PICTURE_ID + " INTEGER PRIMARY KEY, "
+				+ SYMPTOM_PICTURE_SYMPTOM_ID + " INTEGER, " + SYMPTOM_PICTURE_URL + " TEXT, "
+				+ SYMPTOM_PICTURE_CHANGE_DATE + " TEXT" + ")";
+		db.execSQL(CREATE_SYMPTOM_PICTURE_TABLE);
 
 		String CREATE_LINK_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_LINK
 				+ "(" + LINK_ID + " INTEGER PRIMARY KEY, " + LINK_DIS_ID
@@ -128,7 +142,8 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper {
 		// TODO Auto-generated method stub
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROBLEM);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_SYMPTOM);
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_PICTURE);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROBLEM_PICTURE);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_SYMPTOM_PICTURE);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_LINK);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_VERSION);
 
@@ -139,7 +154,8 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getWritableDatabase();
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROBLEM);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_SYMPTOM);
-		db.execSQL("DROP TABLE IF EXISTS " + TABLE_PICTURE);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_PROBLEM_PICTURE);
+		db.execSQL("DROP TABLE IF EXISTS " + TABLE_SYMPTOM_PICTURE);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_LINK);
 		db.execSQL("DROP TABLE IF EXISTS " + TABLE_VERSION);
 
@@ -152,36 +168,24 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper {
 	 * @author Stephanie Lee
 	 */
 	public void addProblem(Problem problem) {
-		Log.d("db entry", "entering a problem");
 		SQLiteDatabase db = this.getWritableDatabase();
-		ContentValues values = new ContentValues();
-		values.put(PROBLEM_ID, problem.getId());
-		values.put(PROBLEM_NAME, problem.getName());
-		values.put(PROBLEM_TYPE, problem.getType());
-		values.put(PROBLEM_DESCRIPTION, problem.getDescription());
-
-		db.insert(TABLE_PROBLEM, null, values);
+		db.execSQL("INSERT OR REPLACE INTO " + TABLE_PROBLEM + " VALUES ( '"+ problem.getId() 
+				+ "' ,'" + problem.getName() + "', '" + problem.getType() + "', '" + problem.getDescription()
+				+ "', '" + problem.getUpdateTime() + "')");
 
 		for (Integer id : problem.getSymptoms()) {
-			values = new ContentValues();
-			values.put(PROBLEM_ID, problem.getId());
-			values.put(SYMPTOM_ID, id);
-
-			db.insert(TABLE_LINK, null, values);
+			db.execSQL("INSERT OR REPLACE INTO " + TABLE_LINK + " (" + LINK_DIS_ID + ", " + LINK_SYM_ID + ") VALUES ('" + problem.getId()
+					+ "', '" + id + "')");
 		}
 		db.close();
 	}
 
 	public void addSymptom(Symptom sym) {
-		Log.d("db entry", "entering a problem");
 		SQLiteDatabase db = this.getWritableDatabase();
-		ContentValues values = new ContentValues();
-		values.put(SYMPTOM_ID, sym.getId());
-		values.put(SYMPTOM_DESCRIPTION, sym.getDescription());
-		values.put(SYMPTOM_PARENT, sym.getParent());
-		values.put(SYMPTOM_TYPE, sym.getPart());
-
-		db.insert(TABLE_SYMPTOM, null, values);
+		
+		db.execSQL("INSERT OR REPLACE INTO " + TABLE_SYMPTOM + " VALUES ('" + sym.getId() + "', '" + sym.getDescription()
+				+ "', '" + sym.getParent() + "', '" + sym.getPart() + "', '" + sym.getUpdateTime() + "')");
+		
 		db.close();
 	}
 
@@ -375,7 +379,6 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper {
 	public void setNewVersion() {
 		DateTime date = new DateTime();
 		SQLiteDatabase db = this.getWritableDatabase();
-		Log.d("input version", String.valueOf(date.getMillis()));
 		db.execSQL("INSERT OR REPLACE INTO " + TABLE_VERSION + " VALUES ( '1' ," +String.valueOf(date.getMillis()) +
 				")");
 		db.close();
@@ -390,12 +393,83 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper {
 		if (cursor.moveToFirst()) {
 				version = cursor.getString(0);
 		}
-		else
+		else {
+			db.close();
 			return null;
-		
-		Log.d("db version", version);
+		}
+		db.close();
 		return version;
 	}
 	
+	public void updateProblemPicture(Picture picture) {
+		String query = "INSERT OR REPLACE INTO " + TABLE_PROBLEM_PICTURE + "(" + PROBLEM_PICTURE_PROBLEM_ID  + ", "
+				+ ", " + PROBLEM_PICTURE_URL + ", " + PROBLEM_PICTURE_CHANGE_DATE + ") " +
+				"VALUES (" + picture.getEntityID() + ", " + picture.getUrl() + ", " + picture.getUpdateTime() + ")";
+		
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.execSQL(query);
+		
+		db.close();
+	}
 	
+	public ArrayList<Picture> getProblemPicture(int id) {
+		String query = "SELECT * FROM " + TABLE_PROBLEM_PICTURE + " WHERE " + PROBLEM_PICTURE_PROBLEM_ID + " = '" + id + "'";
+		ArrayList<Picture> pictures = new ArrayList<Picture>();
+		SQLiteDatabase db = this.getWritableDatabase();
+		Cursor cursor = db.rawQuery(query, null);
+		if (cursor.moveToFirst()) {
+			do{
+				Picture picture = new Picture();
+				picture.setType("problem");
+				picture.setId(cursor.getInt(0));
+				picture.setEntityID(cursor.getInt(1));
+				picture.setUrl(cursor.getString(2));
+				picture.setUpdateTime(new DateTime(cursor.getString(3)));
+				
+				pictures.add(picture);
+			} while (cursor.moveToNext());
+		}
+		else {
+			db.close();
+			return null;
+		}
+		db.close();
+		return pictures;
+	}
+	
+	public void updateSymptomPictures(Picture picture) {
+		String query = "INSERT OR REPLACE INTO " + TABLE_SYMPTOM_PICTURE + "(" + SYMPTOM_PICTURE_SYMPTOM_ID  + ", "
+				+ ", " + SYMPTOM_PICTURE_URL + ", " + SYMPTOM_PICTURE_CHANGE_DATE + ") " +
+				"VALUES (" + picture.getEntityID() + ", " + picture.getUrl() + ", " + picture.getUpdateTime() + ")";
+		
+		SQLiteDatabase db = this.getWritableDatabase();
+		db.execSQL(query);
+		
+		db.close();
+	}
+	
+	public ArrayList<Picture> getSymptomPictures(int id) {
+		String query = "SELECT * FROM " + TABLE_SYMPTOM_PICTURE + " WHERE " + SYMPTOM_PICTURE_SYMPTOM_ID + " = '" + id + "'";
+		ArrayList<Picture> pictures = new ArrayList<Picture>();
+		SQLiteDatabase db = this.getWritableDatabase();
+		Cursor cursor = db.rawQuery(query, null);
+		if (cursor.moveToFirst()) {
+			do{
+				Picture picture = new Picture();
+				picture.setType("symptom");
+				picture.setId(cursor.getInt(0));
+				picture.setEntityID(cursor.getInt(1));
+				picture.setUrl(cursor.getString(2));
+				picture.setUpdateTime(new DateTime(cursor.getString(3)));
+				
+				pictures.add(picture);
+			} while (cursor.moveToNext());
+		}
+		else {
+			db.close();
+			return null;
+		}
+		db.close();
+		return pictures;
+	}
 }

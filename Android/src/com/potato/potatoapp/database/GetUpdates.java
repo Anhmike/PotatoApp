@@ -14,6 +14,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.util.Log;
 
 import com.potato.potatoapp.beans.MutableString;
+import com.potato.potatoapp.beans.Picture;
 import com.potato.potatoapp.beans.Problem;
 import com.potato.potatoapp.beans.Symptom;
 import com.potato.potatoapp.beans.XMLReturn;
@@ -90,12 +91,19 @@ public class GetUpdates {
 	private static void placeDataInDatabase(DiseaseDatabaseController db, XMLReturn xml) {
 		ArrayList<Problem> problems = xml.getProblems();
 		ArrayList<Symptom> symptoms = xml.getSymptoms();
+		ArrayList<Picture> images = xml.getImages();
 		
 		for(Problem problem: problems) {
 			db.addProblem(problem);
 		}
 		for(Symptom symptom: symptoms) {
 			db.addSymptom(symptom);
+		}
+		for(Picture image: images) {
+			if(image.getType().equals("problem"))
+				db.updateProblemPicture(image);
+			else
+				db.updateSymptomPictures(image);
 		}
 	}
 }
