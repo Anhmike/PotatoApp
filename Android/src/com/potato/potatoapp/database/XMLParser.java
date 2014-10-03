@@ -32,7 +32,7 @@ public class XMLParser {
 		ArrayList<Problem> problems = extractProblems(nodes);
 		nodes = xml.getElementsByTagName("symptom");
 		ArrayList<Symptom> symptoms = extractSymptoms(nodes);
-		nodes = xml.getElementsByTagName("images");
+		nodes = xml.getElementsByTagName("pictures");
 		ArrayList<Picture> images = extractPictures(nodes);
 
 

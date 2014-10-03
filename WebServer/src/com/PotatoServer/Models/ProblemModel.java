@@ -347,6 +347,7 @@ public class ProblemModel {
 	}
 	
 	public int addSymptoms(String problemName, String[] symptomIDs) {
+		if (symptomIDs == null) { return 0; }
 		Connection Conn;
 		int problemID = 0;
 		ResultSet rs = null;

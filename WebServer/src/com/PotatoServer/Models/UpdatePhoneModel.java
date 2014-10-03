@@ -242,7 +242,7 @@ public class UpdatePhoneModel {
 				picture.setUrl(rs.getString("url"));
 				picture.setUpdateTime(new DateTime((rs.getDate("change_date").getTime())));
 				
-				pictures.add(picture);
+				//pictures.add(picture);
 			}
 		} catch (Exception ex) {
 			System.out.println("Opps, error in query " + ex);
@@ -303,18 +303,18 @@ public class UpdatePhoneModel {
 	private boolean parsePictures(ArrayList<Picture> pictures, ServletOutputStream out) throws IOException {
 		if(pictures == null) { return false; }
 		
-		out.println("<images>");
+		out.println("<pictures>");
 		for(Picture image: pictures) {
-			out.println("<image>");
+			out.println("<picture>");
 			out.println("<id>" + image.getId() + "</id>");
 			out.println("<entityID>" + image.getEntityID() + "</entityID>");
 			out.println("<type>" + image.getType() + "</type>");
 			out.println("<url>" + image.getUrl() + "</url>");
 			out.println("<updateDate>" + image.getUpdateTime().getMillis() + "</updateDate>");
-			out.println("</image>");
+			out.println("</picture>");
 		}
 		
-		out.println("</images>");
+		out.println("</pictures>");
 		
 		return true;
 	}

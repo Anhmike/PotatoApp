@@ -43,7 +43,7 @@ public class Problem extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private DataSource _ds = null;
 	//private String saveDirectory = "/Users/tombutterwith/Desktop"; 
-	private String SAVE_DIR = "problemImages";
+	private String SAVE_DIR = "images";
 	private int allowedImages = 5;
 
 	/**
@@ -156,7 +156,7 @@ public class Problem extends HttpServlet {
 
 				try {
 					part.write(savePath + File.separator + fileName + ".png");
-					fileURLs.add(SAVE_DIR + File.separator + fileName + ".png");
+					fileURLs.add("problem_" + fileName + ".png");
 				} catch (IOException e) {
 					System.out.println("File not found exception");
 				}

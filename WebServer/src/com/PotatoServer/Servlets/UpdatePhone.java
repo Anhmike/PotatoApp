@@ -62,7 +62,7 @@ public class UpdatePhone extends HttpServlet {
 			if(args[2].equals("image"))
 			{
 				String appPath = request.getServletContext().getRealPath("");
-				String location = args[3] + File.separator + args[4];
+				String location = "images" + File.separator + args[3];
 				// reads input file from an absolute path
 		        String filePath = appPath + File.separator + location;
 		        File downloadFile = new File(filePath);

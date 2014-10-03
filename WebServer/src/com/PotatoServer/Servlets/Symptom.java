@@ -40,7 +40,7 @@ public class Symptom extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private DataSource _ds = null;
 	//private String saveLocation = "/Users/tombutterwith/Desktop";
-	private String SAVE_DIR = "symptomImages";
+	private String SAVE_DIR = "images";
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -110,35 +110,7 @@ public class Symptom extends HttpServlet {
 		Integer parentSymptom = !request.getParameter("parentSymptom").equals("null") ? Integer.parseInt(request.getParameter("parentSymptom")) : null;
 		String type = request.getParameter("type");
 		boolean newSymptom = id == null ? true : false;
-
-		// gets absolute path of the web application
-        String appPath = request.getServletContext().getRealPath("");
-        // constructs path of the directory to save uploaded file
-        String savePath = appPath + File.separator + SAVE_DIR;
-        
-        System.out.println(savePath);
-         
-        // creates the save directory if it does not exists
-        File fileSaveDir = new File(savePath);
-        if (!fileSaveDir.exists()) {
-            fileSaveDir.mkdir();
-        }
-
-
-		Part part = request.getPart("file1");
 		
-		String url;
-
-		String fileName = description;
-		if(part != null) {
-			try{
-			part.write(savePath + File.separator + fileName + ".png"); 
-			url = SAVE_DIR + File.separator + fileName + ".png";
-			} catch (IOException e) {
-				System.out.println("IOException");
-			}
-		}
-
 		SymptomStore symptom;
 		if(newSymptom)
 			symptom = new SymptomStore();
@@ -156,8 +128,50 @@ public class Symptom extends HttpServlet {
 			symptomModel.updateSymptom(symptom, newSymptom);
 		else
 			symptomModel.updateSymptom(symptom, newSymptom);
+		
+		if (id == null)
+			id = symptomModel.getSymptomID(description);
 
-		doGet(request, response);
+		// gets absolute path of the web application
+        String appPath = request.getServletContext().getRealPath("");
+        // constructs path of the directory to save uploaded file
+        String savePath = appPath + File.separator + SAVE_DIR;
+         
+        // creates the save directory if it does not exists
+        File fileSaveDir = new File(savePath);
+        if (!fileSaveDir.exists()) {
+            fileSaveDir.mkdir();
+        }
+
+
+		Part part = request.getPart("file1");
+		
+		String url = null;
+
+		String fileName = description;
+		if(part != null) {
+			try{
+			part.write(savePath + File.separator + fileName + ".png"); 
+			url = "symptom_" +  fileName + ".png";
+			} catch (IOException e) {
+				System.out.println("IOException");
+			}
+		}
+
+		symptomModel.updateImageURLs(url, id);
+		
+		
+		
+
+		LinkedList<SymptomStore> psl = symptomModel.getAllSymptoms();
+		// Get a list of all faults
+
+		/* If we want to forward to a jsp page do this */
+		request.setAttribute("symptoms", psl); //Set a bean with the list in it
+		RequestDispatcher rd = request.getRequestDispatcher("/ShowAllSymptoms.jsp"); 
+
+
+		rd.forward(request, response);
 
 	}
 
