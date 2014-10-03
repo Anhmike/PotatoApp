@@ -31,7 +31,7 @@ public class MainActivity extends ActionBarActivity {
 		//creates a db to be used by the whole application
 		db = new DiseaseDatabaseController(this);
 		//Remove after testing
-		//db.rebuildDatabase();
+		db.rebuildDatabase();
 		
 		//start xmlParser test
 		//genymotion ip
