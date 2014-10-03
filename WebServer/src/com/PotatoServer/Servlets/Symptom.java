@@ -151,7 +151,7 @@ public class Symptom extends HttpServlet {
 		String fileName = description;
 		if(part != null) {
 			try{
-			part.write(savePath + File.separator + fileName + ".png"); 
+			part.write(savePath + File.separator + "symptom_" + fileName + ".png"); 
 			url = "symptom_" +  fileName + ".png";
 			} catch (IOException e) {
 				System.out.println("IOException");

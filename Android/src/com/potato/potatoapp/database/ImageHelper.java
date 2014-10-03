@@ -33,11 +33,11 @@ public class ImageHelper {
 		    conn.connect();
 		    InputStream is = conn.getInputStream();
 		    Bitmap bm = BitmapFactory.decodeStream(is);
-		    File file = new File("image1.png");
+		    File file = new File(picture.getUrl());
 		    if(file.exists())
 		    	file.delete();
 		    
-		    FileOutputStream fos = context.openFileOutput("image1.png", Context.MODE_PRIVATE);
+		    FileOutputStream fos = context.openFileOutput(picture.getUrl(), Context.MODE_PRIVATE);
 		             
 		    ByteArrayOutputStream outstream = new ByteArrayOutputStream();
 		             

@@ -155,7 +155,7 @@ public class Problem extends HttpServlet {
 				String fileName = probID + "_" + fileCount;
 
 				try {
-					part.write(savePath + File.separator + fileName + ".png");
+					part.write(savePath + File.separator + "problem_" + fileName + ".png");
 					fileURLs.add("problem_" + fileName + ".png");
 				} catch (IOException e) {
 					System.out.println("File not found exception");
