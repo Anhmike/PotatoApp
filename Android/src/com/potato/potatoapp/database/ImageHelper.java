@@ -27,6 +27,8 @@ public class ImageHelper {
 	public static void saveImage(Context context, Picture picture) {
 		try {
 			String urlString = "http://134.36.36.188:8080/PotatoServer/UpdatePhone/image/" + picture.getUrl();
+			urlString = urlString.replace(" ", "%20");
+			Log.e("images", picture.getUrl());
 		    URL url = new URL(urlString);
 		    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 		    conn.setDoInput(true);
