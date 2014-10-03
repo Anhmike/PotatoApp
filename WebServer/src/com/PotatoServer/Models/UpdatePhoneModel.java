@@ -242,7 +242,7 @@ public class UpdatePhoneModel {
 				picture.setUrl(rs.getString("url"));
 				picture.setUpdateTime(new DateTime((rs.getDate("change_date").getTime())));
 				
-				//pictures.add(picture);
+				pictures.add(picture);
 			}
 		} catch (Exception ex) {
 			System.out.println("Opps, error in query " + ex);
