@@ -123,7 +123,7 @@ public class MainActivity extends ActionBarActivity {
 			} else {
 				version = "00000000000000";
 			}
-			if(GetUpdates.getUpdates("http://10.0.3.2:8080/PotatoServer/UpdatePhone?t=" + version, db, context)) {
+			if(GetUpdates.getUpdates("http://134.36.36.188:8080/PotatoServer/UpdatePhone?t=" + version, db, context)) {
 				db.setNewVersion();
 				text = "Application Updated";
 				toast = Toast.makeText(context, text, duration);
