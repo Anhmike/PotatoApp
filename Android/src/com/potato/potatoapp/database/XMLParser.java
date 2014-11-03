@@ -32,7 +32,7 @@ public class XMLParser {
 		ArrayList<Problem> problems = extractProblems(nodes);
 		nodes = xml.getElementsByTagName("symptom");
 		ArrayList<Symptom> symptoms = extractSymptoms(nodes);
-		nodes = xml.getElementsByTagName("images");
+		nodes = xml.getElementsByTagName("picture");
 		ArrayList<Picture> images = extractPictures(nodes);
 
 
@@ -168,6 +168,7 @@ public class XMLParser {
 	 * 
 	 */
 	private static String getCharacterDataFromElement(Element e) {
+		if(e == null) { return null; }
 		Node child = e.getFirstChild();
 		if (child instanceof CharacterData) {
 			CharacterData cd = (CharacterData) child;

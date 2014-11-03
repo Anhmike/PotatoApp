@@ -35,6 +35,12 @@
 </select> <br /><br />
 <label>Symptom Description</label><br />
 <input name="symptomDescription" placeholder="Symptom description" value="<%=symptom.getDescription() %>" /><br /><br />
+<label>Symptom Type</label><br />
+<select name="type">
+	<option value="Plant" <% if(symptom.getType().equals("Plant")) { out.print("selected"); } %>>Plant</option>
+	<option value="Pest" <% if(symptom.getType().equals("Pest")) { out.print("selected"); } %>>Pest</option>
+	<option value="Tuber" <% if(symptom.getType().equals("Tuber")) { out.print("selected"); } %>>Tuber</option>
+</select><br /><br />
 <span id="uploadImageSpan">
 <label>Images</label><br />
 <input type="file" name="file1" /><br /><br />

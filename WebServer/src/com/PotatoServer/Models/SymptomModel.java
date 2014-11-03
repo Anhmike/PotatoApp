@@ -131,6 +131,7 @@ public class SymptomModel {
 				ss.setDescription(rs.getString("Description"));
 				ss.setParentSymptom(rs.getInt("parent_symptom"));
 				ss.setUpdateDate(new DateTime(rs.getDate("change_date")));
+				ss.setType(rs.getString("type"));
 			}
 		} catch (Exception ex) {
 			System.out.println("Opps, error in query " + ex);
@@ -238,10 +239,9 @@ public class SymptomModel {
 		}
 	}
 	
-	public boolean updateImageURLs(String url, String id, String name) {
+	public boolean updateImageURLs(String url, int id) {
 		if(url == null) { return false; }
 		Connection Conn;
-		int symptomID = 0;
 
 		ResultSet rs = null;
 		try {
@@ -254,50 +254,12 @@ public class SymptomModel {
 
 		PreparedStatement pmst = null;
 		Statement stmt = null;
-
-		if(id == null) {
-			String sqlQuery = "select s_id from symptoms where description ='" + name + "';";
-			System.out.println("Potato Query " + sqlQuery);
-			try {
-				try {
-					// pmst = Conn.prepareStatement(sqlQuery);
-					stmt = Conn.createStatement();
-				} catch (Exception et) {
-					System.out.println("Can't create prepare statement");
-					return false;
-				}
-				System.out.println("Created prepare");
-				try {
-					// rs=pmst.executeQuery();
-					rs = stmt.executeQuery(sqlQuery);
-				} catch (Exception et) {
-					System.out.println("Can not execut query here " + et);
-					return false;
-				}
-				System.out.println("Statement executed");
-				if (rs.wasNull()) {
-					System.out.println("result set was null");
-				} else {
-					System.out.println("Well it wasn't null");
-				}
-				while (rs.next()) {
-					symptomID = rs.getInt("s_id");
-				}
-			} catch (Exception ex) {
-				System.out.println("Opps, error in query " + ex);
-				return false;
-			}
-		} else {
-			symptomID = Integer.parseInt(id);
-		}
-
-		stmt = null;
 		String sqlQuery;
 		Date date = new Date(System.currentTimeMillis());
 		Time time = new Time(System.currentTimeMillis());
 		String dateTime = date.toString() + " " + time.toString();
 
-		sqlQuery = "INSERT IGNORE INTO symptom_pictures (`s_id`, `url`, `change_date`) VALUES ('" + symptomID + "', '" + url + "', '" + dateTime + "'),";
+		sqlQuery = "INSERT IGNORE INTO symptom_pictures (`s_id`, `url`, `change_date`) VALUES ('" + id + "', '" + url + "', '" + dateTime + "'),";
 		
 		sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1) + ";";
 
@@ -333,6 +295,7 @@ public class SymptomModel {
 		}
 		return true;
 	}
+	
 	public ArrayList<Integer> getAllSymptomsForProblem(int problemID) {
 		ArrayList<Integer> ssl = new ArrayList<Integer>();
 		Connection Conn;
@@ -387,5 +350,60 @@ public class SymptomModel {
 			return null;
 		}
 		return ssl;
+	}
+
+	public int getSymptomID(String description) {
+		Connection Conn;
+		int symptomID = 0;
+
+		ResultSet rs = null;
+		try {
+			Conn = _ds.getConnection();
+		} catch (Exception et) {
+
+			System.out.println("No Connection in Problem Model");
+			return 0;
+		}
+
+		Statement stmt = null;
+		String sqlQuery = "select s_id from symptoms where description ='" + description + "';";
+		System.out.println("Potato Query " + sqlQuery);
+		try {
+			try {
+				// pmst = Conn.prepareStatement(sqlQuery);
+				stmt = Conn.createStatement();
+			} catch (Exception et) {
+				System.out.println("Can't create prepare statement");
+				return 0;
+			}
+			System.out.println("Created prepare");
+			try {
+				// rs=pmst.executeQuery();
+				rs = stmt.executeQuery(sqlQuery);
+			} catch (Exception et) {
+				System.out.println("Can not execut query here " + et);
+				return 0;
+			}
+			System.out.println("Statement executed");
+			if (rs.wasNull()) {
+				System.out.println("result set was null");
+			} else {
+				System.out.println("Well it wasn't null");
+			}
+			while (rs.next()) {
+				symptomID = rs.getInt("s_id");
+			}
+		} catch (Exception ex) {
+			System.out.println("Opps, error in query " + ex);
+			return 0;
+		}
+		try {
+			Conn.close();
+		} catch (Exception ex) {
+			return 0;
+		}
+
+		return symptomID;
+		
 	}
 }

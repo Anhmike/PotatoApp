@@ -56,7 +56,7 @@ public class SymptomChildActivity extends ListActivity {
 		setSymptoms(parentID);
 		Integer imageId = R.drawable.apterousaphid;
 		ListAdapter adapters = new ListAdapter(SymptomChildActivity.this,
-				symptom_names, symptom_images);
+				symptom_names, symptom_images, symptoms);
 		ListView list = (ListView) findViewById(android.R.id.list);
 		list.setAdapter(adapters);
 		list.setOnItemClickListener(new AdapterView.OnItemClickListener() {

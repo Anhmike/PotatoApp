@@ -62,7 +62,7 @@ public class SymptomActivity extends ListActivity {
 			setTubers();
 		}
 		ListAdapter adapters = new ListAdapter(SymptomActivity.this,
-				symptom_names, symptom_images);
+				symptom_names, symptom_images, symptoms);
 		ListView list = (ListView) findViewById(android.R.id.list);
 		list.setAdapter(adapters);
 		list.setOnItemClickListener(new AdapterView.OnItemClickListener() {

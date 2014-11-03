@@ -108,13 +108,13 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper {
 		String CREATE_PROBLEM_PICTURE_TABLE = "CREATE TABLE IF NOT EXISTS "
 				+ TABLE_PROBLEM_PICTURE + "(" + PROBLEM_PICTURE_ID + " INTEGER PRIMARY KEY, "
 				+ PROBLEM_PICTURE_PROBLEM_ID + " INTEGER, " + PROBLEM_PICTURE_URL + " TEXT, "
-				+ PROBLEM_PICTURE_CHANGE_DATE + " TEXT" + ")";
+				+ PROBLEM_PICTURE_CHANGE_DATE + " LONG" + ")";
 		db.execSQL(CREATE_PROBLEM_PICTURE_TABLE);
 		
 		String CREATE_SYMPTOM_PICTURE_TABLE = "CREATE TABLE IF NOT EXISTS "
 				+ TABLE_SYMPTOM_PICTURE + "(" + SYMPTOM_PICTURE_ID + " INTEGER PRIMARY KEY, "
 				+ SYMPTOM_PICTURE_SYMPTOM_ID + " INTEGER, " + SYMPTOM_PICTURE_URL + " TEXT, "
-				+ SYMPTOM_PICTURE_CHANGE_DATE + " TEXT" + ")";
+				+ SYMPTOM_PICTURE_CHANGE_DATE + " LONG" + ")";
 		db.execSQL(CREATE_SYMPTOM_PICTURE_TABLE);
 
 		String CREATE_LINK_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_LINK
@@ -403,9 +403,9 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper {
 	}
 	
 	public void updateProblemPicture(Picture picture) {
-		String query = "INSERT OR REPLACE INTO " + TABLE_PROBLEM_PICTURE + "(" + PROBLEM_PICTURE_PROBLEM_ID  + ", "
+		String query = "INSERT OR REPLACE INTO " + TABLE_PROBLEM_PICTURE + "(" + PROBLEM_PICTURE_PROBLEM_ID
 				+ ", " + PROBLEM_PICTURE_URL + ", " + PROBLEM_PICTURE_CHANGE_DATE + ") " +
-				"VALUES (" + picture.getEntityID() + ", " + picture.getUrl() + ", " + picture.getUpdateTime() + ")";
+				"VALUES ('" + picture.getEntityID() + "', '" + picture.getUrl() + "', '" + picture.getUpdateTime() + "')";
 		
 		SQLiteDatabase db = this.getWritableDatabase();
 		db.execSQL(query);
@@ -425,7 +425,7 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper {
 				picture.setId(cursor.getInt(0));
 				picture.setEntityID(cursor.getInt(1));
 				picture.setUrl(cursor.getString(2));
-				picture.setUpdateTime(new DateTime(cursor.getString(3)));
+				picture.setUpdateTime(new DateTime(Long.parseLong(cursor.getString(3))));
 				
 				pictures.add(picture);
 			} while (cursor.moveToNext());
@@ -439,9 +439,9 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper {
 	}
 	
 	public void updateSymptomPictures(Picture picture) {
-		String query = "INSERT OR REPLACE INTO " + TABLE_SYMPTOM_PICTURE + "(" + SYMPTOM_PICTURE_SYMPTOM_ID  + ", "
+		String query = "INSERT OR REPLACE INTO " + TABLE_SYMPTOM_PICTURE + "(" + SYMPTOM_PICTURE_SYMPTOM_ID
 				+ ", " + SYMPTOM_PICTURE_URL + ", " + SYMPTOM_PICTURE_CHANGE_DATE + ") " +
-				"VALUES (" + picture.getEntityID() + ", " + picture.getUrl() + ", " + picture.getUpdateTime() + ")";
+				"VALUES ('" + picture.getEntityID() + "', '" + picture.getUrl() + "', '" + picture.getUpdateTime().getMillis() + "')";
 		
 		SQLiteDatabase db = this.getWritableDatabase();
 		db.execSQL(query);
@@ -449,8 +449,31 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper {
 		db.close();
 	}
 	
-	public ArrayList<Picture> getSymptomPictures(int id) {
+	public Picture getSymptomPictures(int id) {
 		String query = "SELECT * FROM " + TABLE_SYMPTOM_PICTURE + " WHERE " + SYMPTOM_PICTURE_SYMPTOM_ID + " = '" + id + "'";
+		ArrayList<Picture> pictures = new ArrayList<Picture>();
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		Picture picture = new Picture();
+		Cursor cursor = db.rawQuery(query, null);
+		if (cursor.moveToFirst()) {
+				picture.setType("symptom");
+				picture.setId(cursor.getInt(0));
+				picture.setEntityID(cursor.getInt(1));
+				picture.setUrl(cursor.getString(2));
+				picture.setUpdateTime(new DateTime(Long.parseLong(cursor.getString(3))));
+		}
+		else {
+			db.close();
+			return null;
+		}
+		db.close();
+		return picture;
+	}
+	
+	public ArrayList<Picture> getNewPictures(String lastUpdate) {
+		String query = "SELECT * FROM " + TABLE_SYMPTOM_PICTURE + " WHERE " + SYMPTOM_PICTURE_CHANGE_DATE + " > '" + lastUpdate + "'";
+		Log.d("query", query);
 		ArrayList<Picture> pictures = new ArrayList<Picture>();
 		SQLiteDatabase db = this.getWritableDatabase();
 		Cursor cursor = db.rawQuery(query, null);
@@ -461,6 +484,20 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper {
 				picture.setId(cursor.getInt(0));
 				picture.setEntityID(cursor.getInt(1));
 				picture.setUrl(cursor.getString(2));
+				picture.setUpdateTime(new DateTime(Long.parseLong(cursor.getString(3))));
+				
+				pictures.add(picture);
+			} while (cursor.moveToNext());
+		}
+		query = "SELECT * FROM " + TABLE_PROBLEM_PICTURE + " WHERE " + PROBLEM_PICTURE_CHANGE_DATE + " > '" + lastUpdate + "'";
+		cursor = db.rawQuery(query, null);
+		if (cursor.moveToFirst()) {
+			do{
+				Picture picture = new Picture();
+				picture.setType("problem");
+				picture.setId(cursor.getInt(0));
+				picture.setEntityID(cursor.getInt(1));
+				picture.setUrl(cursor.getString(2));
 				picture.setUpdateTime(new DateTime(cursor.getString(3)));
 				
 				pictures.add(picture);
@@ -468,8 +505,8 @@ public class DiseaseDatabaseController extends SQLiteOpenHelper {
 		}
 		else {
 			db.close();
-			return null;
 		}
+		
 		db.close();
 		return pictures;
 	}

@@ -37,7 +37,7 @@ public class MainActivity extends ActionBarActivity {
 		//genymotion ip
 		//GetUpdates.getUpdates("http://10.0.3.2:8080/PotatoServer/UpdatePhone?t=00000000000000", db);
 		//IP for Tomcat Server
-		GetUpdates.getUpdates("http://134.36.36.188:8080/PotatoServer/UpdatePhone?t=00000000000000", db);
+		//GetUpdates.getUpdates("http://134.36.36.188:8080/PotatoServer/UpdatePhone?t=00000000000000", db);
 		
 		setContentView(R.layout.activity_main);
 		final Button pestButton = (Button) findViewById(R.id.button1);
@@ -123,7 +123,7 @@ public class MainActivity extends ActionBarActivity {
 			} else {
 				version = "00000000000000";
 			}
-			if(GetUpdates.getUpdates("http://134.36.36.188:8080/PotatoServer/UpdatePhone?t=" + version, db)) {
+			if(GetUpdates.getUpdates("http://134.36.36.188:8080/PotatoServer/UpdatePhone?t=" + version, db, context)) {
 				db.setNewVersion();
 				text = "Application Updated";
 				toast = Toast.makeText(context, text, duration);

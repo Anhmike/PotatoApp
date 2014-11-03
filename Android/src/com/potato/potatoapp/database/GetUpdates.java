@@ -1,7 +1,12 @@
 package com.potato.potatoapp.database;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 import org.apache.http.HttpResponse;
@@ -11,6 +16,9 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import com.potato.potatoapp.beans.MutableString;
@@ -25,7 +33,7 @@ public class GetUpdates {
 
 	}
 
-	public static boolean getUpdates(final String URL, DiseaseDatabaseController db) {
+	public static boolean getUpdates(final String URL, DiseaseDatabaseController db, Context context) {
 
 		final MutableString xmlString = new MutableString();
 		Thread getDetails = new Thread(new Runnable() {
@@ -54,8 +62,27 @@ public class GetUpdates {
 		
 		if(xml != null ) {
 			placeDataInDatabase(db, xml);
+			
+			GetImagesRunnable imagesRunnable = new GetImagesRunnable();
+			imagesRunnable.setContext(context);
+			imagesRunnable.setDb(db);
+			Thread getImages = new Thread(imagesRunnable);
+			
+			getImages.start();
+			try {
+				getImages.join();
+			} catch (InterruptedException e1) {
+				Log.e("Thread error", e1.toString());
+				e1.printStackTrace();
+				return false;
+			}
+			
+			
+			
+			
 			return true;
 		}
+		
 		
 		return false;
 		
